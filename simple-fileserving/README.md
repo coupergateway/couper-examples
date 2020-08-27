@@ -3,9 +3,9 @@
 Every Web Application begins with a client (browser) loading an HTML
 page. All necessary scripts, styles and images are referenced in the HTML document and in turn requested by the browser. The rest is browsing history :)
 
-The counterpart to the Web client is the good, old Web server that serves static files on the clients demand.
+The counterpart to the Web client is the good, old Web server that serves static files on the clients' demand.
 
-Let's do that with couper!
+Let's do that with Couper!
 
 
 ## Configuration
