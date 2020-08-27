@@ -1,0 +1,17 @@
+
+body {
+    background: white;
+}
+img#logo {
+    width: 400rem;
+}
+
+marquee {
+    margin: 30px 0;
+    border: 3px dashed yellow;
+    padding: 10px;
+    background: red;
+    color: green;
+    font-weight: bold;
+    text-transform: uppercase;
+}
