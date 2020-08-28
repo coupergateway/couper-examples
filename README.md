@@ -39,4 +39,11 @@ browser or `curl` to [`localhost:8080`](http://localhost:8080/) to see what's go
 
 Press `CTRL+c` to stop the container.
 
-## [Simple File-Serving](simple-fileserving/README.md)
+> Git Bash users on Windows may encounter the error message `Failed to load configuration: open couper.hcl: no such file or directory`. Try if disabling Windows path conversion helps:
+> ```sh
+> $ export MSYS_NO_PATHCONV=1
+> ```
+
+## Examples
+
+### [Simple File-Serving](simple-fileserving/README.md)
