@@ -32,7 +32,7 @@ server "my-api" {
 }
 ```
 
-### Routing
+## Routing
 
 So what happens when you request `localhost:8080/example`?
 
@@ -49,7 +49,7 @@ connect to? This could be a local application (e.g. running in the same
 Kubernetes namespace), or some remote service. We can define a lot of
 HTTP related settings here.
 
-### Path Mapping
+## Path Mapping
 
 We have decided to mount `httpbin.org` onto the `/example` path. But
 the origin doesn't know about that path. Its endpoints live under
@@ -88,3 +88,88 @@ $ curl 'localhost:8080/example/anything?a=b'
 ```
 
 Notice how host and path in the `curl` command differ from the `url` in the response JSON.
+
+
+## Environment Variables
+
+Often times the upstream service to use depends on the environment
+your setup runs in. For example, on your local computer your backend
+may run on `http://localhost:3000`. Whereas in a production environment
+the same service runs at `https://backend:8080`. Of course, we don't want to have _different_ Couper configurations for every environment – that would be error prone.
+
+A widely used approach is making the settings that actually differ configurable with environment variables.
+
+Let's pretend, we had a local development version of `httpbin` running at `http://localhost:3000`. Actually, that's easy to do:
+
+```
+$ docker run --rm -p 3000:80 --name httpbin kennethreitz/httpbin
+```
+
+To configure the actual origin of our service, we decide to use the following environment variable:
+
+```
+HTTPBIN_ORIGIN=http://localhost:3000
+```
+
+Now we can change the Couper configuration to read the origin host from that variable:
+
+```hcl
+…
+  endpoint "/example/**" {
+    backend {
+      origin = env.HTTPBIN_ORIGIN
+    }
+  }
+…
+```
+
+There are numerous ways to inject environment variables into docker.
+You can set them in your `docker-compose.yaml`, define `ConfigMap`
+resourcen in Kubernetes or simply pass them as command line
+arguments:
+
+```sh
+$ docker run --rm \
+-p 8080:8080 \
+-v "$(pwd)":/conf \
+-e HTTPBIN_ORIGIN=http://localhost:3000 \
+avenga/couper
+```
+
+## Linking Docker Containers
+
+Be aware that `localhost` in a Docker container is not the same thing
+as `localhost` on your host computer. If both Couper and httpbin are
+running in containers, you should `--link` one to the other. In that
+case you can simply make up a hostname. But as the containers are then
+talking directly to each other, you have to use the internal service
+ports.
+
+This command starts Couper linked to a local `httpbin` container:
+
+```sh
+$ docker run --rm \
+-p 8080:8080 \
+-v "$(pwd)":/conf \
+--link httpbin:httpbin \
+-e HTTPBIN_ORIGIN=http://httpbin:80 \
+avenga/couper
+```
+
+Docker automatically sets some environment variables for linked
+containers. With that in mind we could omit defining our own
+environment variable (`HTTPBIN_ORIGIN`) and rely on Docker's instead:
+
+```hcl
+…
+  endpoint "/example/**" {
+    backend {
+      origin = "http://${env.HTTPBIN_PORT_80_TCP_ADDR}:80"
+    }
+  }
+…
+```
+
+This is also an example for the handy variable substitutions in
+strings. We can use variables enclosed in curly brackets to insert
+dynamic data into a string.
