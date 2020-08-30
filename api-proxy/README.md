@@ -19,14 +19,16 @@ A basic gateway configuration defines upstream backend services and
 
 ```hcl
 server "my-api" {
+
   api {
     endpoint "/example/**" {
-      path = "/api/v2/**"
+      path = "/**"
       backend {
-        origin = "http://myservice:8080"
+        origin = "https://httpbin.org"
       }
     }
   }
+  
 }
 ```
 
@@ -49,12 +51,40 @@ HTTP related settings here.
 
 ### Path Mapping
 
-We have decided to mount `myservice` onto the `/example` path. But
+We have decided to mount `httpbin.org` onto the `/example` path. But
 the origin doesn't know about that path. Its endpoints live under
-`/api/v2`. We need to remove our local path prefix and adapt it to
+`/` (e.g. `/headers`). We need to remove our local path prefix and adapt it to
 the backend base prefix.
 
 The `path` property does just that. Everything that was matched by
 the `/**` operator of our endpoint is added to the new path where we
-use the operator again. `/example/user/login` becomes
-`http://myservice:8080/api/v1/user/login` in the backend request.
+use the operator again. `/example/anything` becomes
+`https://httpbin.org/anything` in the backend request.
+
+## Try it out
+
+[Start a Couper container](/README.md#getting-started) and play with the [httpbin endpoints](https://httpbin.org/):
+
+```
+$ curl 'localhost:8080/example/anything?a=b'
+{
+  "args": {
+    "a": "b"
+  }, 
+  "data": "", 
+  "files": {}, 
+  "form": {}, 
+  "headers": {
+    "Accept": "*/*", 
+    "Accept-Encoding": "gzip", 
+    "Host": "httpbin.org", 
+    "User-Agent": "curl/7.64.1", 
+    "X-Amzn-Trace-Id": "Root=1-5f4b851f-23dfa24d1f3fd4cf142a7fe3"
+  }, 
+  "json": null, 
+  "method": "GET", 
+  "url": "https://httpbin.org/anything?a=b"
+}
+```
+
+Notice how host and path in the `curl` command differ from the `url` in the response JSON.

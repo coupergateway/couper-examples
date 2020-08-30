@@ -4,15 +4,22 @@ server "my-api" {
     // uncomment the base_path to see how local paths "shift" without
     // affecting backend requests.
     //
-    base_path = "/api/v1"
+    // /base_path = "/api/v1"
 
-    // try /httpbin/headers or /httpbin/anything
-    endpoint "/httpbin/**" {
+    // try /example/headers or /example/anything
+    endpoint "/example/**" {
       path = "/**"
       backend {
         origin = "https://httpbin.org"
+
+        // uncomment to set headers on the way
+        //request_headers = {
+        //  x-foo = "request"
+        //}
+        //response_headers = {
+        //  x-bar = "response"
+        //}
       }
     }
   }
-  
 }
