@@ -7,7 +7,6 @@ The counterpart to the Web client is the good, old Web server that serves static
 
 Let's do that with Couper!
 
-
 ## Configuration
 
 The core configuration looks like this:
@@ -32,7 +31,6 @@ link"](http://localhost:8080/brokenlink) in your browser, you saw the
 built-in error page with our beloved Couper mascot.
 
 You can define your own error document like this:
-
 
 ```hcl
 server "file-server" {
