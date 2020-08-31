@@ -49,3 +49,5 @@ Press `CTRL+c` to stop the container.
 ### [Simple File-Serving](simple-fileserving/README.md)
 
 ### [Proxy API Requests](api-proxy/README.md)
+
+### [SPA Serving](spa-serving/README.md)

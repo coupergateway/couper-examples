@@ -1,0 +1,10 @@
+
+body {
+    background: lightgray url(couper-logo.svg) no-repeat;
+    background-position: 97% 97%;
+    padding: 20px 110px 100px 20px;
+    font-family: sans-serif;
+}
+img#logo {
+    width: 400rem;
+}
