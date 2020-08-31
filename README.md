@@ -18,7 +18,7 @@ computer.
 To download/install Couper, open a terminal and execute:
 
 ```sh
-$ docker pull avenga/couper
+docker pull avenga/couper
 ```
 
 To run the examples, clone the repository and start Couper in a docker
@@ -40,9 +40,10 @@ browser or `curl` to [`localhost:8080`](http://localhost:8080/) to see what's go
 Press `CTRL+c` to stop the container.
 
 > Git Bash users on Windows may encounter the error message `Failed to load configuration: open couper.hcl: no such file or directory`. Try if disabling Windows path conversion helps:
-> ```sh
-> $ export MSYS_NO_PATHCONV=1
-> ```
+
+```sh
+export MSYS_NO_PATHCONV=1
+```
 
 ## Examples
 
