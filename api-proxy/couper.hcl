@@ -3,7 +3,7 @@ server "my-api" {
   api {
     // uncomment the base_path to see how local paths "shift" without
     // affecting backend requests:
-    // /base_path = "/api/v1"
+    // base_path = "/api/v1"
 
     // try /example/headers or /example/anything
     endpoint "/example/**" {

@@ -2,12 +2,9 @@
 
 Most modern Web applications use APIs to get information for display, to
 trigger actions or to check if a user is authorized to see or do
-stuff.
-
-Those APIs may be part of your application (i.e. you have written it)
-or a third-party service running elsewhere. 
-
-Wherever they run – our favorite spot for them is behind Couper :)
+stuff. Those APIs may be part of your application (i.e. you have
+written it) or a third-party service running elsewhere. Wherever they
+run – our favorite spot for them is behind Couper :)
 
 Let's create a Couper configuration that exposes two backend services
 in a consolidated API for the client.
@@ -16,6 +13,8 @@ in a consolidated API for the client.
 
 A basic gateway configuration defines upstream backend services and
 "mounts" them on local API endpoints:
+
+[`couper.hcl`](couper.hcl):
 
 ```hcl
 server "my-api" {
