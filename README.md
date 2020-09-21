@@ -2,14 +2,14 @@
 
 [Couper](https://couper.io) is designed to support developers
 building and operating API-driven Web projects by offering security
-and observability functionality in a lightweight API gateway
+and observability functionality in a frontend gateway
 component.
 
 This collection of examples highlights Couper's features with small, ready-to-use examples.
 
 ## Getting started
 
-To run the examples you need Couper 2. It is available as _docker
+To run the examples you need Couper. It is available as _docker
 image_ from [Docker Hub](https://hub.docker.com/r/avenga/couper)
 
 Of course you need a working [Docker](https://www.docker.com/) setup on your
