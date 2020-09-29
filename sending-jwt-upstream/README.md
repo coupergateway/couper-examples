@@ -71,7 +71,7 @@ HTTP/1.1 200 OK
 }
 ```
 
-Looks ok, we got access to the protected backend.
+Looks ok, we got access to the protected backend. And note that the `Authorization` header was consumed by Couper. It wasn't sent to the backend.
 
 ## Send request headers upstream
 
@@ -134,5 +134,5 @@ HTTP/1.1 200 OK
 ```
 The value of `X-Jwt-Sub` is the same as the `sub` claim of the JWT created at https://jwt.io/.
 
-To send different claim values upstream, we can adapt the `request_headers` in the configuration file.
+To send different claim values upstream, we can adapt the `request_headers` in the configuration file. Note that **all** claims, not just the standard claims, are stored in `req.ctx.…`
 To add different claims to the JWT, we have to modify the JSON in the "PAYLOAD" box in the right ("Decoded") column.
