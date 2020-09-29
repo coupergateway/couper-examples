@@ -36,22 +36,14 @@ rdAOci3W9u3zOSGj4QIDAQAB
 }
 ```
 
-Now we go to https://jwt.io/, switch the Algorithm to "RS256" and copy the content of the first textarea in the "VERIFY SIGNATURE" box in the right ("Decoded") column.
+Now we go to https://jwt.io/, switch the Algorithm to "RS256" and copy the content from the first textarea in the "VERIFY SIGNATURE" box in the right ("Decoded") column.
 
-We replace the key with the copied value:
+Note: the key is in [PEM format](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) and starts with `-----BEGIN PUBLIC KEY-----`.
+
+We paste the key into a file `pubkey.pem` (in the same directory as the couper configuration) and replace the `key` with the relative path to the `key_file` in the couper configuration:
 
 ```hcl
-    key = <<EOF
------BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnzyis1ZjfNB0bBgKFMSv
-vkTtwlvBsaJq7S5wA+kzeVOVpVWwkWdVha4s38XM/pa/yr47av7+z3VTmvDRyAHc
-aT92whREFpLv9cj5lTeJSibyr/Mrm/YtjCZVWgaOYIhwrXwKLqPr/11inWsAkfIy
-tvHWTxZYEcXLgAXFuUuaS3uF9gEiNQwzGTU1v0FqkqTBr4B8nW3HCN47XUu0t8Y0
-e+lf4s4OxQawWD79J9/5d3Ry0vbV3Am1FtGJiJvOwRsIfVChDpYStTcHTCMqtvWb
-V6L11BWkpzGXSW4Hv43qa+GSYOD2QU68Mb59oSk2OB+BtOLpJofmbGEGgvmwyCI9
-MwIDAQAB
------END PUBLIC KEY-----
-    EOF
+    key_file = "pubkey.pem"
 ```
 
 Now we use a token created by the service at https://jwt.io/. We copy the JWT from the box in the left ("Encoded") column and send it in the `Authorization` header:
