@@ -2,7 +2,7 @@
 
 Extending the example [JWT Access Control](/jwt-access-control/README.md) we now want to send certain JWT claims to the backend protected by Couper's access control.
 
-In the following example we use tokens and keys from https://jwt.io/. 
+In the following example we use tokens created by https://jwt.io/.
 
 First, we take the configuration file from the "JWT Access Control" example:
 
@@ -36,21 +36,25 @@ rdAOci3W9u3zOSGj4QIDAQAB
 }
 ```
 
-Now we go to https://jwt.io/, switch the Algorithm to "RS256" and copy the content from the first textarea in the "VERIFY SIGNATURE" box in the right ("Decoded") column.
-
-Note: the key is in [PEM format](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) and starts with `-----BEGIN PUBLIC KEY-----`.
-
-We paste the key into a file `pubkey.pem` (in the same directory as the couper configuration) and replace the `key` with the relative path to the `key_file` in the couper configuration:
+https://jwt.io/ provides a handy service to create tokens. Its default setting for algorithm is HS256. So we modify the couper configuration like this:
 
 ```hcl
-    key_file = "pubkey.pem"
+    …
+    signature_algorithm = "HS256"
+    key = "y0urS3cretT08eU5edF0rC0uPerInThe3xamp1e"
+    …
 ```
 
-Now we use a token created by the service at https://jwt.io/. We copy the JWT from the box in the left ("Encoded") column and send it in the `Authorization` header:
+**Note:** For production setups we recommend RSA based signatures.
+
+Now we go to https://jwt.io/ and fill our secret key into the field labeled "VERIFY SIGNATURE" in the right ("Decoded") column.
+
+Then we use a token created by the service. We copy the JWT from the box in the left ("Encoded") column and send it in the `Authorization` header:
 
 ```sh
-curl -i -H "Authorization: Bearer ey..." "localhost:8080/private/headers"
+curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
 HTTP/1.1 200 OK
+…
 
 {
   "headers": {
@@ -71,8 +75,7 @@ To send request headers upstream to the backend, we have to add some lines to th
 
 ```hcl
       backend {
-        origin = "https://httpbin.org/"
-        path = "/**"
+        …
         request_headers = {
           x-foo = "Bar"
         }
@@ -82,8 +85,9 @@ To send request headers upstream to the backend, we have to add some lines to th
 httpbin's `/headers` endpoint reflects the sent request headers. So we can see that the new header was actually sent.
 
 ```sh
-curl -i -H "Authorization: Bearer ey..." "localhost:8080/private/headers"
+curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
 HTTP/1.1 200 OK
+…
 
 {
   "headers": {
@@ -104,14 +108,17 @@ E.g., the `sub` claim of the "JWTToken" JWT access control is stored in `req.ctx
 We can reference this claim as the value of a request header:
 
 ```hcl
+        …
         request_headers = {
           x-jwt-sub = req.ctx.JWTToken.sub
         }
+        …
 ```
 
 ```sh
-curl -i -H "Authorization: Bearer ey..." "localhost:8080/private/headers"
+curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
 HTTP/1.1 200 OK
+…
 
 {
   "headers": {

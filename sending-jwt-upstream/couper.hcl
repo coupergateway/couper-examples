@@ -2,9 +2,9 @@ server "secured-api" {
   access_control = ["JWTToken"]
   api {
     endpoint "/private/**" {
+      path = "/**"
       backend {
         origin = "https://httpbin.org/"
-        path = "/**"
         request_headers = {
           x-jwt-sub = req.ctx.JWTToken.sub
         }
@@ -16,7 +16,7 @@ server "secured-api" {
 definitions {
   jwt "JWTToken" {
     header = "Authorization"
-    signature_algorithm = "RS256"
-    key_file = "pubkey.pem"
+    signature_algorithm = "HS256"
+    key = "y0urS3cretT08eU5edF0rC0uPerInThe3xamp1e"
   }
 }
