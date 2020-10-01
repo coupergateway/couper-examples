@@ -2,9 +2,9 @@
 
 Extending the example [JWT Access Control](/jwt-access-control/README.md) we now want to send certain JWT claims to the backend protected by Couper's access control.
 
-In the following example we use tokens created by https://jwt.io/.
-
-First, we take the configuration file from the "JWT Access Control" example:
+In the following example we use tokens created by https://jwt.io/
+which provides a handy service to create tokens. Its default setting
+for algorithm is `HS256`. So we use that for our Couper configuration:
 
 ```hcl
 server "secured-api" {
@@ -17,32 +17,15 @@ server "secured-api" {
       }
     }
   }
-
 }
 
 definitions {
   jwt "JWTToken" {
     header = "Authorization"
-    signature_algorithm = "RS256"
-    key = <<EOF
------BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGSd+sSTss2uOuVJKpumpFAaml
-t1CWLMTAZNAabF71Ur0P6u833RhAIjXDSA/QeVitzvqvCZpNtbOJVegaREqLMJqv
-FOUkFdLNRP3f9XjYFFvubo09tcjX6oGEREKDqLG2MfZ2Z8LVzuJc6SwZMgVFk/63
-rdAOci3W9u3zOSGj4QIDAQAB
------END PUBLIC KEY-----
-        EOF
-  }
-}
-```
-
-https://jwt.io/ provides a handy service to create tokens. Its default setting for algorithm is HS256. So we modify the couper configuration like this:
-
-```hcl
-    …
     signature_algorithm = "HS256"
     key = "y0urS3cretT08eU5edF0rC0uPerInThe3xamp1e"
-    …
+  }
+}
 ```
 
 **Note:** For production setups we recommend RSA based signatures.
@@ -67,7 +50,7 @@ HTTP/1.1 200 OK
 }
 ```
 
-Looks ok, we got access to the protected backend. And note that the `Authorization` header was consumed by Couper. It wasn't sent to the backend.
+Looks good, we got access to the protected backend. And note that the `Authorization` header was consumed by Couper. It wasn't sent to the backend.
 
 ## Send request headers upstream
 
@@ -82,7 +65,7 @@ To send request headers upstream to the backend, we have to add some lines to th
       }
 ```
 
-httpbin's `/headers` endpoint reflects the sent request headers. So we can see that the new header was actually sent.
+[httpbin's](https://httpbin.org/) `/headers` endpoint reflects the sent request headers. So we can see that the new header was actually sent.
 
 ```sh
 curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
