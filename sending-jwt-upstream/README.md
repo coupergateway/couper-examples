@@ -2,9 +2,10 @@
 
 Extending the example [JWT Access Control](/jwt-access-control/README.md) we now want to send certain JWT claims to the backend protected by Couper's access control.
 
-In the following example we use tokens created by https://jwt.io/
-which provides a handy service to create tokens. Its default setting
-for algorithm is `HS256`. So we use that for our Couper configuration:
+In the following example, we use tokens created by https://jwt.io/,
+which provides a handy service to create tokens. Its default setting,
+it uses `HS256` as the signing algorithm. So we use that for our 
+Couper configuration:
 
 ```hcl
 server "secured-api" {
@@ -65,7 +66,7 @@ To send request headers upstream to the backend, we have to add some lines to th
       }
 ```
 
-[httpbin's](https://httpbin.org/) `/headers` endpoint reflects the sent request headers. So we can see that the new header was actually sent.
+[httpbin's](https://httpbin.org/) `/headers` endpoint reflects the request headers it has received. So we can see that the new header was actually sent.
 
 ```sh
 curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
