@@ -1,6 +1,6 @@
 # Couper Example Collection
 
-[Couper](https://couper.io) is designed to support developers
+[Couper](https://github.com/avenga/couper) is designed to support developers
 building and operating API-driven Web projects by offering security
 and observability functionality in a frontend gateway
 component.
