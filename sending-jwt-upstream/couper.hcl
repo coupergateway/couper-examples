@@ -5,7 +5,7 @@ server "secured-api" {
       path = "/**"
       backend {
         origin = "https://httpbin.org/"
-        request_headers = {
+        set_request_headers = {
           x-jwt-sub = req.ctx.JWTToken.sub
         }
       }

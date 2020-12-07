@@ -14,10 +14,10 @@ server "my-api" {
         //origin = env.HTTPBIN_ORIGIN
 
         // uncomment to set headers on the way
-        //request_headers = {
+        //set_request_headers = {
         //  x-foo = "request"
         //}
-        //response_headers = {
+        //set_response_headers = {
         //  x-bar = "response"
         //}
       }
