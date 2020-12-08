@@ -60,7 +60,7 @@ To send request headers upstream to the backend, we have to add some lines to th
 ```hcl
       backend {
         …
-        request_headers = {
+        set_request_headers = {
           x-foo = "Bar"
         }
       }
@@ -93,7 +93,7 @@ We can reference this claim as the value of a request header:
 
 ```hcl
         …
-        request_headers = {
+        set_request_headers = {
           x-jwt-sub = req.ctx.JWTToken.sub
         }
         …
@@ -117,5 +117,5 @@ HTTP/1.1 200 OK
 ```
 The value of `X-Jwt-Sub` is the same as the `sub` claim of the JWT created at https://jwt.io/.
 
-To send different claim values upstream, we can adapt the `request_headers` in the configuration file. Note that **all** claims, not just the standard claims, are stored in `req.ctx.…`
+To send different claim values upstream, we can adapt the `set_request_headers` in the configuration file. Note that **all** claims, not just the standard claims, are stored in `req.ctx.…`
 To add different claims to the JWT, we have to modify the JSON in the "PAYLOAD" box in the right ("Decoded") column.
