@@ -133,17 +133,20 @@ $ docker run --rm \
 avenga/couper
 ```
 
-## Linking Docker Containers
+## Linking Docker Containers on your computer
 
-Be aware that `localhost` in a Docker container is not the same thing
-as `localhost` on your host computer. If both Couper and httpbin are
-running in containers, you should `--link` one to the other. In that
-case you can simply make up a hostname. But as the containers are then
+Developers might want to run the backend and Couper both in
+containers on their computer. Be aware that `localhost` in a Docker
+container is not the same thing as `localhost` on your host computer.
+
+Use `docker run --link` parameter to allow Couper to reach the
+backend in your other container. In this case you can simply make up
+a hostname. But as the containers are then
 talking directly to each other, you have to use the internal service
 ports.
 
-Let's start a local instance of `httpbin` running at
-`http://localhost:3000`. It needs a name to be linkable.
+Let's start a local instance of `httpbin` in a container. It needs a
+name to be linkable:
 
 ```
 $ docker run --rm --name httpbin kennethreitz/httpbin
