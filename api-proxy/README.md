@@ -93,9 +93,9 @@ Notice how host and path in the `curl` command differ from the `url` in the resp
 
 Oftentimes the address of the upstream service to use depends on the
 environment/stage of the setup. For example, in a testing environment
-the backend may run at `http://backend:9000`. Whereas in a
+the backend may run locally, e.g. at `http://backend:9000`. Whereas in a
 production environment the same service runs at
-`https://example.com`. Of course, we don't want to have different
+`https://httpbin.org`. Of course, we don't want to have different
 Couper configurations for every environment – that would be error
 prone.
 
@@ -105,7 +105,7 @@ configurable with environment variables.
 To configure the actual origin of our service, we decide to use the following environment variable:
 
 ```
-BACKEND_ORIGIN=http://backend:9000
+BACKEND_ORIGIN=https://httpbin.org
 ```
 
 Now we can change the Couper configuration to read the origin host from that variable:
@@ -129,7 +129,7 @@ Or you simply pass them as command line arguments when starting the container:
 $ docker run --rm \
 -p 8080:8080 \
 -v "$(pwd)":/conf \
--e BACKEND_ORIGIN=http://backend:9000 \
+-e BACKEND_ORIGIN=https://httpbin.org \
 avenga/couper
 ```
 
