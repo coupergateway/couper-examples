@@ -91,23 +91,21 @@ Notice how host and path in the `curl` command differ from the `url` in the resp
 
 ## Environment Variables
 
-Often times the upstream service to use depends on the environment
-your setup runs in. For example, on your local computer your backend
-may run on `http://localhost:3000`. Whereas in a production environment
-the same service runs at `https://backend:8080`. Of course, we don't want to have _different_ Couper configurations for every environment – that would be error prone.
+Oftentimes the address of the upstream service to use depends on the
+environment/stage of the setup. For example, in a testing environment
+the backend may run locally, e.g. at `http://backend:9000`. Whereas in a
+production environment the same service runs at
+`https://httpbin.org`. Of course, we don't want to have different
+Couper configurations for every environment – that would be error
+prone.
 
-A widely used approach is making the settings that actually differ configurable with environment variables.
-
-Let's pretend, we had a local development version of `httpbin` running at `http://localhost:3000`. Actually, that's easy to do:
-
-```
-$ docker run --rm -p 3000:80 --name httpbin kennethreitz/httpbin
-```
+A widely used approach is making the settings that actually differ
+configurable with environment variables.
 
 To configure the actual origin of our service, we decide to use the following environment variable:
 
 ```
-HTTPBIN_ORIGIN=http://localhost:3000
+BACKEND_ORIGIN=https://httpbin.org
 ```
 
 Now we can change the Couper configuration to read the origin host from that variable:
@@ -116,48 +114,60 @@ Now we can change the Couper configuration to read the origin host from that var
 …
   endpoint "/example/**" {
     backend {
-      origin = env.HTTPBIN_ORIGIN
+      origin = env.BACKEND_ORIGIN
     }
   }
 …
 ```
 
 There are numerous ways to inject environment variables into docker.
-You can set them in your `docker-compose.yaml`, define `ConfigMap`
-resourcen in Kubernetes or simply pass them as command line
-arguments:
+You can set them in your `docker-compose.yaml`, define them in your
+Kubernetes `Deployment` or read them from a `ConfigMap`.
+Or you simply pass them as command line arguments when starting the container:
 
 ```sh
 $ docker run --rm \
 -p 8080:8080 \
 -v "$(pwd)":/conf \
--e HTTPBIN_ORIGIN=http://localhost:3000 \
+-e BACKEND_ORIGIN=https://httpbin.org \
 avenga/couper
 ```
 
-## Linking Docker Containers
+## Linking Docker Containers on your computer
 
-Be aware that `localhost` in a Docker container is not the same thing
-as `localhost` on your host computer. If both Couper and httpbin are
-running in containers, you should `--link` one to the other. In that
-case you can simply make up a hostname. But as the containers are then
+Developers might want to run the backend and Couper both in
+containers on their computer. Be aware that `localhost` in a Docker
+container is not the same thing as `localhost` on your host computer.
+
+Use `docker run --link` parameter to allow Couper to reach the
+backend in your other container. In this case you can simply make up
+a hostname. But as the containers are then
 talking directly to each other, you have to use the internal service
 ports.
 
-This command starts Couper linked to a local `httpbin` container:
+Let's start a local instance of `httpbin` in a container. It needs a
+name to be linkable:
+
+```
+$ docker run --rm --name httpbin kennethreitz/httpbin
+```
+
+Note, that we don't need to exported a port (`-p`) here.
+
+Now this command starts Couper linked to our local `httpbin` container:
 
 ```sh
 $ docker run --rm \
 -p 8080:8080 \
 -v "$(pwd)":/conf \
 --link httpbin:httpbin \
--e HTTPBIN_ORIGIN=http://httpbin:80 \
+-e BACKEND_ORIGIN=http://httpbin:80 \
 avenga/couper
 ```
 
 Docker automatically sets some environment variables for linked
 containers. With that in mind we could omit defining our own
-environment variable (`HTTPBIN_ORIGIN`) and rely on Docker's instead:
+environment variable (`BACKEND_ORIGIN`) and rely on Docker's instead:
 
 ```hcl
 …
