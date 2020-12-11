@@ -2,6 +2,7 @@
 
 This type of validation is meant to work with upstream api endpoints. The basic use-case is to prevent invalid requests
 and responses between Couper and its backend origin respectively. This could be a requirement of the origin api or yourself.
+Couper uses the [OpenAPI 3 standard](https://swagger.io/specification/) to load the definitions from a given document.
 
 ## Configuration
 
