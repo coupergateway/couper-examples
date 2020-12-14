@@ -35,33 +35,26 @@ paths:
           description: OK
 ```
 
-Now we can define an api endpoint on `/validate` for example which validates the backend origin request with the path
-`/anything`. That's the thing here, `/validate` is the client path while accessing Couper's endpoint where the backend
-replaces to the configured `/anything` path and this resulting request gets validated before Couper sends out the
-modified request. Here is the related configuration:
+Here is the full hcl configuration:
 
 ```hcl
 server "my-api" {
   api {
-    backend = "validated-origin"
-
     endpoint "/validate" {
-      path = "/anything"
-    }
-  }
-}
-
-definitions {
-  backend "validated-origin" {
-    origin = "https://httpbin.org"
-    openapi {
-      file = "openapi.yaml"
+      backend {
+        origin = "https://httpbin.org"
+        path = "/anything"
+        openapi {
+          file = "openapi.yaml"
+        }
+      }
     }
   }
 }
 ```
 
-That's basically all, but we could refine the configuration to trigger a validation error. Let's add a requirement for
+That's basically all, and a call to [localhost:8080/validate](http://localhost:8080/validate) will give you a Status OK response.
+We could refine the configuration to trigger a validation error. Let's add a requirement for
 a specific query parameter `show_env <string>` (`openapi_refined.yaml`): 
 
 ```yaml

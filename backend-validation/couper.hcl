@@ -1,21 +1,14 @@
 server "my-api" {
   api {
-    backend = "validated-origin"
-
     endpoint "/validate" {
-      path = "/anything"
-      set_query_params = {
-        show_env = "true"
+      backend {
+        origin = "https://httpbin.org"
+        path = "/anything"
+        openapi {
+          file = "openapi.yaml"
+          # file = "openapi_refined.yaml"
+        }
       }
-    }
-  }
-}
-
-definitions {
-  backend "validated-origin" {
-    origin = "https://httpbin.org"
-    openapi {
-      file = "openapi_refined.yaml"
     }
   }
 }
