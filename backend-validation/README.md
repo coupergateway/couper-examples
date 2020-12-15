@@ -1,7 +1,7 @@
 # Backend Validation
 
-This type of validation is meant to work with upstream api endpoints. The basic use-case is to prevent invalid requests
-and responses between Couper and its backend origin respectively. This could be a requirement of the origin api or yourself.
+This type of validation is meant to work with upstream API endpoints. The basic use-case is to prevent invalid requests
+and responses between Couper and its backend origin respectively. This could be a requirement of the origin API or yourself.
 Couper uses the [OpenAPI 3 standard](https://www.openapis.org/) to load the definitions from a given document.
 
 ## Configuration
@@ -13,10 +13,10 @@ A simple backend configuration with validation looks like this:
 
 ```hcl
 backend "validated-origin" {
-    origin = "https://httpbin.org"
-    openapi {
-      file = "openapi.yaml"
-    }
+  origin = "https://httpbin.org"
+  openapi {
+    file = "openapi.yaml"
+  }
 }
 ```
 
@@ -35,7 +35,7 @@ paths:
           description: OK
 ```
 
-Here is the full hcl configuration:
+Here is the full Couper configuration:
 
 ```hcl
 server "my-api" {
@@ -53,7 +53,7 @@ server "my-api" {
 }
 ```
 
-That's basically all, and a call to [localhost:8080/validate](http://localhost:8080/validate) will give you a Status OK response.
+That's basically all, and a call to [localhost:8080/validate](http://localhost:8080/validate) will give you a response with status `200` (OK).
 We could refine the configuration to trigger a validation error. Let's add a requirement for
 a specific query parameter `show_env <string>` (`openapi_refined.yaml`): 
 
@@ -76,8 +76,13 @@ paths:
           description: OK
 ```
 
-The result should be a status-code 400 if you are accessing [localhost:8080/validate](http://localhost:8080/validate) and the related log
-entry should look like this: `request validation: Parameter 'show_env' in query has an error: must have a value`.
-Providing the required query param results in an OK response: [http://localhost:8080/validate?show_env=true](http://localhost:8080/validate?show_env=true).
+The result should have status code `400` if you are accessing [localhost:8080/validate](http://localhost:8080/validate) and the related log
+entry should look like this:
+
+```
+request validation: Parameter 'show_env' in query has an error: must have a value
+```
+
+Providing the required query parameter will fix the request: [http://localhost:8080/validate?show_env=true](http://localhost:8080/validate?show_env=true).
 
 If you have any questions or feedback you are welcome to start a [discussion](https://github.com/avenga/couper/discussions).
