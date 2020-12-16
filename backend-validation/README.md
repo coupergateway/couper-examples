@@ -55,7 +55,7 @@ server "my-api" {
 
 That's basically all, and a call to [localhost:8080/validate](http://localhost:8080/validate) will give you a response with status `200` (OK).
 We could refine the configuration to trigger a validation error. Let's add a requirement for
-a specific query parameter `show_env <string>` (`openapi_refined.yaml`): 
+a specific `string` query parameter named `show_env` (`openapi_refined.yaml`): 
 
 ```yaml
 openapi: 3.0.1
