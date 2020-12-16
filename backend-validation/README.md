@@ -85,4 +85,22 @@ request validation: Parameter 'show_env' in query has an error: must have a valu
 
 Providing the required query parameter will fix the request: [http://localhost:8080/validate?show_env=true](http://localhost:8080/validate?show_env=true).
 
-If you have any questions or feedback you are welcome to start a [discussion](https://github.com/avenga/couper/discussions).
+You should see a json object from the previous response which we will validate partially with the following addition to the openapi file:
+
+```yaml
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            url:
+              type: string
+              description: 'upstream url'
+          required:
+            - url
+```
+
+Now the upstream payload must contain a json object with a `url` property. To try out just add some properties and/or edit the `required` list.

@@ -15,3 +15,14 @@ paths:
       responses:
         200:
           description: OK
+          # last part from our example, response validation:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: 'upstream url'
+                required:
+                  - url

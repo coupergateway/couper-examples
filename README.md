@@ -6,6 +6,7 @@ and observability functionality in a frontend gateway
 component.
 
 This collection of examples highlights Couper's features with small, ready-to-use examples.
+If you have any questions or feedback you are welcome to start a [discussion](https://github.com/avenga/couper/discussions).
 
 ## Getting started
 
