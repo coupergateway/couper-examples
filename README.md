@@ -55,3 +55,5 @@ Press `CTRL+c` to stop the container.
 ### [JWT Access Control](jwt-access-control/README.md)
 
 ### [Sending JWT Claims Upstream](sending-jwt-upstream/README.md)
+
+### [Variable: `path_params`](path-params/README.md)
