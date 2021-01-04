@@ -6,14 +6,15 @@ and observability functionality in a frontend gateway
 component.
 
 This collection of examples highlights Couper's features with small, ready-to-use examples.
+If you have any questions or feedback you are welcome to start a [discussion](https://github.com/avenga/couper/discussions).
 
 ## Getting started
 
 To run the examples you need Couper. It is available as _docker
 image_ from [Docker Hub](https://hub.docker.com/r/avenga/couper)
 
-Of course you need a working [Docker](https://www.docker.com/) setup on your
-computer.
+This requires a working [Docker](https://www.docker.com/) setup on your
+computer. Please visit the [get started guide](https://docs.docker.com/get-started/) to get prepared.
 
 To download/install Couper, open a terminal and execute:
 
@@ -31,10 +32,9 @@ $ cd simple-fileserving
 $ docker run --rm -p 8080:8080 -v "$(pwd)":/conf avenga/couper
 
 {"addr":"0.0.0.0:8080","level":"info","message":"couper gateway is serving","timestamp":"2020-08-27T16:39:18Z","type":"couper"}
-…
 ```
 
-Now Couper is serving on your computer's port 8080. Point your
+Now Couper is serving on your computer's port *8080*. Point your
 browser or `curl` to [`localhost:8080`](http://localhost:8080/) to see what's going on.
 
 Press `CTRL+c` to stop the container.
@@ -57,3 +57,5 @@ Press `CTRL+c` to stop the container.
 ### [Sending JWT Claims Upstream](sending-jwt-upstream/README.md)
 
 ### [Variable: `path_params`](path-params/README.md)
+
+### [Backend Validation](backend-validation/README.md)

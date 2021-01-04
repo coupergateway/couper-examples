@@ -1,0 +1,28 @@
+openapi: 3.0.1
+info:
+  description: 'basic schema to show some couper validation cases'
+  title: 'Couper example api'
+  version: '0.3'
+paths:
+  /anything:
+    get:
+      parameters:
+      - in: query
+        name: show_env
+        schema:
+          type: string
+        required: true
+      responses:
+        200:
+          description: OK
+          # last part from our example, response validation:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: 'upstream url'
+                required:
+                  - url

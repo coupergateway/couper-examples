@@ -1,0 +1,11 @@
+openapi: 3.0.1
+info:
+  description: 'basic schema to show some couper validation cases'
+  title: 'Couper example api'
+  version: '0.3'
+paths:
+  /anything:
+    get:
+      responses:
+        200:
+          description: OK
