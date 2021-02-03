@@ -27,6 +27,9 @@ rdAOci3W9u3zOSGj4QIDAQAB
         //key_file = "pub.pem"
         // … or from env
         // key = env.JWT_PUB_KEY
-
+        required_claims = ["iss"]
+        claims = {
+            sub = "some_user"
+        }
     }
 }
