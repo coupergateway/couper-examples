@@ -278,3 +278,21 @@ large inline `key`.
 
 The `key` and `key_file` attributes are mutually exclusive. But we
 need to define one of them.
+
+## More JWT claims checks
+
+To ensure that a request passes this access control, if a specific claim is present in the JWT (e.g. `iss` meaning "issuer"), we add to the `jwt` block:
+
+```hcl
+required_claims = ["iss"]
+```
+
+A JWT without an `iss` claim, will now be rejected.
+
+If we additionally want to specify a value for a required claim (e.g. `"some_user"` for the `sub` claim), we add:
+
+```hcl
+claims = {
+  sub = "some_user"
+}
+```
