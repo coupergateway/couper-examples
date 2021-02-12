@@ -29,7 +29,7 @@ definitions {
 }
 ```
 
-**Note:** For production setups we recommend RSA based signatures.
+**Note:** For simplicity we use HS256 here. For production setups we recommend RSA based signatures using a private key for JWT signing and a public key for signature validation.
 
 Now we go to https://jwt.io/ and fill our secret key into the field labeled "VERIFY SIGNATURE" in the right ("Decoded") column.
 
