@@ -29,7 +29,7 @@ definitions {
 }
 ```
 
-**Note:** For production setups we recommend RSA based signatures.
+**Note:** For simplicity we use HS256 here. For production setups we recommend RSA based signatures using a private key for JWT signing and a public key for signature validation.
 
 Now we go to https://jwt.io/ and fill our secret key into the field labeled "VERIFY SIGNATURE" in the right ("Decoded") column.
 
@@ -119,3 +119,33 @@ The value of `X-Jwt-Sub` is the same as the `sub` claim of the JWT created at ht
 
 To send different claim values upstream, we can adapt the `set_request_headers` in the configuration file. Note that **all** claims, not just the standard claims, are stored in `req.ctx.…`
 To add different claims to the JWT, we have to modify the JSON in the "PAYLOAD" box in the right ("Decoded") column.
+
+To send a JSON representation of all the JWT claims upstream, we use the `json_encode()` function:
+
+```hcl
+        …
+        set_request_headers = {
+          x-jwt-sub = req.ctx.JWTToken.sub
+          x-jwt = json_encode(req.ctx.JWTToken)
+        }
+        …
+```
+
+
+```sh
+curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
+HTTP/1.1 200 OK
+…
+
+{
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip",
+    "Host": "httpbin.org",
+    "User-Agent": "curl/7.29.0",
+    "X-Amzn-Trace-Id": "Root=1-5f71e855-c997a7e42a272c6304b6f9f3",
+    "X-Jwt": "{\"iat\":1516239022,\"name\":\"John Doe\",\"sub\":\"1234567890\"}",
+    "X-Jwt-Sub": "1234567890"
+  }
+}
+```
