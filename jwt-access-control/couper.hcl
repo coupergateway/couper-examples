@@ -2,9 +2,11 @@ server "secured-api" {
   access_control = ["JWTToken"]
   api {
     endpoint "/private/**" {
-      path = "/**"
-      backend {
-        origin = "https://httpbin.org/"
+      proxy {
+        path = "/**"
+        backend {
+          origin = "https://httpbin.org/"
+        }
       }
     }
   }
