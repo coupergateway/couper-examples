@@ -7,21 +7,19 @@ server "my-api" {
 
     // try /example/headers or /example/anything
     endpoint "/example/**" {
-      proxy {
-        path = "/**"
-        backend {
-          origin = "https://httpbin.org"
-          // uncomment to read origin from env:
-          //origin = env.HTTPBIN_ORIGIN
+      path = "/**"
+      backend {
+        origin = "https://httpbin.org"
+        // uncomment to read origin from env:
+        //origin = env.HTTPBIN_ORIGIN
 
-          // uncomment to set headers on the way
-          //set_request_headers = {
-          //  x-foo = "request"
-          //}
-          //set_response_headers = {
-          //  x-bar = "response"
-          //}
-        }
+        // uncomment to set headers on the way
+        //set_request_headers = {
+        //  x-foo = "request"
+        //}
+        //set_response_headers = {
+        //  x-bar = "response"
+        //}
       }
     }
   }

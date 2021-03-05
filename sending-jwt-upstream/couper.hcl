@@ -1,17 +1,13 @@
 server "secured-api" {
   access_control = ["JWTToken"]
-
   api {
     endpoint "/private/**" {
-      proxy {
-        path = "/**"
-        backend {
-          origin = "https://httpbin.org/"
-
-          set_request_headers = {
-            x-jwt-sub = req.ctx.JWTToken.sub
-            x-jwt = json_encode(req.ctx.JWTToken)
-          }
+      path = "/**"
+      backend {
+        origin = "https://httpbin.org/"
+        set_request_headers = {
+          x-jwt-sub = req.ctx.JWTToken.sub
+          x-jwt = json_encode(req.ctx.JWTToken)
         }
       }
     }
