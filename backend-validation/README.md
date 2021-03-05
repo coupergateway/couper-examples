@@ -41,11 +41,13 @@ Here is the full Couper configuration:
 server "my-api" {
   api {
     endpoint "/validate" {
-      backend {
-        origin = "https://httpbin.org"
-        path = "/anything"
-        openapi {
-          file = "openapi.yaml"
+      proxy {
+        backend {
+          origin = "https://httpbin.org"
+          path = "/anything"
+          openapi {
+            file = "openapi.yaml"
+          }
         }
       }
     }

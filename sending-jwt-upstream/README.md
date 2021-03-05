@@ -13,8 +13,10 @@ server "secured-api" {
   api {
     endpoint "/private/**" {
       path = "/**"
-      backend {
-        origin = "https://httpbin.org/"
+      proxy {
+        backend {
+          origin = "https://httpbin.org/"
+        }
       }
     }
   }
