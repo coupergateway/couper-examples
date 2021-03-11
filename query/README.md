@@ -17,10 +17,12 @@ The `remove_query_params` removes query parameters from the upstream request.
 server "remove-query-params-example" {
   api {
     endpoint "/anything" {
-      backend {
-        remove_query_params = ["cat", "dog"]
+      proxy {
+        backend {
+          remove_query_params = ["cat", "dog"]
 
-        origin = "https://httpbin.org"
+          origin = "https://httpbin.org"
+        }
       }
     }
   }
@@ -38,12 +40,14 @@ The `set_query_params` sets/overrides query parameters in the upstream request.
 server "remove-query-params-example" {
   api {
     endpoint "/anything" {
-      backend {
-        set_query_params = {
-          categories = ["animals", "birds"]
-        }
+      proxy {
+        backend {
+          set_query_params = {
+            categories = ["animals", "birds"]
+          }
 
-        origin = "https://httpbin.org"
+          origin = "https://httpbin.org"
+        }
       }
     }
   }
@@ -64,12 +68,14 @@ The `add_query_params` appends query parameters in the upstream request.
 server "remove-query-params-example" {
   api {
     endpoint "/anything" {
-      backend {
-        add_query_params = {
-          categories = "animals"
-        }
+      proxy {
+        backend {
+          add_query_params = {
+            categories = "animals"
+          }
 
-        origin = "https://httpbin.org"
+          origin = "https://httpbin.org"
+        }
       }
     }
   }

@@ -80,9 +80,11 @@ example](/api-proxy/README.md) we have used
 server "secured-api" {
   api {
     endpoint "/private/**" {
-      backend {
-        origin = "https://httpbin.org/"
-        path = "/**"
+      proxy {
+        backend {
+          origin = "https://httpbin.org/"
+          path = "/**"
+        }
       }
     }
   }

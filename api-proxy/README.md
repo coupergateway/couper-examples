@@ -22,8 +22,10 @@ server "my-api" {
   api {
     endpoint "/example/**" {
       path = "/**"
-      backend {
-        origin = "https://httpbin.org"
+      proxy {
+        backend {
+          origin = "https://httpbin.org"
+        }
       }
     }
   }
@@ -113,8 +115,10 @@ Now we can change the Couper configuration to read the origin host from that var
 ```hcl
 …
   endpoint "/example/**" {
-    backend {
-      origin = env.BACKEND_ORIGIN
+    proxy {
+      backend {
+        origin = env.BACKEND_ORIGIN
+      }
     }
   }
 …
@@ -172,8 +176,10 @@ environment variable (`BACKEND_ORIGIN`) and rely on Docker's instead:
 ```hcl
 …
   endpoint "/example/**" {
-    backend {
-      origin = "http://${env.HTTPBIN_PORT_80_TCP_ADDR}:80"
+    proxy {
+      backend {
+        origin = "http://${env.HTTPBIN_PORT_80_TCP_ADDR}:80"
+      }
     }
   }
 …

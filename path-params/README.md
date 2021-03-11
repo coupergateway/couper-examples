@@ -10,9 +10,11 @@ An enpoint configured with `/my/{category}/view` will make the denoted part acce
 server "path-params-example" {
   api {
     endpoint "/my/{category}/view" {
-      backend {
-        path = "/${req.path_params.category}"
-        origin = "https://httpbin.org"
+      proxy {
+        backend {
+          path = "/${req.path_params.category}"
+          origin = "https://httpbin.org"
+        }
       }
     }
   }
