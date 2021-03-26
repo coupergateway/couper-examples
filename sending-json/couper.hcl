@@ -6,6 +6,11 @@ server "api" {
         param1 = 1
         param2 = "t,w:o"
       }
+      # or json-style
+#      json_body = {
+#        "param1": 1,
+#        "param2": "t,w:o"
+#      }
     }
   }
   endpoint "/response" {

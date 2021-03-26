@@ -19,6 +19,15 @@ server "api" {
 }
 ```
 
+BTW, you can also specify the object in JSON style
+
+```hcl
+      json_body = {
+        "param1": 1,
+        "param2": "t,w:o"
+      }
+```
+
 Call couper with
 
 ```
