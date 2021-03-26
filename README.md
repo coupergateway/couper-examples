@@ -56,6 +56,8 @@ Press `CTRL+c` to stop the container.
 
 ### [Sending JWT Claims Upstream](sending-jwt-upstream/README.md)
 
+### [Creating JWT](creating-jwt/README.md)
+
 ### [Variable: `path_params`](path-params/README.md)
 
 ### [Backend Validation](backend-validation/README.md)
