@@ -1,7 +1,7 @@
 # Sending JSON Content
 
 The `json_body` attribute sets the body of either `request` or `response`.
-Valid value types are boolean, number, string, object or tuple.
+Valid value types are null, boolean, number, string, object or tuple.
 `json_body` also sets a default value of `application/json` for the
 `Content-Type` header.
 
