@@ -50,6 +50,8 @@ Press `CTRL+c` to stop the container.
 
 ### [Proxy API Requests](api-proxy/README.md)
 
+### [Explicit Requests](explicit-requests/README.md)
+
 ### [SPA Serving](spa-serving/README.md)
 
 ### [JWT Access Control](jwt-access-control/README.md)
