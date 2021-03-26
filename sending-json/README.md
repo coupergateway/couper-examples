@@ -34,7 +34,7 @@ Call couper with
 curl -s http://localhost:8080/request | jq
 ```
 
-The result is simular to
+The result is similar to
 
 ```json
 {
@@ -79,7 +79,7 @@ Call couper with
 curl -s http://localhost:8080/response | jq
 ```
 
-The result is simular to
+The result is similar to
 
 ```json
 {

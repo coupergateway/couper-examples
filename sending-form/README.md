@@ -25,7 +25,7 @@ Call couper with
 curl -s http://localhost:8080/form | jq
 ```
 
-The result is simular to
+The result is similar to
 
 ```json
 {
