@@ -62,4 +62,6 @@ Press `CTRL+c` to stop the container.
 
 ### [Query Parameter](query/README.md)
 
-### [Sending JSON or Form Content](json_body-form_body/README.md)
+### [Sending JSON Content](sending-json/README.md)
+
+### [Sending Form Content](sending-form/README.md)
