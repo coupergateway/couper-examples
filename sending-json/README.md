@@ -19,15 +19,6 @@ server "json" {
 }
 ```
 
-BTW, you can also specify the object in JSON style within HCL:
-
-```hcl
-      json_body = {
-        "param1": 1,
-        "param2": "t,w:o"
-      }
-```
-
 Call Couper with
 
 ```shell
@@ -58,6 +49,17 @@ The result is similar to
 }
 ```
 
+BTW, you can also specify the object in JSON style within HCL:
+
+```hcl
+json_body = {
+  "param1": 1,
+  "param2": "t,w:o"
+}
+```
+
+---
+
 Here is an example of an `endpoint` using `json_body` to set the response body:
 
 ```hcl
@@ -86,6 +88,8 @@ The result is similar to
 }
 ```
 
+---
+
 If you need to send a more specific mime type than plain JSON, e.g. a [JSON API Message](https://jsonapi.org/), you can still use `json_body` and just override the header:
 
 ```hcl
@@ -104,6 +108,8 @@ endpoint "/jsonapi" {
   }
 }
 ```
+
+---
 
 `json_body` is convenient short cut for explicitly defining the `Content-Type`
 header and serializing a JSON string with `json_encode()`. If you would want to do it manually, it would read like this:
