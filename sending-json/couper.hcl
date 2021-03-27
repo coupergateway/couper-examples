@@ -1,4 +1,4 @@
-server "api" {
+server "json" {
   endpoint "/request" {
     request {
       url = "https://httpbin.org/anything"
@@ -7,12 +7,13 @@ server "api" {
         param2 = "t,w:o"
       }
       # or json-style
-#      json_body = {
-#        "param1": 1,
-#        "param2": "t,w:o"
-#      }
+      # json_body = {
+      #   "param1": 1,
+      #   "param2": "t,w:o"
+      # }
     }
   }
+
   endpoint "/response" {
     response {
       json_body = {
