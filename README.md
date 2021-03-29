@@ -50,7 +50,9 @@ Press `CTRL+c` to stop the container.
 
 ### [Proxy API Requests](api-proxy/README.md)
 
-### [Explicit Requests](explicit-requests/README.md)
+### [Custom Requests](custom-requests/README.md)
+
+### [Multiple Requests](multiple-requests/README.md)
 
 ### [SPA Serving](spa-serving/README.md)
 
