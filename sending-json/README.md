@@ -111,8 +111,8 @@ endpoint "/jsonapi" {
 
 ---
 
-`json_body` is convenient short cut for explicitly defining the `Content-Type`
-header and serializing a JSON string with `json_encode()`. If you would want to do it manually, it would read like this:
+`json_body` is a convenient short cut for explicitly defining the `Content-Type`
+header and serializing a JSON string with `json_encode()`. If you wanted to do it manually, it would read like this:
 
 ```hcl
 endpoint "/manual" {
