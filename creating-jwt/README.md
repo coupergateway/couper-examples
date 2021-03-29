@@ -48,9 +48,9 @@ the file containing the private key (priv_key.pem), the time-to-live of the
 token and some default claims. The `unixtime()` function returns the current
 UNIX timestamp in seconds as a number.
 
-Call couper with
+Call Couper with
 
-```
+```shell
 $ curl -s --data-urlencode "username=john.doe" http://localhost:8080/token | jq
 ```
 
