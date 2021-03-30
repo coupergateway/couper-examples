@@ -1,13 +1,49 @@
 # Custom Requests
 
-Custom requests m
+In contrast to proxy requests (`proxy {}` blocks), custom requests
+(`request {}` blocks) are not related to the client request. They have to be
+configured explicitly:
 
 ```hcl
-    endpoint "/headers" {
+    endpoint "/headers1" {
       request {
         url = "https://httpbin.org/headers"
         headers = {
-          x-foo = "bar"
+          x-foo = "foo"
+        }
+      }
+      // use the response to the request
+    }
+```
+
+The request calling the headers endpoint at httpbin.org has no label. So the
+response from the request to https://httpbin.org/headers is passed to the
+client.
+
+Call Couper
+
+```shell
+$ curl -i localhost:8080/headers
+HTTP/1.1 200 OK
+...
+
+{
+  "headers": {
+    "Host": "httpbin.org",
+    "X-Amzn-Trace-Id": "Root=1-60635663-4c2df9f51a7be9f73a48e648",
+    "X-Foo": "foo"
+  }
+}
+```
+
+The response can be manipulated, e.g. by adding an additional header:
+
+```hcl
+    endpoint "/headers2" {
+      request {
+        url = "https://httpbin.org/headers"
+        headers = {
+          x-bar = "bar"
         }
       }
       // use the response to the request, and add another header
@@ -16,10 +52,6 @@ Custom requests m
       }
     }
 ```
-
-The request calling the headers endpoint at httpbin.org has no label. So the
-response from the request to https://httpbin.org/headers is passed to the
-client - with an additional header.
 
 Call Couper
 
@@ -32,8 +64,8 @@ X-Additional-Status: 200
 {
   "headers": {
     "Host": "httpbin.org",
-    "X-Amzn-Trace-Id": "Root=1-6061c3ef-2f5e145d5406ced93426b797",
-    "X-Foo": "bar"
+    "X-Amzn-Trace-Id": "Root=1-6063567b-63a04f414e9a263d041c5848",
+    "X-Bar": "bar"
   }
 }
 ```

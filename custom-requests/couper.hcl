@@ -1,10 +1,20 @@
 server "custom-requests" {
   api {
-    endpoint "/headers" {
+    endpoint "/headers1" {
       request {
         url = "https://httpbin.org/headers"
         headers = {
-          x-foo = "bar"
+          x-foo = "foo"
+        }
+      }
+      // use the response to the request
+    }
+
+    endpoint "/headers2" {
+      request {
+        url = "https://httpbin.org/headers"
+        headers = {
+          x-bar = "bar"
         }
       }
       // use the response to the request, and add another header
