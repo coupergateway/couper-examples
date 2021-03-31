@@ -1,26 +1,24 @@
 # Multiple Requests
 
-You can start several custom requests in one endpoint. From the "first"
-response we only want the `headers` property to be returned, from the "second"
-we use the `status` code.
+You can start several custom requests in one endpoint. In the following example
+we use the JSON body from the "first" and the `status` code from the "second"
+response. The "first" response's `status` code is set as the value of the
+`x-first-status` response header.
 
 ```hcl
     endpoint "/headers" {
       request "first" {
         url = "https://httpbin.org/anything"
-        headers = {
-          x-foo = "bar"
-        }
       }
       request "second" {
-        url = "https://httpbin.org/status/200"
+        url = "https://httpbin.org/status/404"
       }
-      add_response_headers = {
-        x-second-status = beresps.second.status
-      }
-      // with more than one of request or proxy combined, we have to specify a response block:
       response {
-        json_body = beresps.first.json_body.headers
+        status = beresps.second.status
+        headers = {
+          x-first-status = beresps.first.status
+        }
+        json_body = beresps.first.json_body
       }
     }
 ```
@@ -32,13 +30,12 @@ Call Couper
 
 ```shell
 $ curl -i localhost:8080/headers
-HTTP/1.1 200 OK
+HTTP/1.1 404 Not Found
 ...
-Content-Type: application/json
+X-First-Status: 200
 ...
-X-Second-Status: 200
 
-{"Host":"httpbin.org","X-Amzn-Trace-Id":"Root=1-6061c797-1f20fab738225bf70b38fca1","X-Foo":"bar"}
+{"args":{},"data":"","files":{},"form":{},"headers":{"Host":"httpbin.org","X-Amzn-Trace-Id":"Root=1-606453e4-60dce76823525ed11db360f3"},"json":null,"method":"GET","origin":"93.184.216.34","url":"https://httpbin.org/anything"}
 ```
 
 Proxy and custom requests can be combined:
@@ -67,7 +64,7 @@ As the `proxy` block creates a "default" request, you don't have to create a
 
 The request labelled "additional" calls the status endpoint at httpbin.org.
 The resulting status code is set as the value of an `x-additional-status`
-response code.
+response header.
 
 Again, the order of the `proxy` and `request` blocks is irrelevant.
 
@@ -92,7 +89,7 @@ X-Additional-Status: 404
   },
   "json": null,
   "method": "GET",
-  "origin": "87.123.196.76",
+  "origin": "93.184.216.34",
   "url": "https://httpbin.org/anything"
 }
 ```
