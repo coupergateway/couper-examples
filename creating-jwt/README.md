@@ -26,7 +26,7 @@ server "simple-oauth-as" {
 In an endpoint for the path `/token` we use the `json_body` attribute to create
 a JSON response body. The `jwt_sign()` function creates the value for
 the `access_token` property. In order to sign a JWT we need a `jwt_signing_profile` which is configured in the `definitions` block and referenced by the label `myjwt`. 
-`sub`and `aud` add some additional claims to the JWT.
+With the properties `sub` and `aud` we add some additional claims to the JWT.
 
 ```hcl
 ...
