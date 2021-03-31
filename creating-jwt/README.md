@@ -24,9 +24,9 @@ server "simple-oauth-as" {
 ```
 
 In an endpoint for the path `/token` we use the `json_body` attribute to create
-a JSON response body. The `jwt_sign()` function called to create the value for
-the `access_token` property references a `jwt_signing_profile` block with the
-label `myjwt` and provides some claims to be included in the JWT.
+a JSON response body. The `jwt_sign()` function creates the value for
+the `access_token` property. In order to sign a JWT we need a `jwt_signing_profile` which is configured in the `definitions` block and referenced by the label `myjwt`. 
+`sub`and `aud` add some additional claims to the JWT.
 
 ```hcl
 ...
@@ -63,7 +63,7 @@ The response looks similar to
 }
 ```
 
-The resulting token has the following header
+When you look at the decoded version of the `access_token`, the header contains the `alg` property configured in our `jwt_signing_profile`.
 
 ```json
 {
@@ -72,7 +72,8 @@ The resulting token has the following header
 }
 ```
 
-and contains claims like
+Looking at the decoded payload you will find the claims `iss`and `iat` form the `jwt_signing_profile`, a calculated `exp` claim and the two additional claims `aud`and `sub`from the `jwt_sign()` function.  
+
 ```json
 {
   "aud": "The_Audience",
