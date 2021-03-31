@@ -95,3 +95,21 @@ HTTP/1.1 200 OK
 X-Status: 200
 
 ```
+
+Of course, custom requests can also use backends:
+
+```hcl
+    endpoint "/headers3" {
+      request {
+        path = "/headers"
+        backend = "httpbin"
+      }
+    }
+...
+definitions {
+  backend "httpbin" {
+    origin = "https://httpbin.org"
+    timeout = "10s"
+  }
+}
+```

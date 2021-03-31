@@ -34,5 +34,18 @@ server "custom-requests" {
         }
       }
     }
+
+    endpoint "/headers3" {
+      request {
+        path = "/headers"
+        backend = "httpbin"
+      }
+    }
+  }
+}
+definitions {
+  backend "httpbin" {
+    origin = "https://httpbin.org"
+    timeout = "10s"
   }
 }
