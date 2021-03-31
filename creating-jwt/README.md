@@ -3,9 +3,6 @@
 To create and sign JWT, you can use the `jwt_sign()` function and the
 `jwt_signing_profile` block:
 
-[`jwt_sign()`](https://github.com/avenga/couper/tree/master/docs#functions){: .btn .btn-green }
-[`jwt_signing_profile`](https://github.com/avenga/couper/tree/master/docs#jwt-signing-profile-block){: .btn .btn-green }
-
 E.g. let's create as simple OAuth authorization server token endpoint:
 
 ```hcl
