@@ -4,19 +4,16 @@ server "multiple-requests" {
     endpoint "/headers" {
       request "first" {
         url = "https://httpbin.org/anything"
-        headers = {
-          x-foo = "bar"
-        }
       }
       request "second" {
-        url = "https://httpbin.org/status/200"
+        url = "https://httpbin.org/status/404"
       }
-      add_response_headers = {
-        x-second-status = beresps.second.status
-      }
-      // with more than one of request or proxy combined, we have to specify a response block:
       response {
-        json_body = beresps.first.json_body.headers
+        status = beresps.second.status
+        headers = {
+          x-first-status = beresps.first.status
+        }
+        json_body = beresps.first.json_body
       }
     }
 
