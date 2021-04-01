@@ -52,6 +52,8 @@ Press `CTRL+c` to stop the container.
 
 ### [SPA Serving](spa-serving/README.md)
 
+### [Static Responses](static-responses/README.md)
+
 ### [JWT Access Control](jwt-access-control/README.md)
 
 ### [Sending JWT Claims Upstream](sending-jwt-upstream/README.md)
