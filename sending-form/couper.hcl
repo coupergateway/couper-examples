@@ -1,10 +1,10 @@
-server "api" {
+server "form" {
   endpoint "/form" {
     request {
       url = "https://httpbin.org/anything"
       form_body = {
-        param1 = 1
-        param2 = "t,w:o"
+        message = "foo & bar"
+        numbers = [1, 2]
       }
     }
   }
