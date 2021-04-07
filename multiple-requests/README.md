@@ -1,26 +1,26 @@
 # Multiple Requests
 
 You can start several custom requests in one endpoint. In the following example
-we use the JSON body from the "first" and the `status` code from the "second"
-response. The "first" response's `status` code is set as the value of the
+we use the JSON body from the "first" and the status code from the "second"
+response. The "first" response's status code is set as the value of the
 `x-first-status` response header.
 
 ```hcl
-    endpoint "/headers" {
-      request "first" {
-        url = "https://httpbin.org/anything"
-      }
-      request "second" {
-        url = "https://httpbin.org/status/404"
-      }
-      response {
-        status = beresps.second.status
-        headers = {
-          x-first-status = beresps.first.status
-        }
-        json_body = beresps.first.json_body
-      }
+endpoint "/headers" {
+  request "first" {
+    url = "https://httpbin.org/headers"
+  }
+  request "second" {
+    url = "https://httpbin.org/status/404"
+  }
+  response {
+    status = backend_responses.second.status
+    headers = {
+      x-first-status = backend_responses.first.status
     }
+    json_body = backend_responses.first.json_body
+  }
+}
 ```
 
 The order in which the `request` blocks are written has no influence on the
@@ -28,34 +28,41 @@ sequence of the started requests. They are run in parallel.
 
 Call Couper
 
-```shell
+```json
 $ curl -i localhost:8080/headers
 HTTP/1.1 404 Not Found
 ...
 X-First-Status: 200
 ...
 
-{"args":{},"data":"","files":{},"form":{},"headers":{"Host":"httpbin.org","X-Amzn-Trace-Id":"Root=1-606453e4-60dce76823525ed11db360f3"},"json":null,"method":"GET","origin":"93.184.216.34","url":"https://httpbin.org/anything"}
+{
+    "headers": {
+        "Host": "httpbin.org",
+        "X-Amzn-Trace-Id": "Root=1-606ca44b-021d6eb95736023517532aa8"
+    }
+}
 ```
 
-Proxy and custom requests can be combined:
+(The `X-Amzn-…` header is added by httpbin internally).
+
+`proxy` and custom requests can be combined, too:
 
 ```hcl
-    endpoint "/example/**" {
-      proxy {
-        path = "/**"
-        backend {
-          origin = "https://httpbin.org"
-        }
-      }
-      request "additional" {
-        url = "https://httpbin.org/status/404"
-      }
-      // use the response from the proxy, and add another header
-      add_response_headers = {
-        x-additional-status = beresps.additional.status
-      }
+endpoint "/example/**" {
+  proxy {
+    path = "/**"
+    backend {
+      origin = "https://httpbin.org"
     }
+  }
+  request "additional" {
+    url = "https://httpbin.org/status/404"
+  }
+  // use the response from the proxy, and add another header
+  add_response_headers = {
+    x-additional-status = backend_responses.additional.status
+  }
+}
 ```
 
 With the `proxy` block the client request is passed to the httpbin.org backend.
@@ -70,26 +77,18 @@ Again, the order of the `proxy` and `request` blocks is irrelevant.
 
 Call Couper
 
-```shell
-$ curl -i localhost:8080/example/anything
+```json
+$ curl -i localhost:8080/example/headers
 HTTP/1.1 200 OK
 ...
 X-Additional-Status: 404
 
 {
-  "args": {},
-  "data": "",
-  "files": {},
-  "form": {},
   "headers": {
-    "Accept": "*/*",
-    "Host": "httpbin.org",
-    "User-Agent": "curl/7.58.0",
-    "X-Amzn-Trace-Id": "Root=1-6061c877-09fcbef87a6fc2296bf12051"
-  },
-  "json": null,
-  "method": "GET",
-  "origin": "93.184.216.34",
-  "url": "https://httpbin.org/anything"
+    "Accept": "*/*", 
+    "Host": "httpbin.org", 
+    "User-Agent": "curl/7.64.1", 
+    "X-Amzn-Trace-Id": "Root=1-606d67cb-1d27e6a24c929b48089806e1"
+  }
 }
 ```
