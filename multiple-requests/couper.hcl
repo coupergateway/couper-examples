@@ -1,36 +1,35 @@
 server "multiple-requests" {
 
-  api {
-    endpoint "/headers" {
-      request "first" {
-        url = "https://httpbin.org/anything"
-      }
-      request "second" {
-        url = "https://httpbin.org/status/404"
-      }
-      response {
-        status = beresps.second.status
-        headers = {
-          x-first-status = beresps.first.status
-        }
-        json_body = beresps.first.json_body
-      }
+  endpoint "/headers" {
+    request "first" {
+        url = "https://httpbin.org/headers"
     }
-
-    endpoint "/example/**" {
-      proxy {
-        path = "/**"
-        backend {
-          origin = "https://httpbin.org"
-        }
+    request "second" {
+      url = "https://httpbin.org/status/404"
+    }
+    response {
+      status = backend_responses.second.status
+      headers = {
+        x-first-status = backend_responses.first.status
       }
-      request "additional" {
-        url = "https://httpbin.org/status/404"
-      }
-      // use the response from the proxy, and add another header
-      add_response_headers = {
-        x-additional-status = beresps.additional.status
-      }
+      json_body = backend_responses.first.json_body
     }
   }
+
+  endpoint "/example/**" {
+    proxy {
+      path = "/**"
+      backend {
+        origin = "https://httpbin.org"
+      }
+    }
+    request "additional" {
+      url = "https://httpbin.org/status/404"
+    }
+    // use the response from the proxy, and add another header
+    add_response_headers = {
+      x-additional-status = backend_responses.additional.status
+    }
+  }
+
 }
