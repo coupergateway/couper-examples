@@ -3,14 +3,9 @@ server "json" {
     request {
       url = "https://httpbin.org/anything"
       json_body = {
-        param1 = 1
-        param2 = "t,w:o"
+        "message": "a simple request",
+        "numbers": [1, "two",]
       }
-      # or json-style
-      # json_body = {
-      #   "param1": 1,
-      #   "param2": "t,w:o"
-      # }
     }
   }
 
@@ -18,7 +13,7 @@ server "json" {
     response {
       json_body = {
         message = "a simple response"
-        ID = req.id
+        ID = request.id
       }
     }
   }

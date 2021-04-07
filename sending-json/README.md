@@ -1,7 +1,8 @@
 # Sending JSON Content
 
-The `json_body` attribute sets the body of either `request` or `response`.
-Valid value types are null, boolean, number, string, object or tuple.
+The `json_body` attribute provides a convenient way to set a JSON
+serialization as the body of either `request` or `response`.
+
 `json_body` also sets a default value of `application/json` for the
 `Content-Type` header.
 
@@ -11,8 +12,8 @@ server "json" {
     request {
       url = "https://httpbin.org/anything"
       json_body = {
-        param1 = 1
-        param2 = "t,w:o"
+        message = "a simple request"
+        numbers = [1, "two"]
       }
     }
   }
@@ -22,41 +23,37 @@ server "json" {
 Call Couper with
 
 ```shell
-curl -s http://localhost:8080/request | jq
+curl http://localhost:8080/request
 ```
 
 The result is similar to
 
 ```json
 {
-  "args": {},
-  "data": "{\"param1\":1,\"param2\":\"t,w:o\"}",
-  "files": {},
-  "form": {},
+  "args": {}, 
+  "data": "{\"message\":\"a simple request\",\"numbers\":[1,\"two\"]}", 
+  "files": {}, 
+  "form": {}, 
   "headers": {
-    "Content-Length": "29",
-    "Content-Type": "application/json",
-    "Host": "httpbin.org",
-    "X-Amzn-Trace-Id": "Root=1-605dd985-466ef358702e1a6714eda53b"
-  },
+    "Content-Length": "50", 
+    "Content-Type": "application/json", 
+    "Host": "httpbin.org", 
+    "X-Amzn-Trace-Id": "Root=1-606dd088-6d6c1a813f657cc6262d1b4b"
+  }, 
   "json": {
-    "param1": 1,
-    "param2": "t,w:o"
-  },
-  "method": "POST",
+    "message": "a simple request", 
+    "numbers": [
+      1, 
+      "two"
+    ]
+  }, 
+  "method": "POST", 
   "origin": "93.184.216.34",
   "url": "https://httpbin.org/anything"
 }
 ```
 
-BTW, you can also specify the object in JSON style within HCL:
-
-```hcl
-json_body = {
-  "param1": 1,
-  "param2": "t,w:o"
-}
-```
+Note how content type, content length and the method was set automatically.
 
 ---
 
@@ -76,7 +73,7 @@ endpoint "/response" {
 Call Couper with
 
 ```shell
-curl -s http://localhost:8080/response | jq
+curl http://localhost:8080/response
 ```
 
 The result is similar to
@@ -111,8 +108,7 @@ endpoint "/jsonapi" {
 
 ---
 
-`json_body` is a convenient short cut for explicitly defining the `Content-Type`
-header and serializing a JSON string with `json_encode()`. If you wanted to do it manually, it would read like this:
+If you don't like shortcuts, you can create a JSON body manually:
 
 ```hcl
 endpoint "/manual" {
