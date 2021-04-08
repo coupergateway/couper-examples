@@ -4,7 +4,7 @@ Path parameters are named, variable parts of an endpoint path, denoted in curly 
 
 ## Configuration
 The `path_params` [variable](https://github.com/avenga/couper/tree/master/docs#variables_conf) gets evaluated on client requests which matches an endpoint with a related parameter definition.
-An enpoint configured with `/my/{category}/view` will make the denoted part accessible under `req.path_params.category`.
+An enpoint configured with `/my/{category}/view` will make the denoted part accessible under `request.path_params.category`.
 
 ```hcl
 server "path-params-example" {
@@ -12,7 +12,7 @@ server "path-params-example" {
     endpoint "/my/{category}/view" {
       proxy {
         backend {
-          path = "/${req.path_params.category}"
+          path = "/${request.path_params.category}"
           origin = "https://httpbin.org"
         }
       }
