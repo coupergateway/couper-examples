@@ -9,8 +9,8 @@ server "secured-api" {
           origin = "https://httpbin.org/"
 
           set_request_headers = {
-            x-jwt-sub = req.ctx.JWTToken.sub
-            x-jwt = json_encode(req.ctx.JWTToken)
+            x-jwt-sub = request.context.JWTToken.sub
+            x-jwt = json_encode(request.context.JWTToken)
           }
         }
       }

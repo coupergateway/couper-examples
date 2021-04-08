@@ -89,14 +89,14 @@ HTTP/1.1 200 OK
 
 ## Send JWT claims
 
-Claims from a JWT sent to Couper are stored in the variable `req.ctx.<access_control_name>.<claim_name>`.
-E.g., the `sub` claim of the "JWTToken" JWT access control is stored in `req.ctx.JWTToken.sub`.
+Claims from a JWT sent to Couper are stored in the variable `request.context.<access_control_name>.<claim_name>`.
+E.g., the `sub` claim of the "JWTToken" JWT access control is stored in `request.context.JWTToken.sub`.
 We can reference this claim as the value of a request header:
 
 ```hcl
         …
         set_request_headers = {
-          x-jwt-sub = req.ctx.JWTToken.sub
+          x-jwt-sub = request.context.JWTToken.sub
         }
         …
 ```
@@ -119,7 +119,7 @@ HTTP/1.1 200 OK
 ```
 The value of `X-Jwt-Sub` is the same as the `sub` claim of the JWT created at https://jwt.io/.
 
-To send different claim values upstream, we can adapt the `set_request_headers` in the configuration file. Note that **all** claims, not just the standard claims, are stored in `req.ctx.…`
+To send different claim values upstream, we can adapt the `set_request_headers` in the configuration file. Note that **all** claims, not just the standard claims, are stored in `request.context.…`
 To add different claims to the JWT, we have to modify the JSON in the "PAYLOAD" box in the right ("Decoded") column.
 
 To send a JSON representation of all the JWT claims upstream, we use the `json_encode()` function:
@@ -127,8 +127,8 @@ To send a JSON representation of all the JWT claims upstream, we use the `json_e
 ```hcl
         …
         set_request_headers = {
-          x-jwt-sub = req.ctx.JWTToken.sub
-          x-jwt = json_encode(req.ctx.JWTToken)
+          x-jwt-sub = request.context.JWTToken.sub
+          x-jwt = json_encode(request.context.JWTToken)
         }
         …
 ```

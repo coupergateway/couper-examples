@@ -10,7 +10,7 @@ server "query-params-example" {
           }
 
           add_query_params = {
-            categories = req.query.category
+            categories = request.query.category
             sort = "dest"
           }
 

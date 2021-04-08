@@ -64,7 +64,7 @@ endpoint "/response" {
   response {
     json_body = {
       message = "a simple response"
-      ID = req.id
+      ID = request.id
     }
   }
 }

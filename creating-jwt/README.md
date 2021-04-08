@@ -11,7 +11,7 @@ server "simple-oauth-as" {
     response {
       json_body = {
         access_token = jwt_sign("myjwt", {
-          sub = req.form_body.username[0]
+          sub = request.form_body.username[0]
           aud = "The_Audience"
         })
         token_type = "Bearer"

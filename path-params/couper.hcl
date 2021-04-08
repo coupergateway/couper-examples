@@ -3,7 +3,7 @@ server "path-params-example" {
     endpoint "/my/{category}/view" {
       proxy {
         backend {
-          path = "/${req.path_params.category}"
+          path = "/${request.path_params.category}"
           origin = "https://httpbin.org"
         }
       }
