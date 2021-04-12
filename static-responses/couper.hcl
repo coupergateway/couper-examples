@@ -12,7 +12,6 @@ server "static-responses" {
     endpoint "/userinfo" {
       access_control = ["JWTToken"]
       response {
-        status = 200
         json_body = req.ctx.JWTToken
       }
     }
