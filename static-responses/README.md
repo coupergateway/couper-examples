@@ -65,3 +65,35 @@ Content-Type: application/json
 
 {"iss":"some_provider","sub":"some_user"}
 ```
+
+As a third example we create a simple configuration endpoint that emits some
+environment variables:
+
+```hcl
+  endpoint "/app/conf" {
+    response {
+      json_body = {
+        version = env.APP_VERSION
+        env = env.APP_ENV
+        debug = env.APP_DEBUG == "true"
+      }
+    }
+  }
+```
+
+Start Couper with
+
+```shell
+$ docker run --rm -e APP_VERSION=1.0 -e APP_ENV=my_value -e APP_DEBUG=true -p 8080:8080 -v "$(pwd)":/conf avenga/couper
+```
+
+and call it with
+
+```shell
+$ curl -i localhost:8080/app/conf
+HTTP/1.1 200 OK
+Content-Type: application/json
+...
+
+{"debug":true,"env":"my_value","version":"1.0"}
+```

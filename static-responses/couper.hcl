@@ -16,6 +16,16 @@ server "static-responses" {
       }
     }
   }
+
+  endpoint "/app/conf" {
+    response {
+      json_body = {
+        version = env.APP_VERSION
+        env = env.APP_ENV
+        debug = env.APP_DEBUG == "true"
+      }
+    }
+  }
 }
 definitions {
   jwt "JWTToken" {
