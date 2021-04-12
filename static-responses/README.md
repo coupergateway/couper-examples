@@ -39,7 +39,7 @@ are reflected to the client.
       access_control = ["JWTToken"]
       response {
         status = 200
-        json_body = req.ctx.JWTToken
+        json_body = request.context.JWTToken
       }
     }
 ...

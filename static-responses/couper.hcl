@@ -12,7 +12,7 @@ server "static-responses" {
     endpoint "/userinfo" {
       access_control = ["JWTToken"]
       response {
-        json_body = req.ctx.JWTToken
+        json_body = request.context.JWTToken
       }
     }
   }
