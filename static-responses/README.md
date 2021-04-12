@@ -5,26 +5,29 @@ Nevertheless, a response is needed. So a `response` block can exist in an
 `endpoint` block without any `proxy` or `request` blocks.
 
 Consider the following example, in which the client is instructed to perform a
-redirect via a `303` status code an a `location` header specifying the redirect
-target:
+redirect via a `301` status code and a `location` header specifying the
+redirect target:
 
 ```hcl
-    endpoint "/redirect" {
-      response {
-        status = 303
-        headers = {
-          location = "https://www.example.com/"
-        }
+  endpoint "/" {
+    response {
+      status = 301
+      headers = {
+        location = "/app/"
       }
     }
+  }
 ```
+
+This could be an example for the good practice of having the SPA paths not
+under `/**`.
 
 Call Couper:
 
 ```shell
-$ curl -i http://localhost:8080/redirect
-HTTP/1.1 303 See Other
-Location: https://www.example.com/
+$ curl -i http://localhost:8080/
+HTTP/1.1 301 Moved Permanently
+Location: /app/
 ...
 
 ```

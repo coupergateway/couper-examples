@@ -1,14 +1,14 @@
 server "static-responses" {
-  api {
-    endpoint "/redirect" {
-      response {
-        status = 303
-        headers = {
-          location = "https://www.example.com/"
-        }
+  endpoint "/" {
+    response {
+      status = 301
+      headers = {
+        location = "/app"
       }
     }
+  }
 
+  api {
     endpoint "/userinfo" {
       access_control = ["JWTToken"]
       response {
