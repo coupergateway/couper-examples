@@ -21,6 +21,6 @@ definitions {
   jwt "JWTToken" {
     header = "Authorization"
     signature_algorithm = "RS256"
-    key_file = "../jwt-access-control/pub.pem"
+    key_file = "pub.pem"
   }
 }
