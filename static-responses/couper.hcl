@@ -1,4 +1,4 @@
-server "static-responses" {
+server "responses" {
   endpoint "/" {
     response {
       status = 301
@@ -8,12 +8,10 @@ server "static-responses" {
     }
   }
 
-  api {
-    endpoint "/userinfo" {
-      access_control = ["JWTToken"]
-      response {
-        json_body = request.context.JWTToken
-      }
+  endpoint "/userinfo" {
+    access_control = ["JWTToken"]
+    response {
+      json_body = request.context.JWTToken
     }
   }
 
@@ -27,6 +25,7 @@ server "static-responses" {
     }
   }
 }
+
 definitions {
   jwt "JWTToken" {
     header = "Authorization"
