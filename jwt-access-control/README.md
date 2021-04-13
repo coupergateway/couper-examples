@@ -56,7 +56,7 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3B
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIiwiZXhwIjoxNTkwNDkxNTI4fQ.lJnUpBzMx84_5yigeHeLw4f8sbdSdu_7fWr1--t7EAp8v8K-kSmVYUGnR0Jx4o_ZE84N2M72Kn1pKssrzgTHsFi7txcZHHz_JqgnPgKqsZwjrmWDC-XVvdrSXjAsPO6wn0qy3KEMT1y6Z8YQA4ZyzA1dDsRRIUFiNrgF6_b5pC4
 ```
 
-The tokens are contain an `RS256` signature the can be validated with this public key:
+The tokens contain an `RS256` signature the can be validated with this public key:
 
 ```
 -----BEGIN PUBLIC KEY-----
@@ -94,7 +94,7 @@ server "secured-api" {
 [Start your container, ](/README.md#getting-started) and check that
 the API works as expected:
 
-```sh
+```shell
 $ curl http://localhost:8080/private/headers
 {
   "headers": {
@@ -121,18 +121,11 @@ All we need is:
 
 ```hcl
 definitions {
-    jwt "JWTToken" {
-        header = "Authorization"
-        signature_algorithm = "RS256"
-        key = <<EOF
------BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGSd+sSTss2uOuVJKpumpFAaml
-t1CWLMTAZNAabF71Ur0P6u833RhAIjXDSA/QeVitzvqvCZpNtbOJVegaREqLMJqv
-FOUkFdLNRP3f9XjYFFvubo09tcjX6oGEREKDqLG2MfZ2Z8LVzuJc6SwZMgVFk/63
-rdAOci3W9u3zOSGj4QIDAQAB
------END PUBLIC KEY-----
-        EOF
-    }
+  jwt "JWTToken" {
+    signature_algorithm = "RS256"
+    key_file = "pub.pem"
+    header = "Authorization"
+  }
 }
 ```
 
@@ -153,15 +146,15 @@ referencing its name in the `access_control` attribute:
 
 ```hcl
 server "secured-api" {
-  access_control = ["JWTToken"]
   api {
-    …
+    access_control = ["JWTToken"]
+    # …
   }
 }
 ```
 
-By defining `access_control` in the `server` block, it applies to all
-requests. We could also move it to `api` or even a single `endpoint`
+By defining `access_control` in the `api` block, it applies to all
+API endpoints. We could also move it to `server` or even a single `endpoint`
 for finer grained access control.
 
 ## Try it out
@@ -191,7 +184,7 @@ Excellent! Now that API is not open to the public anymore. But can
 _we_ still use it? Use the two prepared tokens from above in your
 calls:
 
-```sh
+```shell
 $ curl -i http://localhost:8080/private/headers -H "authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIiwiZXhwIjoxNTkwNDkxNTI4fQ.lJnUpBzMx84_5yigeHeLw4f8sbdSdu_7fWr1--t7EAp8v8K-kSmVYUGnR0Jx4o_ZE84N2M72Kn1pKssrzgTHsFi7txcZHHz_JqgnPgKqsZwjrmWDC-XVvdrSXjAsPO6wn0qy3KEMT1y6Z8YQA4ZyzA1dDsRRIUFiNrgF6_b5pC4"
 
 HTTP/1.1 403 Forbidden
@@ -213,7 +206,7 @@ from `401` to `403`. We send an authentication token, but it is not
 valid. Well, now we know that this one is the invalid one, because it
 has expired.
 
-```sh
+```shell
 $ curl -i http://localhost:8080/private/headers -H "authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIn0.bNXv28XmnFBjirPbCzBqyfpqHKo6PpoFORHsQ-80IJLi3IhBh1y0pFR0wm-2hiz_F7PkGQLTsnFiSXxCt1DZvMstbQeklZIh7O3tQGJyCAi-HRVASHKKYqZ_-eqQQhNr8Ex00qqJWD9BsWVJr7Q526Gua7ghcttmVgTYrfSNDzU"
 
 HTTP/1.1 200 OK
@@ -259,27 +252,19 @@ send it automatically to our API.
 
 ## More key configuration
 
-In our quick example, we have included the `key` as a _heredoc_
-directly into the configuration file. We can do better :)
+In our code example, we specify a `key_file` attribute referencing a file containing the key. That is a good way, if you actually have the key in a file or if you want to mount a Kubernetes secret to a file.
 
-One simple way is to read the key from an environment variable:
+Another convenient way to configure the key is with the `key`
+attribute that reads it from an environment variable:
 
 ```hcl
 key = env.JWT_PUB_KEY
 ```
 
-Especially RSA keys typically live in files. If Couper has direct access to the file, we can read that directly:
-
-```hcl
-key_file = "pub.pem"
-```
-
-The example directory contains the public key as `pub.pem`. You can
-change the configuration file to use that `key_file` instead of the
-large inline `key`.
+For testing purposes, you could simply write the `key` into your configuration file. However, string literals in HCL may not run over multiple lines – and escaping with `\n` may feel cumbersome to you. For such cases, HCL supports _heredocs_.
 
 The `key` and `key_file` attributes are mutually exclusive. But we
-need to define one of them.
+need to define one of them. We favor `key_file`.
 
 ## More JWT claims checks
 
@@ -298,3 +283,11 @@ claims = {
   sub = "some_user"
 }
 ```
+
+JWT Tokens shouldn't last forever as the one we used above. If you are not sure whether the issuer of your tokens always includes an `exp`iry time, you can force it like this:
+
+```hcl
+required_claims = ["exp"]
+```
+
+This renders our test token unusable.
