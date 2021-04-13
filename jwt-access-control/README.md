@@ -252,7 +252,7 @@ send it automatically to our API.
 
 ## More key configuration
 
-In our code example, we have read the key from a file with the `key_file` attribute. That is a good way, if you actually have the key in a file or if you want to mount a Kubernetes secret to a file.
+In our code example, we specify a `key_file` attribute referencing a file containing the key. That is a good way, if you actually have the key in a file or if you want to mount a Kubernetes secret to a file.
 
 Another convenient way to configure the key is with the `key`
 attribute that reads it from an environment variable:
