@@ -79,3 +79,41 @@ This can be helpful if you have variables that should not be pushed
 into you source code repository: You could list the
 `.env` file in your project's `.gitignore` to avoid accidental
 exposure of local secrets, such as usernames and passwords.
+
+## Linking other services
+
+Now that everything is configurable, let's make things more complicated:
+
+We want to run a local version of the upstream service, to develop
+against. (This could even be a mocked version of it). We add it as
+a second `service` in our `docker-compose.yml`. Docker automatically
+links those services with their name as network address.
+
+```yaml
+version: "3"
+services:
+  couper:
+    image: avenga/couper
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/conf
+    environment:
+      # hot reload config
+      - COUPER_WATCH=true
+      # make important parameters configurable
+      - GREET_NAME=Couper
+      # use local service
+      - SERVICE_ORIGIN=http://httpbin
+  httpbin:
+    image: kennethreitz/httpbin
+```
+
+Run
+
+```shell
+$ docker-compose up
+```
+
+and this time, two services come up. http://localhost:8080 should
+greet you with a local IP address.
