@@ -1,0 +1,20 @@
+<html>
+
+<head>
+    <title>Hello Couper</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="shortcut icon" href="/assets/couper-logo.svg">
+    <script>
+        fetch('/api/greet')
+        .then(response => response.json())
+        .then(data => document.getElementById('greet').innerText = data.message);
+
+    </script>
+</head>
+
+<body>
+    <img src="/assets/couper-logo.svg">
+    <h1 id="greet">Hello World!</h1>
+</body>
+
+</html>
