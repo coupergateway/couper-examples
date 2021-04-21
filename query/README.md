@@ -4,8 +4,8 @@ Query parameter can be used for manipulations of the URL query string for the up
 By default, the query string is passed unchanged to the backend.
 
 The `query` [variable](https://github.com/avenga/couper/tree/master/docs#variables_conf) gets evaluated on client requests which matches the URL query string.
-A query string `?category=cats` will make the query part value `cats` accessible under `request.query.category`.
-Parameters with the same name can be accessed with the index operator.
+A query string `?category=cats` will make the query part value `cats` accessible under `request.query.category[0]`.
+As there may be several parameters with the same name, a single value is accessed with the (0-based) index operator.
 A query string `?category=cats&category=dogs` will make the query part value `cats` accessible
 under `request.query.category[0]` and the `dogs` under `request.query.category[1]`.
 
