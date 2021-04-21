@@ -14,14 +14,15 @@ under `request.query.category[0]` and the `dogs` under `request.query.category[1
 The `remove_query_params` removes query parameters from the upstream request.
 
 ```hcl
-server "remove-query-params-example" {
+server "query-params-example" {
   api {
-    endpoint "/anything" {
+    endpoint "/remove" {
       proxy {
         backend {
           remove_query_params = ["cat", "dog"]
 
           origin = "https://httpbin.org"
+          path = "/anything"
         }
       }
     }
@@ -29,7 +30,7 @@ server "remove-query-params-example" {
 }
 ```
 
-A request to [http://localhost:8080/anything?cat=true&dog=true&mouse=true](http://localhost:8080/anything?cat=true&dog=true&mouse=true)
+A request to [http://localhost:8080/remove?cat=true&dog=true&mouse=true](http://localhost:8080/remove?cat=true&dog=true&mouse=true)
 will be changed to `https://httpbin.org/anything?mouse=true`.
 
 ## `set_query_params`
@@ -37,9 +38,9 @@ will be changed to `https://httpbin.org/anything?mouse=true`.
 The `set_query_params` sets/overrides query parameters in the upstream request.
 
 ```hcl
-server "remove-query-params-example" {
+server "query-params-example" {
   api {
-    endpoint "/anything" {
+    endpoint "/set" {
       proxy {
         backend {
           set_query_params = {
@@ -47,6 +48,7 @@ server "remove-query-params-example" {
           }
 
           origin = "https://httpbin.org"
+          path = "/anything"
         }
       }
     }
@@ -54,10 +56,10 @@ server "remove-query-params-example" {
 }
 ```
 
-A request to [http://localhost:8080/anything](http://localhost:8080/anything)
+A request to [http://localhost:8080/set](http://localhost:8080/set)
 will be changed to `https://httpbin.org/anything?categories=animals&categories=birds`.
 
-A request to [http://localhost:8080/anything?categories=insects](http://localhost:8080/anything?categories=insects)
+A request to [http://localhost:8080/set?categories=insects](http://localhost:8080/set?categories=insects)
 will be changed to `https://httpbin.org/anything?categories=animals&categories=birds`, too.
 
 ## `add_query_params`
@@ -67,7 +69,7 @@ The `add_query_params` appends query parameters in the upstream request.
 ```hcl
 server "remove-query-params-example" {
   api {
-    endpoint "/anything" {
+    endpoint "/add" {
       proxy {
         backend {
           add_query_params = {
@@ -75,6 +77,7 @@ server "remove-query-params-example" {
           }
 
           origin = "https://httpbin.org"
+          path = "/anything"
         }
       }
     }
@@ -82,10 +85,10 @@ server "remove-query-params-example" {
 }
 ```
 
-A request to [http://localhost:8080/anything](http://localhost:8080/anything)
+A request to [http://localhost:8080/add](http://localhost:8080/add)
 will be changed to `https://httpbin.org/anything?categories=animals`.
 
-A request to [http://localhost:8080/anything?categories=birds](http://localhost:8080/anything?categories=birds)
+A request to [http://localhost:8080/add?categories=birds](http://localhost:8080/add?categories=birds)
 will be changed to `https://httpbin.org/anything?categories=birds&categories=animals`.
 
 ## Example
