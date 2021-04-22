@@ -1,9 +1,9 @@
-# Query Parameter
+# Query Parameter Manipulation
 
-Query parameter can be used for manipulations of the URL query string for the upstream request.
-By default, the query string is passed unchanged to the backend.
+Query parameter modifiers can be used for manipulations of the URL query string for the upstream proxy request.
+By default, for proxy requests the query string is passed unchanged to the backend.
 
-The `query` [variable](https://github.com/avenga/couper/tree/master/docs#variables) gets evaluated on client requests which matches the URL query string.
+The `request.query` [variable](https://github.com/avenga/couper/tree/master/docs#variables) is filled with information from the client request URL's query string.
 A query string `?category=insects` will make the query part value `insects` accessible under `request.query.category[0]`.
 As there may be several parameters with the same name, a single value is accessed with the (0-based) index operator.
 A query string `?category=insects&category=snakes` will make the query part value `insects` accessible

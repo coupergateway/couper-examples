@@ -68,7 +68,7 @@ Press `CTRL+c` to stop the container.
 
 ### [Backend Validation](backend-validation/README.md)
 
-### [Query Parameter](query/README.md)
+### [Query Parameter Manipulation](query/README.md)
 
 ### [Sending JSON Content](sending-json/README.md)
 
