@@ -103,7 +103,7 @@ remove_query_params = ["old"]
 …
 ```
 
-When you use Couper to validate [JWT tokens](../), you can set query parameters from claims. Here we assume that we have a `UserToken` JWT configuration in our `definitions`:
+When you use Couper to validate [JWT tokens](../jwt-access-control/README.md), you can set query parameters from claims. Here we assume that we have a `UserToken` JWT configuration in our `definitions`:
 
 ```
 …

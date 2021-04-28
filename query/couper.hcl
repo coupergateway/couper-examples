@@ -43,7 +43,6 @@ server "query-params-example" {
 
         set_query_params = {
           categories = ["animals", "birds"]
-          new = request.query.old
         }
 
         add_query_params = {
