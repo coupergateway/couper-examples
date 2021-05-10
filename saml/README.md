@@ -1,6 +1,6 @@
 # Single-Sign-On with SAML
 
-The Security Assertion Markup Language (SAML) 2.0 defines the Web Browser Single-Sign-On Profile (for more information see secion 4.1 in https://www.oasis-open.org/committees/download.php/56782/sstc-saml-profiles-errata-2.0-wd-07.pdf). In this profile the web browser sends a `GET` request containing the SAML request data to the the SAML identity provider (IdP); the IdP authenticates the user and then causes the browser to send a `POST` request with the SAML response data containing an assertion with information about the authenticated user to the SAML service provider (SP).
+The Security Assertion Markup Language (SAML) 2.0 defines the Web Browser Single-Sign-On Profile (for more information see secion 4.1 in https://www.oasis-open.org/committees/download.php/56782/sstc-saml-profiles-errata-2.0-wd-07.pdf). In this profile the web browser sends a `GET` request containing the SAML request data to the SAML identity provider (IdP); the IdP authenticates the user and then causes the browser to send a `POST` request with the SAML response data containing an assertion with information about the authenticated user to the SAML service provider (SP).
 
 Couper can act as such a SAML service provider: it creates the SAML request URL and processes the SAML response.
 
