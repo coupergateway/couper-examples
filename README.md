@@ -75,3 +75,5 @@ Press `CTRL+c` to stop the container.
 ### [Sending Form Content](sending-form/README.md)
 
 ### [Using docker-compose](docker-compose/README.md)
+
+### [Error Handling with the Basic Auth Access Control](error-handling-ba/README.md)
