@@ -205,7 +205,7 @@ The browser then loads the SAML Demo page again, now showing some user informati
 
 We can play around with this demo by removing
 
-* either only the `UserToken` cookie,
+* either only the `UserToken` cookie (in chrome-based browsers you may have to make a navigational request to http://localhost:8080/api/userinfo to see it in the developer tools),
 * or the `UserToken`, `PHPSESSIDIDP` and `SimpleSAMLAuthTokenIdp` cookies.
 
 Watch the network tab of the browser's developer tools to see what happens.
