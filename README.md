@@ -64,6 +64,8 @@ Press `CTRL+c` to stop the container.
 
 ### [Creating JWT](creating-jwt/README.md)
 
+### [Single-Sign-On with SAML](saml/README.md)
+
 ### [Variable: `path_params`](path-params/README.md)
 
 ### [Backend Validation](backend-validation/README.md)
