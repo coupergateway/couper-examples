@@ -1,12 +1,12 @@
 # Error Handling with the Basic Auth Access Control
 
-Suppose, we have an API which we protect with a basic_auth access control:
+Suppose, we have an endpoint `/test` which we protect with a basic_auth access control:
 
 ```hcl
 server "error-handling" {
   api {
-    access_control = ["ba"]
     endpoint "/test" {
+      access_control = ["ba"]
       response {
         json_body = { "ok" = true }
       }
@@ -21,7 +21,7 @@ definitions {
 }
 ```
 
-We try to access the `/test` endpoint:
+Let's start Couper and try to access the `/test` endpoint via curl:
 
 ```sh
 $ curl -is localhost:8080/test
@@ -42,15 +42,15 @@ Www-Authenticate: Basic
 }
 ```
 
-Hmm, access control error. But what is the specific problem here? Let's look into the logs:
+You get a `401` with the message: access control error. But what is the specific problem here? Let's take a look at the logs:
 
 ```json
 {...,"error_type":"basic_auth_credentials_missing","handler":"error_basic_auth","level":"error","message":"access control error: ba: credentials required",...}
 ```
 
-Ah, `"error_type":"basic_auth_credentials_missing"` and `"message":"access control error: ba: credentials required"`. OK, we forgot the user credentials.
+`"error_type":"basic_auth_credentials_missing"` and `"message":"access control error: ba: credentials required"`. OK, seems like we forgot the user credentials.
 
-Try again, now with the configured credentials:
+Try again, now with the configured credentials and voilà: you get a status `200`:
 
 ```sh
 $ curl -is -u "john.doe:\$eCr3T" localhost:8080/test
@@ -62,7 +62,13 @@ Server: couper.io
 {"ok":true}
 ```
 
-Fine. But now we want to change the error response to `403` instead of `401`: we add an error handler to the basic auth access control using the `error_type` from the log entry as the label:
+## Custom errors
+
+Now we want to demonstrate how you can change errors by configuring an `error_handler` block for a specific `access_control`.
+
+Remember the `401` we got earlier. As we have seen, Couper logs the specific error under `"basic_auth_credentials_missing"`. Use this `error_type` from the logs as the label to modify the response for a specific error:
+
+(delete comments in couper.hcl and restart Couper)
 
 ```hcl
   basic_auth "ba" {
@@ -71,19 +77,14 @@ Fine. But now we want to change the error response to `403` instead of `401`: we
       response {
         status = 403
         json_body = {
-          error = {
-            id = request.id
-            message = "access control error"
-            path = request.path
-            status = 403
-          }
+          error = "forbidden"
         }
       }
     }
   }
 ```
 
-Try again the uncredentialed request to check:
+Try again without credentials and receive the custom error:
 
 ```sh
 $ curl -is localhost:8080/test
@@ -93,10 +94,10 @@ Content-Type: application/json
 Server: couper.io
 ...
 
-{"error":{"id":"c2ch0v5mveodtqio2qs0","message":"access control error","path":"/test","status":403}}
+{"error":"forbidden"}
 ```
 
-Now, we try a credentialed request using wrong credentials:
+Now, let's try a request with wrong credentials:
 
 ```sh
 $ curl -is -u "john.doe:foo" localhost:8080/test
@@ -119,13 +120,13 @@ Content-Length: 142
 }
 ```
 
-The status code is 401, again, because this time, the `error_type` in the log entry is the less specific `basic_auth`.
+Again, you get the status code `401`. Because this time, the `error_type` in the log entry is less specific, namely `basic_auth`:
 
 ```json
 {"auth_user":"john.doe",...,"error_type":"basic_auth","handler":"error_basic_auth","level":"error","message":"access control error: ba: credential mismatch",...}
 ```
 
-If we want to change all error responses related to our basic auth access control, we can remove the error handler label entirely:
+You can either add several `error_handler` blocks with different labels or, in order to change all error responses related to the basic auth access control, omit the error handler label entirely:
 
 ```hcl
   basic_auth "ba" {
@@ -134,13 +135,8 @@ If we want to change all error responses related to our basic auth access contro
       response {
         status = 403
         json_body = {
-          error = {
-            id = request.id
-            message = "access control error"
-            path = request.path
-            status = 403
-          }
-        }
+          error = "forbidden"
+        }  
       }
     }
   }
@@ -157,8 +153,8 @@ Server: couper.io
 {"error":{"id":"c2ci73o75846jfpfirp0","message":"access control error","path":"/test","status":403}}
 ```
 
-BTW, error handlers can also be used in other access controls; e.g. you can try to add them to the [JWT Access Control](../jwt-access-control/README.md) example.
+Error handlers can also be used in other access controls; e.g. you can try to add them to the [JWT Access Control](../jwt-access-control/README.md) example.
 
-See also:
+## See also:
 
 * [Errors](https://github.com/avenga/couper/blob/master/docs/ERRORS.md) (reference)
