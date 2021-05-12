@@ -1,7 +1,7 @@
 server "error-handling" {
   api {
-    access_control = ["ba"]
     endpoint "/test" {
+      access_control = ["ba"]
       response {
         json_body = { "ok" = true }
       }
