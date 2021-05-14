@@ -44,7 +44,7 @@ server "resource-server" {
 }
 ```
 
-We start couper and send a request to the client endpoint:
+We start Couper and send a request to the client endpoint:
 
 ```sh
 $ curl -is localhost:8080/foo
