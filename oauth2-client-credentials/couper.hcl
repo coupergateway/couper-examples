@@ -20,7 +20,7 @@ server "client" {
 server "resource-server" {
   hosts = ["localhost:8081"]
   api {
-#    access_control = ["token"]   # protect the resource server's api
+    access_control = ["token"]   # protect the resource server's api
     endpoint "/resource" {
       response {
         json_body = {"foo" = 1}
@@ -39,15 +39,15 @@ server "resource-server" {
 #    }
 #  }
 #}
-#definitions {
+definitions {
 #  jwt_signing_profile "token" {
 #    signature_algorithm = "HS256"
 #    key = "$eCr3T"
 #    ttl = "10s"
 #  }
-#  jwt "token" {
-#    signature_algorithm = "HS256"
-#    key = "$eCr3T"
-#    header = "Authorization"
-#  }
-#}
+  jwt "token" {
+    signature_algorithm = "HS256"
+    key = "$eCr3T"
+    header = "Authorization"
+  }
+}
