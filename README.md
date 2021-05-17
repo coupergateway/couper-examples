@@ -76,4 +76,4 @@ Press `CTRL+c` to stop the container.
 
 ### [Using docker-compose](docker-compose/README.md)
 
-### [Error Handling with the Basic Auth Access Control](error-handling-ba/README.md)
+### [Error Handling for Access Controls](error-handling-ba/README.md)
