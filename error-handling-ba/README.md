@@ -1,4 +1,6 @@
-# Error Handling with the Basic Auth Access Control
+# Error Handling
+
+In this example we demonstrate how you can create custom errors for a specific access control by configuring an `error_handler` block.
 
 Suppose, we have an endpoint `/test` which we protect with a basic_auth access control:
 
@@ -150,7 +152,7 @@ Content-Type: application/json
 Server: couper.io
 ...
 
-{"error":{"id":"c2ci73o75846jfpfirp0","message":"access control error","path":"/test","status":403}}
+{"error":"forbidden"}
 ```
 
 Error handlers can also be used in other access controls; e.g. you can try to add them to the [JWT Access Control](../jwt-access-control/README.md) example.
