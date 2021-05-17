@@ -1,4 +1,4 @@
-# Error Handling
+# Error Handling for Access Controls
 
 Errors can occur in various places: due to invalid client requests or problems on the backend and network side. Couper specifies some generic error categories (like `configuration`, `server`, `backend` or `access_control`) to help you identify the occurring problems faster.
 
