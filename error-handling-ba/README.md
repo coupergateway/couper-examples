@@ -1,6 +1,8 @@
 # Error Handling
 
-In this example we demonstrate how you can create custom errors for a specific access control by configuring an `error_handler` block.
+Errors can occur in various places: due to invalid client requests or problems on the backend and network side. Couper specifies some generic error categories (like `configuration`, `server`, `backend` or `access_control`) to help you identify the occurring problems faster.
+
+In this example we show Couper's standard error handling and demonstrate how you can create custom errors for a specific access control by configuring an `error_handler` block.
 
 Suppose, we have an endpoint `/test` which we protect with a basic_auth access control:
 
@@ -44,7 +46,7 @@ Www-Authenticate: Basic
 }
 ```
 
-You get a `401` with the message: access control error. But what is the specific problem here? Let's take a look at the logs:
+You get a `401` with the message: access control error. For more detailed information let's take a look at the logs:
 
 ```json
 {...,"error_type":"basic_auth_credentials_missing","handler":"error_basic_auth","level":"error","message":"access control error: ba: credentials required",...}
@@ -68,7 +70,8 @@ Server: couper.io
 
 Now we want to demonstrate how you can change errors by configuring an `error_handler` block for a specific `access_control`.
 
-Remember the `401` we got earlier. As we have seen, Couper logs the specific error under `"basic_auth_credentials_missing"`. Use this `error_type` from the logs as the label to modify the response for a specific error:
+Remember the `401` we got earlier. As we have seen, Couper logs the specific error under `"basic_auth_credentials_missing"`. 
+Use this `error_type` from the logs as the label for the `error_handler` block to modify the response for the specific error. In this example we simply change the status `403` and add `error = "forbidden"` to the json body but you can also e.g. reference a custom error file here.
 
 (delete comments in couper.hcl and restart Couper)
 
