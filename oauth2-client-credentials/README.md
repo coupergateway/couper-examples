@@ -216,7 +216,7 @@ Content-Length: 9
 {"foo":1}
 ```
 
-We do not see any entries for a token request in the log, because Couper already has a valid token.
+we do not see any entries for a token request in the log, because Couper already has a valid token.
 
 But if we wait for more than 10 seconds, the token is expired and again we see five log entries containing the request for a new token.
 
