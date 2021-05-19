@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SAML Demo</title>
+    <script>
+function getUserinfo() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/api/userinfo");
+  xhr.addEventListener("load", function(ev) {
+    if (xhr.status === 200) {
+      document.getElementById("userinfo").value = xhr.response;
+    } else if (xhr.status === 401 || xhr.status === 403) {
+      login();
+    }
+  });
+  xhr.send();
+}
+function login() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/saml/login");
+  xhr.addEventListener("load", function(ev) {
+    location.href = JSON.parse(xhr.response).url;
+  });
+  xhr.send();
+}
+window.addEventListener("load", getUserinfo);
+    </script>
+  </head>
+  <body>
+    <h1>SAML Demo</h1>
+    <p>userinfo: <textarea id="userinfo" name="userinfo"></textarea></p>
+  <body>
+</html>
