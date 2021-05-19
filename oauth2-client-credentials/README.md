@@ -1,4 +1,4 @@
-# Adding Access Tokens using the OAuth2 Client Credentials Flow
+# OAuth2 Client Credentials Flow
 
 In this example we learn how to configure Couper to automatically request an access token for a third-party API using the OAuth2 client credentials grant.
 
@@ -76,6 +76,7 @@ And the third is the request to the client in its access log:
 
 Now we protect the resource at the resource server API with a `jwt` access control:
 
+(please uncomment in `couper.hcl`)
 ```hcl
 ...
 server "resource-server" {
@@ -157,6 +158,8 @@ Now we reference this token endpoint in an `oauth2` block that we add to the `ba
 
 ```hcl
 ...
+    endpoint "/foo" {
+      proxy {
         backend {
           origin = "http://localhost:8081"
           path = "/resource"
@@ -213,7 +216,7 @@ Content-Length: 9
 {"foo":1}
 ```
 
-We don't see any entries for a token request in the log, because Couper has a valid token.
+We do not see any entries for a token request in the log, because Couper already has a valid token.
 
 But if we wait for more than 10 seconds, the token is expired and again we see five log entries containing the request for a new token.
 
