@@ -64,6 +64,8 @@ Press `CTRL+c` to stop the container.
 
 ### [Creating JWT](creating-jwt/README.md)
 
+### [OAuth2 Client Credentials Flow](oauth2-client-credentials/README.md)
+
 ### [Single-Sign-On with SAML](saml/README.md)
 
 ### [Variable: `path_params`](path-params/README.md)
