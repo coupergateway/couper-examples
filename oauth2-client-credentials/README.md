@@ -2,6 +2,8 @@
 
 In this example we learn how to configure Couper to automatically request an access token for a third-party API using the OAuth2 client credentials grant.
 
+![OAuth2 Example Image](oauth_example.png)
+
 OAuth2 defines (at least) three parties:
 * the resource server providing resources (e.g. an API) protected by access tokens,
 * the client requesting the resources,
