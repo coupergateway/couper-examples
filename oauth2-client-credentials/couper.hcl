@@ -20,7 +20,7 @@ server "client" {
 server "resource-server" {
   hosts = ["localhost:8081"]
   api {
-    access_control = ["token"]   # protect the resource server's api
+#    access_control = ["token"]   # protect the resource server's api
     endpoint "/resource" {
       response {
         json_body = {"foo" = 1}
