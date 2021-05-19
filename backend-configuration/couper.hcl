@@ -1,8 +1,8 @@
 server "backend-configuration" {
   endpoint "/downloads/**" {
     proxy {
-      backend "main" {
-        path = "/downloads/**"
+      backend "httpbin" {
+        path = "/anything/**"
         timeout = "10m"
 
         set_request_headers = {
@@ -12,16 +12,15 @@ server "backend-configuration" {
     }
   }
 
-  endpoint "/data/**" {
-    path = "/data/**"
+  endpoint "/anything" {
     proxy {
-      backend "main"
+      backend = "httpbin"
     }
   }
 }
 
 definitions {
-  backend "main" {
+  backend "httpbin" {
     origin = "https://httpbin.org"
     timeout = "5s"
     max_connections = 10
