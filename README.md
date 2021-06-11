@@ -22,17 +22,34 @@ To download/install Couper, open a terminal and execute:
 $ docker pull avenga/couper
 ```
 
-To run the examples, clone the repository and start Couper in a docker
-container with the example's directory shared into the container:
-
+To run the examples, clone the repository:
 ```sh
 $ git clone https://github.com/avenga/couper-examples.git
+
+Cloning into 'couper-examples'...
+```
+`cd` into the directory:
+```sh
 $ cd couper-examples
-$ cd simple-fileserving
+```
+Choose an example and `cd` into the directory:
+```sh
+$ cd /simple-fileserving
+````
+
+Then start Couper in a docker
+container: 
+
+```sh
 $ docker run --rm -p 8080:8080 -v "$(pwd)":/conf avenga/couper
 
 {"addr":"0.0.0.0:8080","level":"info","message":"couper gateway is serving","timestamp":"2020-08-27T16:39:18Z","type":"couper"}
 ```
+In the examples with a `docker-compose.yml` you can also run: 
+```sh
+$ docker-compose up
+```
+as an alternative.
 
 Now Couper is serving on your computer's port *8080*. Point your
 browser or `curl` to [`localhost:8080`](http://localhost:8080/) to see what's going on.
@@ -46,38 +63,33 @@ Press `CTRL+c` to stop the container.
 
 ## Examples
 
-### [Simple File-Serving](simple-fileserving/README.md)
+### File & Web Serving
 
-### [Proxy API Requests](api-proxy/README.md)
+* [Simple File-Serving](simple-fileserving/README.md)
+* [SPA Serving](spa-serving/README.md)
 
-### [Custom Requests](custom-requests/README.md)
+### Requests & Responses
 
-### [Multiple Requests](multiple-requests/README.md)
+* [Proxy API Requests](api-proxy/README.md)
+* [Custom Requests](custom-requests/README.md)
+* [Multiple Requests](multiple-requests/README.md)
+* [Static Responses](static-responses/README.md)
+* [Backend Validation](backend-validation/README.md)
+* [Path Parameter](path-params/README.md)
+* [Query Parameter Manipulation](query/README.md)
+* [Sending JSON Content](sending-json/README.md)
+* [Sending Form Content](sending-form/README.md)
 
-### [SPA Serving](spa-serving/README.md)
+### Authorization & Authentication
 
-### [Static Responses](static-responses/README.md)
+* [JWT Access Control](jwt-access-control/README.md)
+* [Sending JWT Claims Upstream](sending-jwt-upstream/README.md)
+* [Creating JWT](creating-jwt/README.md)
+* [OAuth2 Client Credentials Flow](oauth2-client-credentials/README.md)
+* [Single-Sign-On with SAML](saml/README.md)
+* [Error Handling for Access Controls](error-handling-ba/README.md)
 
-### [JWT Access Control](jwt-access-control/README.md)
-
-### [Sending JWT Claims Upstream](sending-jwt-upstream/README.md)
-
-### [Creating JWT](creating-jwt/README.md)
-
-### [OAuth2 Client Credentials Flow](oauth2-client-credentials/README.md)
-
-### [Single-Sign-On with SAML](saml/README.md)
-
-### [Variable: `path_params`](path-params/README.md)
-
-### [Backend Validation](backend-validation/README.md)
-
-### [Query Parameter Manipulation](query/README.md)
-
-### [Sending JSON Content](sending-json/README.md)
-
-### [Sending Form Content](sending-form/README.md)
-
-### [Using docker-compose](docker-compose/README.md)
-
-### [Error Handling for Access Controls](error-handling-ba/README.md)
+### Running Couper
+* [Environment Variables](env-vars/README.md)
+* [Using docker-compose](docker-compose/README.md)
+* [Linking Docker Containers](linking-docker-containers/README.md)

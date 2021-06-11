@@ -62,7 +62,7 @@ and then refer to it from an endpoint:
     }
   }
 ```
-When you start Couper and send a request the endpoint `/anything`:
+When you [start Couper](/README.md#getting-started) and send a request the endpoint `/anything`:
 ```
 curl -is localhost:8080/anything
 ```
@@ -84,7 +84,7 @@ Content-Length: 343
 
   "url": "https://httpbin.org/anything"
 }
-
+```
 You also have the option to refine this reference, depending on the use case in the respective `endpoint` block:
 
 ```hcl
