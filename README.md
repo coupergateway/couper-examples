@@ -90,6 +90,6 @@ Press `CTRL+c` to stop the container.
 * [Error Handling for Access Controls](error-handling-ba/README.md)
 
 ### Running Couper
-* [Environment Variables](env-vars/README.md)
+* [Environment Variables](env-var/README.md)
 * [Using docker-compose](docker-compose/README.md)
 * [Linking Docker Containers](linking-docker-containers/README.md)
