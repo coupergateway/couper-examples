@@ -16,12 +16,6 @@ image_ from [Docker Hub](https://hub.docker.com/r/avenga/couper)
 This requires a working [Docker](https://www.docker.com/) setup on your
 computer. Please visit the [get started guide](https://docs.docker.com/get-started/) to get prepared.
 
-To download/install Couper, open a terminal and execute:
-
-```sh
-$ docker pull avenga/couper
-```
-
 To run the examples, clone the repository:
 ```sh
 $ git clone https://github.com/avenga/couper-examples.git
@@ -36,30 +30,11 @@ Choose an example and `cd` into the directory:
 ```sh
 $ cd /simple-fileserving
 ````
-
-Then start Couper in a docker
-container: 
-
-```sh
-$ docker run --rm -p 8080:8080 -v "$(pwd)":/conf avenga/couper
-
-{"addr":"0.0.0.0:8080","level":"info","message":"couper gateway is serving","timestamp":"2020-08-27T16:39:18Z","type":"couper"}
-```
-In the examples with a `docker-compose.yml` you can also run: 
+and run
 ```sh
 $ docker-compose up
 ```
-as an alternative.
-
-Now Couper is serving on your computer's port *8080*. Point your
-browser or `curl` to [`localhost:8080`](http://localhost:8080/) to see what's going on.
-
-Press `CTRL+c` to stop the container.
-
-> Git Bash users on Windows may encounter the error message `Failed to load configuration: open couper.hcl: no such file or directory`. Try if disabling Windows path conversion helps:
-> ```sh
-> $ export MSYS_NO_PATHCONV=1
-> ```
+Press `CTRL+c` to exit.
 
 ## Examples
 
