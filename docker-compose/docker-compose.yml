@@ -12,3 +12,4 @@ services:
       # make important parameters configurable
       - GREET_NAME=Couper
       - SERVICE_ORIGIN=https://httpbin.org
+
