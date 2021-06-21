@@ -1,5 +1,5 @@
 server "k8s-example" {
-  # we will mount this config on another dir but want serve an index file
+  # we will mount this config on another dir, but want serve an index file
   files {
     document_root = "/htdocs"
   }
@@ -9,5 +9,4 @@ server "k8s-example" {
       body = "Hello! I am ${env.MY_POD_NAME}"
     }
   }
-
 }

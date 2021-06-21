@@ -4,7 +4,7 @@
     * [Deployment](#deployment)
     * [Service](#service)
   * [Applying the configuration](#applying-the-configuration)
-    * [Listing pods and services](#listing-pods-and-services)
+    * [Listing Pods and services](#listing-pods-and-services)
     * [Applying deployment and service](#applying-deployment-and-service)
   * [Accessing the Couper service](#accessing-the-couper-service)
   * [Adding a custom Couper configuration file](#adding-a-custom-couper-configuration-file)
@@ -16,12 +16,12 @@
 [Kubernetes](https://kubernetes.io/docs/home/), also known as *K8s*, is an established open-source container orchestration.
 We will describe a Couper integration as gateway service to connect multiple internal services.
 
-> **Note:** Currently Couper is not an [Ingress-Controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/). This is still required for e.g. TLS offloading.
+> **Note:** Currently Couper is not an [Ingress-Controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/). This is still required e.g. for TLS offloading.
 
 ## Requirements
 
 A running Kubernetes Cluster where you can apply the following configuration manifests.
-Running a local cluster can be achieved with e.g. [MiniKube](https://minikube.sigs.k8s.io/docs/).
+Running a local cluster can be achieved e.g. with the [MiniKube](https://minikube.sigs.k8s.io/docs/).
 
 The [`kubectl`](https://kubernetes.io/docs/tasks/tools/) is required to apply the manifest files to your cluster.
 
@@ -30,11 +30,11 @@ The [`kubectl`](https://kubernetes.io/docs/tasks/tools/) is required to apply th
 To keep things simple, we will configure a [Pod](https://kubernetes.io/docs/concepts/workloads/pods/) containing a Couper [deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) and a [service](https://kubernetes.io/docs/concepts/services-networking/service/) to describe our basic setup.
 
 Depending on the project you may want to connect the upstream services via additional Kubernetes services.
-For those cases use the related [service dns-record](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/) as [`origin`](https://github.com/avenga/couper/tree/master/docs#backend-block) for your `backend` configuration within your Couper configuration file.
+For those cases use the related [service dns-record](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/) as `origin` for your [`backend`](https://github.com/avenga/couper/tree/master/docs#backend-block) configuration within your Couper configuration file.
 
 ### Deployment
 
-The following configuration shows a setup with just one container, Couper. We have changed the listening port to `8099` (default: `8080`) via environment variable. This change will affect the `service` configuration since we will map the service to the container port.
+The following configuration shows a setup with just one container - Couper. We have changed the listening port to `8099` (default: `8080`) via environment variable. This change will affect the `service` configuration since we will map the service to the container port.
 
 ```yaml
 apiVersion: apps/v1
@@ -92,9 +92,9 @@ spec:
 
 Now we are going to apply those manifest (`yaml`) files. After that Couper will show a welcome page.  
 
-I am using minikube here, but the following commands should work for all local or remote clusters. Just ensure your `kubectl` *context* and *namespace* is set accordingly.
+I am using MiniKube here, but the following commands should work for all local or remote clusters. Just ensure your `kubectl` *context* and *namespace* is set accordingly.
 
-### Listing pods and services
+### Listing Pods and services
 
 First, let's see what is already running:
 
@@ -105,11 +105,11 @@ NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE   SELE
 service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   21h   <none>
 ```
 
-Just the minikube service, we will ignore this for now.
+Just the MiniKube service, we will ignore this for now.
 
 ### Applying deployment and service
 
-Execute the following apply command which will create all resources related to our configurations:
+Execute the following `apply` command which will create all resources related to our configurations:
 
 ```shell
 kubectl apply -f deployment.yaml -f service.yaml
@@ -137,9 +137,9 @@ We can see the newly created `pod/couper-example-*` and the service named `coupe
 
 To be able to access the newly created `couper-example` service and keeping things simple we will just use the `kubectl port-forward` command.
 
-> *Note*: For production setups this may be solved by a properly configured ingress-controller which will forward the traffic for e.g. a specific hostname to your Couper service.
+> *Note*: For production setups this may be solved by a properly configured Ingress-Controller which will forward the traffic, e.g. for a specific hostname to your Couper service.
 
-We will pick a free port on our local machine e.g. `9090` and forward it to the service port `7070` with:
+We will pick a free port on our local machine, e.g. `9090`, and forward it to the service port `7070`:
 
 ```shell
 kubectl port-forward service/couper-example 9090:7070
@@ -155,7 +155,6 @@ Running `curl -v http://127.0.0.1:9090/` results in:
 < HTTP/1.1 200 OK
 < Content-Type: text/html; charset=utf-8
 < Server: couper.io
-< Vary: Accept-Encoding
 ...
 ```
 
@@ -164,7 +163,7 @@ Or you can visit the welcome page with your browser: [http://localhost:9090/](ht
 ## Adding a custom Couper configuration file
 
 To customize the Couper configuration you can build a container inherited from `avenga/couper`, add the related configuration file and make this image available to your K8s cluster.
-First, we will mount the configuration file into the pod with help from the [configmap](https://kubernetes.io/docs/concepts/configuration/configmap/).
+First, we will mount the configuration file into the Pod with help from the [configmap](https://kubernetes.io/docs/concepts/configuration/configmap/).
 
 Let's run the following:
 
@@ -180,7 +179,7 @@ This will make the content from our `couper.hcl` available as key `couper.hcl` w
 
 The following updates can be found as complete configuration file in `deployment_part_two.yaml`.
 
-We will add a configmap volume with our `couper.hcl` and another environment variable to response the current pod name.
+We will add a configmap volume with our `couper.hcl` and another environment variable to response the current Pod name.
 
 The environment variable `MY_POD_NAME` gets referred via Couper configuration.
 
@@ -227,7 +226,6 @@ Finally, we call `curl -v http://localhost:9090/hello` and see the result from o
 < HTTP/1.1 200 OK
 < Content-Type: text/plain
 < Server: couper.io
-< Content-Length: 43
 <
 
 Hello! I am couper-example-7fdf98f4c8-mrbx5
@@ -235,4 +233,4 @@ Hello! I am couper-example-7fdf98f4c8-mrbx5
 
 ## See also
 
-K8s: [Expose a service](https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/)
+* K8s: [Expose a service](https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/)
