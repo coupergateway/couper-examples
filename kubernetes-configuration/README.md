@@ -1,15 +1,15 @@
 * [Kubernetes configuration for Couper](#kubernetes-configuration-for-couper)
-   * [Requirements](#requirements)
-   * [Configuration](#configuration)
-      * [Deployment](#deployment)
-      * [Service](#service)
-   * [Applying the configuration](#applying-the-configuration)
-      * [Listing pods and services](#listing-pods-and-services)
-      * [Applying deployment and service](#applying-deployment-and-service)
-   * [Accessing the Couper service](#accessing-the-couper-service)
-   * [Adding a custom Couper configuration file](#adding-a-custom-couper-configuration-file)
-      * [Replacing the deployment](#replacing-the-deployment)
-   * [See also](#see-also)
+  * [Requirements](#requirements)
+  * [Configuration](#configuration)
+    * [Deployment](#deployment)
+    * [Service](#service)
+  * [Applying the configuration](#applying-the-configuration)
+    * [Listing pods and services](#listing-pods-and-services)
+    * [Applying deployment and service](#applying-deployment-and-service)
+  * [Accessing the Couper service](#accessing-the-couper-service)
+  * [Adding a custom Couper configuration file](#adding-a-custom-couper-configuration-file)
+    * [Replacing the deployment](#replacing-the-deployment)
+  * [See also](#see-also)
 
 # Kubernetes configuration for Couper
 
@@ -23,11 +23,11 @@ We will describe a Couper integration as gateway service to connect multiple int
 A running Kubernetes Cluster where you can apply the following configuration manifests.
 Running a local cluster can be achieved with e.g. [MiniKube](https://minikube.sigs.k8s.io/docs/).
 
-`kubectl` is required to apply the manifest files to your cluster: https://kubernetes.io/docs/tasks/tools/
+The [`kubectl`](https://kubernetes.io/docs/tasks/tools/) is required to apply the manifest files to your cluster.
 
 ## Configuration
 
-To keep things simple, we will configure a [Pod](https://kubernetes.io/docs/concepts/workloads/pods/) containing a Couper [deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) and a [service](https://kubernetes.io/docs/concepts/services-networking/service/) to describe our basic setup. 
+To keep things simple, we will configure a [Pod](https://kubernetes.io/docs/concepts/workloads/pods/) containing a Couper [deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) and a [service](https://kubernetes.io/docs/concepts/services-networking/service/) to describe our basic setup.
 
 Depending on the project you may want to connect the upstream services via additional Kubernetes services.
 For those cases use the related [service dns-record](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/) as [`origin`](https://github.com/avenga/couper/tree/master/docs#backend-block) for your `backend` configuration within your Couper configuration file.
@@ -110,6 +110,7 @@ Just the minikube service, we will ignore this for now.
 ### Applying deployment and service
 
 Execute the following apply command which will create all resources related to our configurations:
+
 ```shell
 kubectl apply -f deployment.yaml -f service.yaml
 
@@ -118,6 +119,7 @@ service/couper-example created
 ```
 
 Check the results:
+
 ```shell
 kubectl get pods,services -o wide
 
@@ -157,7 +159,7 @@ Running `curl -v http://127.0.0.1:9090/` results in:
 ...
 ```
 
-Or you can visit the welcome page with your browser: [http://localhost:9090/](http://localhost:9090/) 
+Or you can visit the welcome page with your browser: [http://localhost:9090/](http://localhost:9090/)
 
 ## Adding a custom Couper configuration file
 
@@ -165,6 +167,7 @@ To customize the Couper configuration you can build a container inherited from `
 First, we will mount the configuration file into the pod with help from the [configmap](https://kubernetes.io/docs/concepts/configuration/configmap/).
 
 Let's run the following:
+
 ```shell
 kubectl create configmap couper-example --from-file=couper.hcl=couper.hcl
 
