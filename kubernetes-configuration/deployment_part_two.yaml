@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: couper-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: couper
+  minReadySeconds: 2
+  template:
+    metadata:
+      labels:
+        app: couper
+    spec:
+      containers:
+        - name: couper
+          # With 'latest' tag, K8s image pull policy is implicitly 'always'
+          image: avenga/couper:latest
+          args: ['run', '-f', '/my-conf/couper.hcl']
+          ports:
+            - containerPort: 8099
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8099
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          env:
+            - name: COUPER_DEFAULT_PORT
+              value: '8099'
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          volumeMounts:
+            - name: couper-conf
+              mountPath: /my-conf/couper.hcl
+              subPath: couper.hcl
+      volumes:
+        - name: couper-conf
+          configMap:
+            name: couper-example
