@@ -9,4 +9,3 @@ services:
     environment:
       # hot reload config
       - COUPER_WATCH=true
-    
