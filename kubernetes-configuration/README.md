@@ -1,16 +1,3 @@
-* [Kubernetes configuration for Couper](#kubernetes-configuration-for-couper)
-  * [Requirements](#requirements)
-  * [Configuration](#configuration)
-    * [Deployment](#deployment)
-    * [Service](#service)
-  * [Applying the configuration](#applying-the-configuration)
-    * [Listing Pods and services](#listing-pods-and-services)
-    * [Applying deployment and service](#applying-deployment-and-service)
-  * [Accessing the Couper service](#accessing-the-couper-service)
-  * [Adding a custom Couper configuration file](#adding-a-custom-couper-configuration-file)
-    * [Replacing the deployment](#replacing-the-deployment)
-  * [See also](#see-also)
-
 # Kubernetes configuration for Couper
 
 [Kubernetes](https://kubernetes.io/docs/home/), also known as *K8s*, is an established open-source container orchestration.
