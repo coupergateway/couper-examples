@@ -66,8 +66,9 @@ use the operator again. `/example/anything` becomes
 
 [Start a Couper container](/README.md#getting-started) and play with the [httpbin endpoints](https://httpbin.org/):
 
-```
+```sh
 $ curl 'localhost:8080/example/anything?a=b'
+
 {
   "args": {
     "a": "b"
@@ -88,4 +89,4 @@ $ curl 'localhost:8080/example/anything?a=b'
 }
 ```
 
-Notice how host and path in the `curl` command differ from the `url` in the response JSON.
+Note how the host and the path in the `curl` command line differ from the `url` in the response JSON.

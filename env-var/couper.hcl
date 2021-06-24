@@ -1,7 +1,5 @@
 server "my-api" {
-
   api {
-
     endpoint "/example/**" {
       proxy {
         path = "/**"
@@ -9,7 +7,6 @@ server "my-api" {
           origin = "https://httpbin.org"
           // uncomment to read origin from env:
           //origin = env.HTTPBIN_ORIGIN
-
         }
       }
     }

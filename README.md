@@ -17,24 +17,32 @@ This requires a working [Docker](https://www.docker.com/) setup on your
 computer. Please visit the [get started guide](https://docs.docker.com/get-started/) to get prepared.
 
 To run the examples, clone the repository:
+
 ```sh
 $ git clone https://github.com/avenga/couper-examples.git
 
 Cloning into 'couper-examples'...
 ```
-`cd` into the directory:
+
+change into the `couper-examples` directory:
+
 ```sh
-$ cd couper-examples
+cd couper-examples
 ```
-Choose an example and `cd` into the directory:
+
+Choose an example, change to its directory:
+
 ```sh
-$ cd /simple-fileserving
-````
+cd simple-fileserving
+```
+
 and run
+
 ```sh
-$ docker-compose up
+docker-compose up
 ```
-Press `CTRL+c` to exit.
+
+Press `CTRL+C` to exit.
 
 ## Examples
 
@@ -65,6 +73,7 @@ Press `CTRL+c` to exit.
 * [Error Handling for Access Controls](error-handling-ba/README.md)
 
 ### Running Couper
+
 * [Environment Variables](env-var/README.md)
 * [Using docker-compose](docker-compose/README.md)
 * [Linking Docker Containers](linking-docker-containers/README.md)

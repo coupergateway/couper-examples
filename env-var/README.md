@@ -17,7 +17,6 @@ We have a basic Couper configuration that defines an upstream backend service an
 
 ```hcl
 server "my-api" {
-
   api {
     endpoint "/example/**" {
       path = "/**"
@@ -28,13 +27,12 @@ server "my-api" {
       }
     }
   }
-  
 }
 ```  
 
 To configure the actual origin of our service, we decide to use the following environment variable:
 
-```
+```sh
 BACKEND_ORIGIN=https://httpbin.org
 ```
 
@@ -51,6 +49,7 @@ Now we change the Couper configuration to read the origin host from that variabl
   }
 …
 ```
+
 There are numerous ways to inject environment variables into docker. You can set them in your `docker-compose.yaml`, define them in your Kubernetes `Deployment`, read them from a `ConfigMap` or pass them as command line arguments when starting the container.
 
 [`docker-compose.yml`](docker-compose.yml):
@@ -59,10 +58,11 @@ There are numerous ways to inject environment variables into docker. You can set
     environment:
       - HTTPBIN_ORIGIN=https://httpbin.org
 ```
+
 Docker command:
 
 ```sh
-$ docker run --rm \
+docker run --rm \
 -p 8080:8080 \
 -v "$(pwd)":/conf \
 -e HTTPBIN_ORIGIN=https://httpbin.org \

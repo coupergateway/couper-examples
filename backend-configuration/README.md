@@ -38,6 +38,7 @@ server "backend-configuration" {
   }
 }
 ```
+
 ## Reusing backend configurations
 
 You can "reuse" `backend` configurations by defining a labeled `backend` in the `definitions` block:
@@ -62,13 +63,16 @@ and then refer to it from an endpoint:
     }
   }
 ```
-When you [start Couper](/README.md#getting-started) and send a request the endpoint `/anything`:
-```
+
+When you [start Couper](/README.md#getting-started) and send a request to the endpoint `/anything`:
+
+```sh
 curl -is localhost:8080/anything
 ```
+
 You will get a response from `https://httpbin.org/anything`:
 
-```
+```sh
 HTTP/1.1 200 OK
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: *
@@ -85,6 +89,7 @@ Content-Length: 343
   "url": "https://httpbin.org/anything"
 }
 ```
+
 You also have the option to refine this reference, depending on the use case in the respective `endpoint` block:
 
 ```hcl
@@ -102,18 +107,21 @@ You also have the option to refine this reference, depending on the use case in 
   }
 ```
 
-In this example we increase the request timeout for all `/download/**` routes to `10m` and add a HTTP request header
-field `X-Hello: from Couper`. 
+In this example we increase the request timeout for all `/download/**` routes to
+`10m` and add a HTTP request header field `X-Hello: from Couper`.
 
-The other settings (`max_connections`, `ttfb_timeout`
-etc.) are inherited from the `backend` configuration in the `definitions` block.
+The other settings (`max_connections`, `ttfb_timeout` etc.) are inherited from the
+`backend` configuration in the `definitions` block.
 
-When you request: 
-```
+When you request:
+
+```sh
 curl -is localhost:8080/downloads
 ```
+
 You will see the additional header:
-```
+
+```sh
 HTTP/1.1 200 OK
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: *
@@ -136,6 +144,7 @@ Content-Length: 374
   "url": "https://httpbin.org/anything"
 }
 ```
+
 ## See also
 
-* [backend Block](https://github.com/avenga/couper/tree/master/docs/README.md#backend-block) (reference)
+* [Backend Block](https://github.com/avenga/couper/tree/master/docs/README.md#backend-block) (reference)

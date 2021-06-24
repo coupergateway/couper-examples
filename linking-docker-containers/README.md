@@ -1,4 +1,4 @@
-# Linking Docker Containers 
+# Linking Docker Containers
 
 Developers might want to run the backend and Couper both in
 containers on their computer. Be aware that `localhost` in a Docker
@@ -13,8 +13,8 @@ ports.
 Let's start a local instance of `httpbin` in a container. It needs a
 name to be linkable:
 
-```
-$ docker run --rm --name httpbin kennethreitz/httpbin
+```sh
+docker run --rm --name httpbin kennethreitz/httpbin
 ```
 
 Note, that we don't need to exported a port (`-p`) here.
@@ -22,7 +22,7 @@ Note, that we don't need to exported a port (`-p`) here.
 Now this command starts Couper linked to our local `httpbin` container:
 
 ```sh
-$ docker run --rm \
+docker run --rm \
 -p 8080:8080 \
 -v "$(pwd)":/conf \
 --link httpbin:httpbin \
@@ -51,4 +51,5 @@ strings. We can use variables enclosed in curly brackets to insert
 dynamic data into a string.
 
 ## Linking containers with `docker-compose`
+
 Please have a look at the [docker-compose example](../docker-compose) to see how you can link containers with `docker-compose`.

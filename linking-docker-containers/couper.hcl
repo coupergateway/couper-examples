@@ -1,7 +1,5 @@
 server "my-api" {
-
   api {
-
     endpoint "/example/**" {
       proxy {
         path = "/**"
