@@ -21,7 +21,7 @@ server "form" {
 
 Call Couper with
 
-```shell
+```sh
 curl http://localhost:8080/form
 ```
 

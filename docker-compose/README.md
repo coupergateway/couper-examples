@@ -17,7 +17,7 @@ In this example, we are using the current working directory (`.`) as Couper's `/
 
 Start your setup:
 
-```shell
+```sh
 $ docker-compose up
 ```
 
@@ -111,7 +111,7 @@ services:
 
 Run
 
-```shell
+```sh
 $ docker-compose up
 ```
 

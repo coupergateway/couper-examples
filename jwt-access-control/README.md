@@ -94,7 +94,7 @@ server "secured-api" {
 [Start your container, ](/README.md#getting-started) and check that
 the API works as expected:
 
-```shell
+```sh
 $ curl http://localhost:8080/private/headers
 {
   "headers": {
@@ -184,7 +184,7 @@ Excellent! Now that API is not open to the public anymore. But can
 _we_ still use it? Use the two prepared tokens from above in your
 calls:
 
-```shell
+```sh
 $ curl -i http://localhost:8080/private/headers -H "authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIiwiZXhwIjoxNTkwNDkxNTI4fQ.lJnUpBzMx84_5yigeHeLw4f8sbdSdu_7fWr1--t7EAp8v8K-kSmVYUGnR0Jx4o_ZE84N2M72Kn1pKssrzgTHsFi7txcZHHz_JqgnPgKqsZwjrmWDC-XVvdrSXjAsPO6wn0qy3KEMT1y6Z8YQA4ZyzA1dDsRRIUFiNrgF6_b5pC4"
 
 HTTP/1.1 403 Forbidden
@@ -206,7 +206,7 @@ from `401` to `403`. We send an authentication token, but it is not
 valid. Well, now we know that this one is the invalid one, because it
 has expired.
 
-```shell
+```sh
 $ curl -i http://localhost:8080/private/headers -H "authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIn0.bNXv28XmnFBjirPbCzBqyfpqHKo6PpoFORHsQ-80IJLi3IhBh1y0pFR0wm-2hiz_F7PkGQLTsnFiSXxCt1DZvMstbQeklZIh7O3tQGJyCAi-HRVASHKKYqZ_-eqQQhNr8Ex00qqJWD9BsWVJr7Q526Gua7ghcttmVgTYrfSNDzU"
 
 HTTP/1.1 200 OK

@@ -188,7 +188,7 @@ After loading the page, a request is sent to the API's `/userinfo` endpoint to g
 
 As our demo application is now complete, we can start it:
 
-```shell
+```sh
 docker-compose up
 ```
 

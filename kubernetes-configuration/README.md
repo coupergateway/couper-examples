@@ -85,7 +85,7 @@ I am using MiniKube here, but the following commands should work for all local o
 
 First, let's see what is already running:
 
-```shell
+```sh
 kubectl get pods,services -o wide
 
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE   SELECTOR
@@ -98,7 +98,7 @@ Just the MiniKube service, we will ignore this for now.
 
 Execute the following `apply` command which will create all resources related to our configurations:
 
-```shell
+```sh
 kubectl apply -f deployment.yaml -f service.yaml
 
 deployment.apps/couper-example created
@@ -107,7 +107,7 @@ service/couper-example created
 
 Check the results:
 
-```shell
+```sh
 kubectl get pods,services -o wide
 
 NAME                                  READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
@@ -128,7 +128,7 @@ To be able to access the newly created `couper-example` service and keeping thin
 
 We will pick a free port on our local machine, e.g. `9090`, and forward it to the service port `7070`:
 
-```shell
+```sh
 kubectl port-forward service/couper-example 9090:7070
 
 Forwarding from 127.0.0.1:9090 -> 8099
@@ -137,7 +137,7 @@ Forwarding from [::1]:9090 -> 8099
 
 Running `curl -v http://127.0.0.1:9090/` results in:
 
-```shell
+```sh
 ...
 < HTTP/1.1 200 OK
 < Content-Type: text/html; charset=utf-8
@@ -154,7 +154,7 @@ First, we will mount the configuration file into the Pod with help from the [con
 
 Let's run the following:
 
-```shell
+```sh
 kubectl create configmap couper-example --from-file=couper.hcl=couper.hcl
 
 configmap/couper-example created
@@ -192,7 +192,7 @@ spec:
             name: couper-example
 ```
 
-```shell
+```sh
 kubectl replace --force -f deployment_part_two.yaml
 
 deployment.apps "couper-example" deleted
@@ -203,13 +203,13 @@ deployment.apps/couper-example replaced
 
 You may want to re-run the `port-forward` command since the previous container got removed.
 
-```shell
+```sh
 kubectl port-forward service/couper-example 9090:7070
 ```
 
 Finally, we call `curl -v http://localhost:9090/hello` and see the result from our custom endpoint response:
 
-```shell
+```sh
 < HTTP/1.1 200 OK
 < Content-Type: text/plain
 < Server: couper.io
