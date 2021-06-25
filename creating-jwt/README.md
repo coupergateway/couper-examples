@@ -51,7 +51,7 @@ UNIX timestamp in seconds as a number.
 Call Couper with
 
 ```shell
-$ curl -s --data-urlencode "username=john.doe" http://localhost:8080/token | jq
+$ curl -s --data-urlencode "username=john.doe" http://localhost:8080/token
 ```
 
 The response looks similar to

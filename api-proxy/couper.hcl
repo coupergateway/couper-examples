@@ -11,8 +11,6 @@ server "my-api" {
         path = "/**"
         backend {
           origin = "https://httpbin.org"
-          // uncomment to read origin from env:
-          //origin = env.HTTPBIN_ORIGIN
 
           // uncomment to set headers on the way
           //set_request_headers = {

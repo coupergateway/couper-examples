@@ -1,0 +1,13 @@
+version: "3"
+services:
+  couper:
+    image: avenga/couper
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/conf
+    environment:
+      # hot reload config
+      - COUPER_WATCH=true
+      # make important parameters configurable
+      - HTTPBIN_ORIGIN=https://httpbin.org
