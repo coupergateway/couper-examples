@@ -89,4 +89,4 @@ $ curl 'localhost:8080/example/anything?a=b'
 }
 ```
 
-Note how the host and the path in the `curl` command line differ from the `url` in the response JSON.
+Note how host and path in the `curl` command line differ from the `url` in the response JSON.
