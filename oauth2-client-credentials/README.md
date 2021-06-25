@@ -5,13 +5,14 @@ In this example we learn how to configure Couper to automatically request an acc
 ![OAuth2 Example Image](oauth_example.png)
 
 OAuth2 defines (at least) three parties:
+
 * the resource server providing resources (e.g. an API) protected by access tokens,
 * the client requesting the resources,
 * and the authorization server providing the access tokens.
 
 Usually, Couper acts only as the OAuth2 client but in this example, we use Couper for all three parties.
 
-**(Please jump to the bottom of the page to learn how to configure Couper in a real world setting)**
+_**(Please jump to the bottom of the page to learn how to configure Couper in a real world setting)**_
 
 First, we define two `server` blocks in `couper.hcl`, one for the client:
 
@@ -67,11 +68,15 @@ We see three new log entries. The first is the request to the resource server in
 ```json
 {"build":"dde67d7","bytes":9,"client_ip":"127.0.0.1","endpoint":"/resource","handler":"api","level":"info","message":"","method":"GET","proto":"HTTP/1.1","realtime":"0.416","request":{"addr":"localhost:8081","headers":{"accept":"*/*","user-agent":"curl/7.67.0"},"host":"localhost","path":"/resource","port":"8081","tls":false},"response":{"bytes":9,"headers":{"content-type":"application/json"}},"scheme":"http","server":"resource-server","status":200,"timestamp":"2021-05-07T15:36:54Z","type":"couper_access","uid":"c2alt5ig9jseb1ednotg","url":"http://localhost:8081/resource","version":"master"}
 ```
+
 The second is the same request in the client's backend log:
+
 ```json
 {"backend":"default","build":"dde67d7","level":"info","message":"","realtime":"1.614","request":{"addr":"localhost:8081","headers":{"accept":"*/*","user-agent":"curl/7.67.0"},"host":"localhost","method":"GET","name":"default","path":"/foo","port":"8081","proto":"HTTP/1.1","scheme":"http"},"response":{"headers":{"content-type":"application/json"},"proto":"HTTP/1.1","tls":false},"status":200,"timestamp":"2021-05-07T15:36:54Z","timings":{"connect":"0.150","dns":"0.374","ttfb":"0.708"},"type":"couper_backend","uid":"c2alt5ig9jseb1ednot0","url":"http://localhost:8081/resource","version":"master"}
-````
+```
+
 And the third is the request to the client in its access log:
+
 ```json
 {"build":"dde67d7","bytes":9,"client_ip":"172.17.0.1","endpoint":"/foo","handler":"api","level":"info","message":"","method":"GET","proto":"HTTP/1.1","realtime":"2.125","request":{"addr":"localhost:8080","headers":{"accept":"*/*","user-agent":"curl/7.67.0"},"host":"localhost","path":"/foo","port":"8080","tls":false},"response":{"bytes":9,"headers":{"content-type":"application/json"}},"scheme":"http","server":"client","status":200,"timestamp":"2021-05-07T15:36:54Z","type":"couper_access","uid":"c2alt5ig9jseb1ednot0","url":"http://localhost:8080/foo","version":"master"}
 ```
@@ -79,6 +84,7 @@ And the third is the request to the client in its access log:
 Now we protect the resource at the resource server API with a `jwt` access control:
 
 (please uncomment in `couper.hcl`)
+
 ```hcl
 ...
 server "resource-server" {
@@ -124,7 +130,9 @@ Content-Length: 146
   }
 }
 ```
+
 Corresponding log entry:
+
 ```json
 {"build":"dde67d7","bytes":146,"client_ip":"127.0.0.1","endpoint":"","error_type":"jwt_token_missing","level":"error","message":"access control error: token: token required","method":"GET","proto":"HTTP/1.1","realtime":"0.105","request":{"addr":"localhost:8081","headers":{"accept":"*/*","user-agent":"curl/7.67.0"},"host":"localhost","path":"/resource","port":"8081","tls":false},"response":{"bytes":146,"headers":{"content-type":"application/json"}},"scheme":"http","server":"resource-server","status":401,"timestamp":"2021-05-07T15:37:36Z","type":"couper_access","uid":"c2altg6jsr9gcdiijvp0","url":"http://localhost:8081/resource","version":"master"}
 ```
@@ -132,7 +140,6 @@ Corresponding log entry:
 We get a `401` because our request did not contain a token. Yet!
 
 We add a third `server` block to emulate a simple OAuth2 authorization server. It contains an endpoint creating a token response with a JWT expiring after 10 seconds. (A real authorization server will of course do a lot of checks before creating the response, but we skip that here for simplicity)
-
 
 ```hcl
 server "authorization-server" {
@@ -194,10 +201,13 @@ Content-Length: 9
 If we now look at the logs, we see five log entries.
 
 The first is the token request in the authorization server's access log:
+
 ```json
 {"auth_user":"my-client","build":"dde67d7","bytes":140,"client_ip":"127.0.0.1","endpoint":"/token","handler":"endpoint","level":"info","message":"","method":"POST","proto":"HTTP/1.1","realtime":"0.616","request":{"addr":"localhost:8082","headers":{},"host":"localhost","path":"/token","port":"8082","tls":false},"response":{"bytes":140,"headers":{"content-type":"application/json"}},"scheme":"http","server":"authorization-server","status":200,"timestamp":"2021-05-07T15:38:23Z","type":"couper_access","uid":"c2altrtnb4g11ke0bndg","url":"http://localhost:8082/token","version":"master"}
 ```
+
 And the second in the client's backend log representing the token request sent by Couper (because it had no (valid) token):
+
 ```json
 {"auth_user":"my-client","backend":"default","build":"dde67d7","level":"info","message":"","realtime":"2.131","request":{"addr":"localhost:8082","headers":{},"host":"localhost","method":"POST","name":"default","path":"","port":"8082","proto":"HTTP/1.1","scheme":"http"},"response":{"headers":{"content-type":"application/json"},"proto":"HTTP/1.1","tls":false},"status":200,"timestamp":"2021-05-07T15:38:23Z","timings":{"connect":"0.200","dns":"0.413","ttfb":"1.060"},"token_request":"oauth2","type":"couper_backend","uid":"c2altrtnb4g11ke0bnd0","url":"http://localhost:8082/token","version":"master"}
 ```
@@ -222,11 +232,10 @@ we do not see any entries for a token request in the log, because Couper already
 
 But if we wait for more than 10 seconds, the token is expired and again we see five log entries containing the request for a new token.
 
-## How to use the oauth2 block in a real world setting 
+## How to use the oauth2 block in a real world setting
 
 In a real-world setting, use the `oauth2` block in your backend configuration for the
 third-party API that needs a token available via the client credentials flow and configure the parameters `token_endpoint`, `client_id` and `client_secret` accordingly:
-
 
 ```hcl
 ...
@@ -255,7 +264,7 @@ We can also specify the scope of the requested access token by setting the `scop
 scope = "foo bar"
 ```
 
-## See also:
+## See also
 
 * [OAuth2 Block](https://github.com/avenga/couper/tree/master/docs/README.md#oauth2-block) (reference)
 * [JWT Block](https://github.com/avenga/couper/tree/master/docs/README.md#jwt-block) (reference)

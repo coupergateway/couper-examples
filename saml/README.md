@@ -1,6 +1,6 @@
 # Single-Sign-On with SAML
 
-The Security Assertion Markup Language (SAML) 2.0 defines the Web Browser Single-Sign-On Profile (for more information see secion 4.1 in https://www.oasis-open.org/committees/download.php/56782/sstc-saml-profiles-errata-2.0-wd-07.pdf). In this profile the web browser sends a `GET` request containing the SAML request data to the SAML identity provider (IdP); the IdP authenticates the user and then causes the browser to send a `POST` request with the SAML response data containing an assertion with information about the authenticated user to the SAML service provider (SP).
+The Security Assertion Markup Language (SAML) 2.0 defines the Web Browser Single-Sign-On Profile (for more information see secion 4.1 in `https://www.oasis-open.org/committees/download.php/56782/sstc-saml-profiles-errata-2.0-wd-07.pdf`). In this profile the web browser sends a `GET` request containing the SAML request data to the SAML identity provider (IdP); the IdP authenticates the user and then causes the browser to send a `POST` request with the SAML response data containing an assertion with information about the authenticated user to the SAML service provider (SP).
 
 ![SAML Flow](saml_flow.svg)
 
@@ -62,7 +62,6 @@ definitions {
 * `sp_acs_url` is the ACS URL at the SP.
 * `array_attributes` contains a list of attributes from the SAML assertion which may have multiple values
 
-
 In the `server` block we configure an endpoint that returns the SAML request URL:
 
 ```hcl
@@ -100,8 +99,8 @@ server "saml" {
         set-cookie = "UserToken=${jwt_sign("UserToken", {
           sub = request.context.SSO.sub
           mail = request.context.SSO.attributes.email
-		  groups = request.context.SSO.attributes.eduPersonAffiliation
-		})};HttpOnly;Secure;Path=/api"
+      groups = request.context.SSO.attributes.eduPersonAffiliation
+    )};HttpOnly;Secure;Path=/api"
         location = "/"
       }
     }
@@ -111,7 +110,7 @@ definitions {
 ...
 ```
 
-This endpoint is protected by the `saml` access control, which validates the received SAML response and stores some data from the contained SAML assertion in `request.context.SSO`. From this information we create a JWT and send it to the browser via the `set-cookie` header. The `status` code `303` together with the `location` header causes the browser to load the HTML page at http://localhost:8080/.
+This endpoint is protected by the `saml` access control, which validates the received SAML response and stores some data from the contained SAML assertion in `request.context.SSO`. From this information we create a JWT and send it to the browser via the `set-cookie` header. The `status` code `303` together with the `location` header causes the browser to load the HTML page at `http://localhost:8080/`.
 
 For the `jwt_sign` function we add a `jwt_signing_profile` block to the `definitions` (see [Creating JWT](../creating-jwt/README.md) for more information):
 
@@ -192,7 +191,7 @@ As our demo application is now complete, we can start it:
 docker-compose up
 ```
 
-We point our browser to http://localhost:8080/. For a short time, the browser shows the SAML Demo page with a blank textarea, indicating that no information about the user is available.
+We point our browser to `http://localhost:8080/`. For a short time, the browser shows the SAML Demo page with a blank textarea, indicating that no information about the user is available.
 
 The browser then loads the identity provider's login form (in case the user is not already logged in at the IdP).
 
@@ -207,7 +206,7 @@ The browser then loads the SAML Demo page again, now showing some user informati
 
 We can play around with this demo by removing
 
-* either only the `UserToken` cookie (in chrome-based browsers you may have to make a navigational request to http://localhost:8080/api/userinfo to see it in the developer tools),
+* either only the `UserToken` cookie (in chrome-based browsers you may have to make a navigational request to `http://localhost:8080/api/userinfo` to see it in the developer tools),
 * or the `UserToken`, `PHPSESSIDIDP` and `SimpleSAMLAuthTokenIdp` cookies.
 
 Watch the network tab of the browser's developer tools to see what happens.

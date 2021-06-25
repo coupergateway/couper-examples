@@ -1,6 +1,6 @@
 # Using docker-compose
 
-A typical setup for local development is running Couper with [`docker-compose`](https://docs.docker.com/compose/). Couper's Docker image [`avenga/couper`](https://hub.docker.com/r/avenga/couper) is ready to use. All you need is a `docker-compose.yaml`: 
+A typical setup for local development is running Couper with [`docker-compose`](https://docs.docker.com/compose/). Couper's Docker image [`avenga/couper`](https://hub.docker.com/r/avenga/couper) is ready to use. All you need is a `docker-compose.yaml`:
 
 ```yaml
 version: "3"
@@ -13,12 +13,12 @@ services:
       - ./:/conf
 ```
 
-In this example, we are using the current working directory (`.`) as Couper's `/conf` directory. 
+In this example, we are using the current working directory (`.`) as Couper's `/conf` directory.
 
 Start your setup:
 
 ```sh
-$ docker-compose up
+docker-compose up
 ```
 
 Now point your browser to [`http://localhost:8080`](http://localhost:8080).
@@ -112,8 +112,8 @@ services:
 Run
 
 ```sh
-$ docker-compose up
+docker-compose up
 ```
 
-and this time, two services come up. http://localhost:8080 should
+and this time, two services come up. `http://localhost:8080` should
 greet you with a local IP address.

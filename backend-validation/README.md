@@ -57,7 +57,7 @@ server "my-api" {
 
 That's basically all, and a call to [localhost:8080/validate](http://localhost:8080/validate) will give you a response with status `200` (OK).
 We could refine the configuration to trigger a validation error. Let's add a requirement for
-a specific `string` query parameter named `show_env` (`openapi_refined.yaml`): 
+a specific `string` query parameter named `show_env` (`openapi_refined.yaml`):
 
 ```yaml
 openapi: 3.0.1
@@ -81,7 +81,7 @@ paths:
 The result should have status code `400` if you are accessing [localhost:8080/validate](http://localhost:8080/validate) and the related log
 entry should look like this:
 
-```
+```sh
 request validation: Parameter 'show_env' in query has an error: must have a value
 ```
 

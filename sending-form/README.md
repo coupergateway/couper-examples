@@ -58,7 +58,7 @@ The only valid value type for `form_body` is object. The properties of this obje
 
 The actual transferred upstream request would look like this:
 
-```
+```sh
 POST / HTTP/1.1
 Host: httpbin.org
 Content-Length: 39

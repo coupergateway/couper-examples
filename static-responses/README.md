@@ -64,7 +64,6 @@ Call Couper using the valid token from the ["JWT Access Control"](../jwt-access-
 
 ```sh
 $ curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIn0.bNXv28XmnFBjirPbCzBqyfpqHKo6PpoFORHsQ-80IJLi3IhBh1y0pFR0wm-2hiz_F7PkGQLTsnFiSXxCt1DZvMstbQeklZIh7O3tQGJyCAi-HRVASHKKYqZ_-eqQQhNr8Ex00qqJWD9BsWVJr7Q526Gua7ghcttmVgTYrfSNDzU" localhost:8080/userinfo
-
 {
   "iss": "some_provider",
   "sub": "some_user"
@@ -94,7 +93,7 @@ server "responses" {
 Start Couper with
 
 ```sh
-$ docker run --rm -e APP_VERSION=1.0 -e APP_ENV=local -e APP_DEBUG=true -p 8080:8080 -v "$(pwd)":/conf avenga/couper
+docker run --rm -e APP_VERSION=1.0 -e APP_ENV=local -e APP_DEBUG=true -p 8080:8080 -v "$(pwd)":/conf avenga/couper
 ```
 
 and call it with

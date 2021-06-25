@@ -2,9 +2,9 @@
 
 Extending the example [JWT Access Control](/jwt-access-control/README.md) we now want to send certain JWT claims to the backend protected by Couper's access control.
 
-In the following example, we use tokens created by https://jwt.io/,
+In the following example, we use tokens created by `https://jwt.io/`,
 which provides a handy service to create tokens. Its default setting,
-it uses `HS256` as the signing algorithm. So we use that for our 
+it uses `HS256` as the signing algorithm. So we use that for our
 Couper configuration:
 
 ```hcl
@@ -33,12 +33,12 @@ definitions {
 
 **Note:** For simplicity we use HS256 here. For production setups we recommend RSA based signatures using a private key for JWT signing and a public key for signature validation.
 
-Now we go to https://jwt.io/ and fill our secret key into the field labeled "VERIFY SIGNATURE" in the right ("Decoded") column.
+Now we go to `https://jwt.io/` and fill our secret key into the field labeled "VERIFY SIGNATURE" in the right ("Decoded") column.
 
 Then we use a token created by the service. We copy the JWT from the box in the left ("Encoded") column and send it in the `Authorization` header:
 
 ```sh
-curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
+$ curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
 HTTP/1.1 200 OK
 …
 
@@ -71,7 +71,7 @@ To send request headers upstream to the backend, we have to add some lines to th
 [httpbin's](https://httpbin.org/) `/headers` endpoint reflects the request headers it has received. So we can see that the new header was actually sent.
 
 ```sh
-curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
+$ curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
 HTTP/1.1 200 OK
 …
 
@@ -117,7 +117,8 @@ HTTP/1.1 200 OK
   }
 }
 ```
-The value of `X-Jwt-Sub` is the same as the `sub` claim of the JWT created at https://jwt.io/.
+
+The value of `X-Jwt-Sub` is the same as the `sub` claim of the JWT created at `https://jwt.io/`.
 
 To send different claim values upstream, we can adapt the `set_request_headers` in the configuration file. Note that **all** claims, not just the standard claims, are stored in `request.context.…`
 To add different claims to the JWT, we have to modify the JSON in the "PAYLOAD" box in the right ("Decoded") column.
@@ -133,9 +134,8 @@ To send a JSON representation of all the JWT claims upstream, we use the `json_e
         …
 ```
 
-
 ```sh
-curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
+$ curl -i -H "Authorization: Bearer ey…" "localhost:8080/private/headers"
 HTTP/1.1 200 OK
 …
 

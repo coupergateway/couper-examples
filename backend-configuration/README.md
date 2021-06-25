@@ -69,7 +69,6 @@ get a response from `https://httpbin.org/anything`:
 
 ```sh
 $ curl -is localhost:8080/anything
-
 HTTP/1.1 200 OK
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: *
@@ -114,7 +113,6 @@ When you request the endpoint `/downloads`, You will see the additional header:
 
 ```sh
 $ curl -is localhost:8080/downloads
-
 HTTP/1.1 200 OK
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: *

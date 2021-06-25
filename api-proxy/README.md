@@ -68,7 +68,6 @@ use the operator again. `/example/anything` becomes
 
 ```sh
 $ curl 'localhost:8080/example/anything?a=b'
-
 {
   "args": {
     "a": "b"

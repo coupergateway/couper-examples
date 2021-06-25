@@ -26,7 +26,7 @@ amounts of payload. Typically, that includes user ID, email address,
 maybe additional information such as access privileges
 (user/admin, read/write…), and an expiry date. The token furthermore
 contains a signature to prevent that any of this information is
-altered by a user. 
+altered by a user.
 
 The nifty thing about JWT tokens is, that that a server can validate
 the token without database lookups or on-line communication with
@@ -48,17 +48,17 @@ that it is a service "running elsewhere". For this example, we use
 predefined JWT tokens. One has expired, and one is perpetual (i.e. it
 has no expiry date).
 
-```
+```sh
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIn0.bNXv28XmnFBjirPbCzBqyfpqHKo6PpoFORHsQ-80IJLi3IhBh1y0pFR0wm-2hiz_F7PkGQLTsnFiSXxCt1DZvMstbQeklZIh7O3tQGJyCAi-HRVASHKKYqZ_-eqQQhNr8Ex00qqJWD9BsWVJr7Q526Gua7ghcttmVgTYrfSNDzU
 ```
 
-```
+```sh
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIiwiZXhwIjoxNTkwNDkxNTI4fQ.lJnUpBzMx84_5yigeHeLw4f8sbdSdu_7fWr1--t7EAp8v8K-kSmVYUGnR0Jx4o_ZE84N2M72Kn1pKssrzgTHsFi7txcZHHz_JqgnPgKqsZwjrmWDC-XVvdrSXjAsPO6wn0qy3KEMT1y6Z8YQA4ZyzA1dDsRRIUFiNrgF6_b5pC4
 ```
 
 The tokens contain an `RS256` signature the can be validated with this public key:
 
-```
+```sh
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGSd+sSTss2uOuVJKpumpFAaml
 t1CWLMTAZNAabF71Ur0P6u833RhAIjXDSA/QeVitzvqvCZpNtbOJVegaREqLMJqv
@@ -91,7 +91,7 @@ server "secured-api" {
 }
 ```
 
-[Start your container, ](/README.md#getting-started) and check that
+[Start your container](/README.md#getting-started) and check that
 the API works as expected:
 
 ```sh
@@ -115,8 +115,9 @@ To make the API only available to authorized users, we need to define
 an Access Control mechanism.
 
 All we need is:
+
 * The signature algorithm
-* the key (here, in case of `RS256`, we use the public key in PEM format) 
+* the key (here, in case of `RS256`, we use the public key in PEM format)
 * and the request field to read the token from.
 
 ```hcl
@@ -129,14 +130,12 @@ definitions {
 }
 ```
 
-
 The `Authorization` header has a special meaning in HTTP. To carry
 any kind of API token, the `Bearer` prefix is necessary:
 
-```
+```sh
 Authorization: Bearer <token>
 ```
-
 
 ## Use Access Control in API
 
@@ -161,11 +160,10 @@ for finer grained access control.
 
 Now we're all set to try out our access controlled API.
 
-First, we repeat the unauthorized request from above: 
+First, we repeat the unauthorized request from above:
 
 ```sh
 $ curl -i http://localhost:8080/private/headers
-
 HTTP/1.1 401 Unauthorized
 …
 
@@ -186,7 +184,6 @@ calls:
 
 ```sh
 $ curl -i http://localhost:8080/private/headers -H "authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIiwiZXhwIjoxNTkwNDkxNTI4fQ.lJnUpBzMx84_5yigeHeLw4f8sbdSdu_7fWr1--t7EAp8v8K-kSmVYUGnR0Jx4o_ZE84N2M72Kn1pKssrzgTHsFi7txcZHHz_JqgnPgKqsZwjrmWDC-XVvdrSXjAsPO6wn0qy3KEMT1y6Z8YQA4ZyzA1dDsRRIUFiNrgF6_b5pC4"
-
 HTTP/1.1 403 Forbidden
 …
 
@@ -208,7 +205,6 @@ has expired.
 
 ```sh
 $ curl -i http://localhost:8080/private/headers -H "authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIn0.bNXv28XmnFBjirPbCzBqyfpqHKo6PpoFORHsQ-80IJLi3IhBh1y0pFR0wm-2hiz_F7PkGQLTsnFiSXxCt1DZvMstbQeklZIh7O3tQGJyCAi-HRVASHKKYqZ_-eqQQhNr8Ex00qqJWD9BsWVJr7Q526Gua7ghcttmVgTYrfSNDzU"
-
 HTTP/1.1 200 OK
 …
 {
@@ -228,7 +224,6 @@ accepted the request and forwarded it to `httpbin.org`! 200 OK :)
 ## More transport configuration
 
 In our example, we have read the token from the standard HTTP header `Authorization`. But we could also choose use a custom header, such as `API-Token`.
-
 
 ```hcl
 header = "API-Token"
