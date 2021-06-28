@@ -12,7 +12,7 @@ OAuth2 defines (at least) three parties:
 
 Usually, Couper acts only as the OAuth2 client but in this example, we use Couper for all three parties.
 
-_**(Please jump to the bottom of the page to learn how to configure Couper in a real world setting)**_
+_**Please jump to the bottom of the page to learn how to configure Couper in a real world setting**_
 
 First, we define two `server` blocks in `couper.hcl`, one for the client:
 

@@ -64,7 +64,7 @@ and then refer to it from an endpoint:
   }
 ```
 
-When you start Couper and send a request to the endpoint `/anything`, You will
+When you start Couper and send a request to the endpoint `/anything`, you will
 get a response from `https://httpbin.org/anything`:
 
 ```sh
@@ -109,7 +109,7 @@ In this example we increase the request timeout for all `/download/**` routes to
 The other settings (`max_connections`, `ttfb_timeout` etc.) are inherited from
 the `backend` configuration in the `definitions` block.
 
-When you request the endpoint `/downloads`, You will see the additional header:
+When you request the endpoint `/downloads`, you will see the additional header:
 
 ```sh
 $ curl -is localhost:8080/downloads
