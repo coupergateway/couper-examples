@@ -76,4 +76,5 @@ Press `CTRL+C` to exit.
 
 * [Environment Variables](env-var/README.md)
 * [Using docker-compose](docker-compose/README.md)
+* [Kubernetes](kubernetes-configuration/README.md)
 * [Linking Docker Containers](linking-docker-containers/README.md)
