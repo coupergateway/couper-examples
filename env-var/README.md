@@ -28,7 +28,7 @@ server "my-api" {
     }
   }
 }
-```  
+```
 
 To configure the actual origin of our service, we decide to use the following environment variable:
 

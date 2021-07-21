@@ -104,10 +104,10 @@ and call it with
 ```shell
 $ curl localhost:8080/app/conf
 {
+  "couper": "1.3.1",
   "debug": true,
   "env": "local",
-  "version": "1.0",
-  "couper": "1.3.1"
+  "version": "1.0"
 }
 ```
 
