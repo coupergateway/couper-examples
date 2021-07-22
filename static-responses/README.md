@@ -76,6 +76,7 @@ $ curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOi
 As a third example we create a simple configuration endpoint that
 emits some
 _environment variables_. It could be used to initialize the app in the browser.
+Adding the `couper.version` might be useful as well.
 
 ```hcl
 server "responses" {
@@ -85,6 +86,7 @@ server "responses" {
         version = env.APP_VERSION
         env = env.APP_ENV
         debug = env.APP_DEBUG == "true"
+        couper = couper.version
       }
     }
   }
@@ -102,6 +104,7 @@ and call it with
 ```shell
 $ curl localhost:8080/app/conf
 {
+  "couper": "1.3.1",
   "debug": true,
   "env": "local",
   "version": "1.0"
