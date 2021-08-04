@@ -33,7 +33,7 @@ server "my-api" {
 To configure the actual origin of our service, we decide to use the following environment variable:
 
 ```sh
-BACKEND_ORIGIN=https://httpbin.org
+HTTPBIN_ORIGIN=https://httpbin.org
 ```
 
 Now we change the Couper configuration to read the origin host from that variable:
@@ -43,14 +43,14 @@ Now we change the Couper configuration to read the origin host from that variabl
   endpoint "/example/**" {
     proxy {
       backend {
-        origin = env.BACKEND_ORIGIN
+        origin = env.HTTPBIN_ORIGIN
       }
     }
   }
 …
 ```
 
-There are numerous ways to inject environment variables into docker. You can set them in your `docker-compose.yaml`, define them in your Kubernetes `Deployment`, read them from a `ConfigMap` or pass them as command line arguments when starting the container.
+There are numerous ways to inject environment variables into docker. We can set them in our `docker-compose.yaml`, define them in our Kubernetes `Deployment`, read them from a `ConfigMap` or pass them as command line arguments when starting the container.
 
 [`docker-compose.yml`](docker-compose.yml):
 
