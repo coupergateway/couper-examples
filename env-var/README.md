@@ -50,6 +50,24 @@ Now we change the Couper configuration to read the origin host from that variabl
 …
 ```
 
+This fails if the `HTTPBIN_ORIGIN` environment variable is not set.
+Using the `environment_variables` map in the `defaults` block allows us to define default values as fallback for missing environment variables:
+
+```hcl
+server "my-api" {
+          …
+          origin = env.HTTPBIN_ORIGIN
+          …
+}
+
+defaults {
+  environment_variables = {
+    # use local backend as fallback
+    HTTPBIN_ORIGIN = "http://backend:9000"
+  }
+}
+```
+
 There are numerous ways to inject environment variables into docker. We can set them in our `docker-compose.yaml`, define them in our Kubernetes `Deployment`, read them from a `ConfigMap` or pass them as command line arguments when starting the container.
 
 [`docker-compose.yml`](docker-compose.yml):

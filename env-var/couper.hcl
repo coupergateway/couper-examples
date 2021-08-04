@@ -4,11 +4,15 @@ server "my-api" {
       proxy {
         path = "/**"
         backend {
-          origin = "https://httpbin.org"
-          // uncomment to read origin from env:
-          //origin = env.HTTPBIN_ORIGIN
+          origin = env.HTTPBIN_ORIGIN
         }
       }
     }
+  }
+}
+
+defaults {
+  environment_variables = {
+    HTTPBIN_ORIGIN = "https://httpbin.org"
   }
 }
