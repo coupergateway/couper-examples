@@ -4,15 +4,16 @@ server "my-api" {
       proxy {
         path = "/**"
         backend {
-          origin = env.HTTPBIN_ORIGIN
+          origin = "https://httpbin.org"
+          //origin = env.BACKEND_ORIGIN
         }
       }
     }
   }
 }
 
-defaults {
-  environment_variables = {
-    HTTPBIN_ORIGIN = "https://httpbin.org"
-  }
-}
+//defaults {
+//  environment_variables = {
+//    BACKEND_ORIGIN = "http://backend:9000"
+//  }
+//}
