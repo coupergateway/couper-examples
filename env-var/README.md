@@ -33,7 +33,7 @@ server "my-api" {
 To configure the actual origin of our service, we decide to use the following environment variable:
 
 ```sh
-HTTPBIN_ORIGIN = https://httpbin.org
+BACKEND_ORIGIN = https://httpbin.org
 ```
 
 Now we change the Couper configuration to read the origin host from that variable:
