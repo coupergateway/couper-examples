@@ -33,30 +33,33 @@ server "my-api" {
 To configure the actual origin of our service, we decide to use the following environment variable:
 
 ```sh
-BACKEND_ORIGIN=https://httpbin.org
+BACKEND_ORIGIN = https://httpbin.org
 ```
 
 Now we change the Couper configuration to read the origin host from that variable:
 
 ```hcl
-…
-  endpoint "/example/**" {
-    proxy {
-      backend {
-        origin = env.BACKEND_ORIGIN
+server "my-api" {
+  api {
+    endpoint "/example/**" {
+      path = "/**"
+      proxy {
+        backend {
+          origin = env.BACKEND_ORIGIN
+        }
       }
     }
   }
-…
+}
 ```
 
-There are numerous ways to inject environment variables into docker. You can set them in your `docker-compose.yaml`, define them in your Kubernetes `Deployment`, read them from a `ConfigMap` or pass them as command line arguments when starting the container.
+There are numerous ways to inject environment variables into docker. We can set them in our `docker-compose.yaml`, define them in our Kubernetes `Deployment`, read them from a `ConfigMap` or pass them as command line arguments when starting the container.
 
 [`docker-compose.yml`](docker-compose.yml):
 
 ```yml
     environment:
-      - HTTPBIN_ORIGIN=https://httpbin.org
+      - BACKEND_ORIGIN=https://httpbin.org
 ```
 
 Docker command:
@@ -65,6 +68,19 @@ Docker command:
 docker run --rm \
 -p 8080:8080 \
 -v "$(pwd)":/conf \
--e HTTPBIN_ORIGIN=https://httpbin.org \
+-e BACKEND_ORIGIN=https://httpbin.org \
 avenga/couper
+```
+
+The [`environment_variables` map](https://github.com/avenga/couper/blob/master/docs/REFERENCE.md#defaults-block) in the `defaults` block allows us to define default values as fallback for missing environment variables:
+
+```hcl
+//...
+
+defaults {
+  environment_variables = {
+    //use local backend as fallback
+    BACKEND_ORIGIN = "http://backend:9000"
+  }
+}
 ```

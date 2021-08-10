@@ -10,4 +10,4 @@ services:
       # hot reload config
       - COUPER_WATCH=true
       # make important parameters configurable
-      - HTTPBIN_ORIGIN=https://httpbin.org
+      - BACKEND_ORIGIN=https://httpbin.org

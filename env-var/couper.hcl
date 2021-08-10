@@ -5,10 +5,15 @@ server "my-api" {
         path = "/**"
         backend {
           origin = "https://httpbin.org"
-          // uncomment to read origin from env:
-          //origin = env.HTTPBIN_ORIGIN
+          //origin = env.BACKEND_ORIGIN
         }
       }
     }
   }
 }
+
+//defaults {
+//  environment_variables = {
+//    BACKEND_ORIGIN = "http://backend:9000"
+//  }
+//}
