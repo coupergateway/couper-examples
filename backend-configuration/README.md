@@ -57,22 +57,18 @@ definitions {
 and then refer to it from an endpoint:
 
 ```hcl
- endpoint "/anything" {
+  endpoint "/anything" {
     proxy {
       backend = "main"
     }
   }
 ```
 
-When you [start Couper](/README.md#getting-started) and send a request to the endpoint `/anything`:
+When you start Couper and send a request to the endpoint `/anything`, you will
+get a response from `https://httpbin.org/anything`:
 
 ```sh
-curl -is localhost:8080/anything
-```
-
-You will get a response from `https://httpbin.org/anything`:
-
-```sh
+$ curl -is localhost:8080/anything
 HTTP/1.1 200 OK
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: *
@@ -110,18 +106,13 @@ You also have the option to refine this reference, depending on the use case in 
 In this example we increase the request timeout for all `/download/**` routes to
 `10m` and add a HTTP request header field `X-Hello: from Couper`.
 
-The other settings (`max_connections`, `ttfb_timeout` etc.) are inherited from the
-`backend` configuration in the `definitions` block.
+The other settings (`max_connections`, `ttfb_timeout` etc.) are inherited from
+the `backend` configuration in the `definitions` block.
 
-When you request:
-
-```sh
-curl -is localhost:8080/downloads
-```
-
-You will see the additional header:
+When you request the endpoint `/downloads`, you will see the additional header:
 
 ```sh
+$ curl -is localhost:8080/downloads
 HTTP/1.1 200 OK
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: *

@@ -20,7 +20,6 @@ To run the examples, clone the repository:
 
 ```sh
 $ git clone https://github.com/avenga/couper-examples.git
-
 Cloning into 'couper-examples'...
 ```
 

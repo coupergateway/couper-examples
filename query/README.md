@@ -89,7 +89,6 @@ will be changed to `https://httpbin.org/anything?categories=animals`.
 A request to [http://localhost:8080/add?categories=birds](http://localhost:8080/add?categories=birds)
 will be changed to `https://httpbin.org/anything?categories=birds&categories=animals`.
 
-
 ## Dynamic Parameters
 
 The values of query parameters can also be dynamic. They are evaluated at runtime. You could for example rename a query parameter like this:
@@ -105,7 +104,7 @@ remove_query_params = ["old"]
 
 When you use Couper to validate [JWT tokens](../jwt-access-control/README.md), you can set query parameters from claims. Here we assume that we have a `UserToken` JWT configuration in our `definitions`:
 
-```
+```hcl
 …
 set_query_params = {
   user = request.context.UserToken.sub
@@ -125,4 +124,3 @@ definitions {
 Try out and see how the response body `url` property changes accordingly:
 
 [http://localhost:8080/anything?cat=true&dog=true&category=insects&category=snakes&sort=name](http://localhost:8080/anything?cat=true&dog=true&category=insects&category=snakes&sort=name)
-

@@ -22,7 +22,7 @@ server "json" {
 
 Call Couper with
 
-```shell
+```sh
 curl http://localhost:8080/request
 ```
 
@@ -72,7 +72,7 @@ endpoint "/response" {
 
 Call Couper with
 
-```shell
+```sh
 curl http://localhost:8080/response
 ```
 

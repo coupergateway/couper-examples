@@ -70,7 +70,7 @@ Server: couper.io
 
 Now we want to demonstrate how you can change errors by configuring an `error_handler` block for a specific `access_control`.
 
-Remember the `401` we got earlier. As we have seen, Couper logs the specific error under `"basic_auth_credentials_missing"`. 
+Remember the `401` we got earlier. As we have seen, Couper logs the specific error under `"basic_auth_credentials_missing"`.
 Use this `error_type` from the logs as the label for the `error_handler` block to modify the response for the specific error. In this example we simply change the status `403` and add `error = "forbidden"` to the json body but you can also e.g. reference a custom error file here.
 
 (delete comments in couper.hcl and restart Couper)
@@ -160,6 +160,6 @@ Server: couper.io
 
 Error handlers can also be used in other access controls; e.g. you can try to add them to the [JWT Access Control](../jwt-access-control/README.md) example.
 
-## See also:
+## See also
 
 * [Errors](https://github.com/avenga/couper/blob/master/docs/ERRORS.md) (reference)
