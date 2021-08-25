@@ -4,6 +4,8 @@ There are situations where no backend requests are sent for an endpoint.
 Nevertheless, a response is needed. So a `response` block can exist in an
 `endpoint` block without any `proxy` or `request` blocks.
 
+## Example 1: Redirects
+
 Consider the following example, in which the client is instructed to perform a
 redirect via a `301` status code and a `location` header specifying the
 redirect target:
@@ -34,9 +36,9 @@ Location: /app/
 
 ```
 
----
+## Example 2: _Userinfo_ endpoint
 
-Another example is a simple userinfo endpoint, similar to the one defined by
+Another example is a simple _userinfo_ endpoint, similar to the one defined by
 [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html#UserInfo).
 The endpoint is protected by the "JWTToken" access control. The token claims
 are reflected to the client.
@@ -70,7 +72,7 @@ $ curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOi
 }
 ```
 
----
+## Example 3: Environment variables
 
 As a third example we create a simple configuration endpoint that
 emits some
