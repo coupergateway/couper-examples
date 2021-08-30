@@ -67,7 +67,7 @@ rdAOci3W9u3zOSGj4QIDAQAB
 -----END PUBLIC KEY-----
 ```
 
-In areal wold setup, you would call some kind of login endpoint that
+In a real world setup, you would call some kind of login endpoint that
 would turn your username and password into a token.
 
 ## Our API
