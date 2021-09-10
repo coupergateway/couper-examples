@@ -38,7 +38,7 @@ cd simple-fileserving
 and run
 
 ```sh
-docker-compose up
+docker-compose pull && docker-compose up
 ```
 
 Press `CTRL+C` to exit.
