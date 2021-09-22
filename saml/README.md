@@ -100,7 +100,7 @@ server "saml" {
           sub = request.context.SSO.sub
           mail = request.context.SSO.attributes.email
           groups = request.context.SSO.attributes.eduPersonAffiliation
-        )};HttpOnly;Secure;Path=/api"
+        })};HttpOnly;Secure;Path=/api"
         location = "/"
       }
     }
