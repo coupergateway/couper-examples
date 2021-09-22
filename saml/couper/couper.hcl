@@ -22,8 +22,8 @@ server "saml" {
         set-cookie = "UserToken=${jwt_sign("UserToken", {
           sub = request.context.SSO.sub
           mail = request.context.SSO.attributes.email
-		  groups = request.context.SSO.attributes.eduPersonAffiliation
-		})};HttpOnly;Secure;Path=/api"
+          groups = request.context.SSO.attributes.eduPersonAffiliation
+        })};HttpOnly;Secure;Path=/api"
         location = "/"
       }
     }
