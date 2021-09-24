@@ -8,6 +8,7 @@ services:
     volumes:
       - ./couper:/conf
     environment:
+      COUPER_WATCH: "true"
       SP_ENTITY_ID: the_sp_entity_id
   idp:
     image: kristophjunge/test-saml-idp
