@@ -118,8 +118,8 @@ For the `jwt_sign` function we add a `jwt_signing_profile` block to the `definit
 ...
 definitions {
   jwt_signing_profile "UserToken" {
-    signature_algorithm = "RS256"
-    key_file = "priv_key.pem"
+    signature_algorithm = "HS256"
+    key = "Th3$e(rEt"
     ttl = "1h"
   }
 
@@ -144,8 +144,8 @@ definitions {
   }
 
   jwt "UserToken" {
-    signature_algorithm = "RS256"
-    key_file = "pub_key.pem"
+    signature_algorithm = "HS256"
+    key = "Th3$e(rEt"
     cookie = "UserToken"
   }
 
@@ -170,6 +170,31 @@ We add an endpoint to the api block returning the claims from the JWT presented 
   }
 ...
 ```
+
+The `jwt_signing_profile` and `jwt` blocks share the same `signature_algorithm` and `key`. Because the API is the only consumer of the created tokens, we can simplify the configuration by merging the `jwt_signing_profile` and `jwt` blocks:
+
+```hcl
+...
+definitions {
+#  jwt_signing_profile "UserToken" {
+#    signature_algorithm = "HS256"
+#    key = "Th3$e(rEt"
+#    ttl = "1h"
+#  }
+
+  jwt "UserToken" {
+    signature_algorithm = "HS256"
+    key = "Th3$e(rEt"
+    cookie = "UserToken"
+    signing_ttl = "1h"       # add signing_ttl
+  }
+
+  saml "SSO" {
+...
+  }
+```
+
+**Note:** `ttl` in the `jwt_signing_profile` becomes `signing_ttl` in `jwt`.
 
 The frontend part of our demo application has only one HTML page (index.html) which is served from the `htdocs` directory:
 

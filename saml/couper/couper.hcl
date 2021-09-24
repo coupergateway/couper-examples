@@ -42,15 +42,16 @@ server "saml" {
 }
 definitions {
   jwt_signing_profile "UserToken" {
-    signature_algorithm = "RS256"
-    key_file = "priv_key.pem"
+    signature_algorithm = "HS256"
+    key = "Th3$e(rEt"
     ttl = "1h"
   }
 
   jwt "UserToken" {
-    signature_algorithm = "RS256"
-    key_file = "pub_key.pem"
+    signature_algorithm = "HS256"
+    key = "Th3$e(rEt"
     cookie = "UserToken"
+#    signing_ttl = "1h"       # add signing_ttl
   }
 
   saml "SSO" {
