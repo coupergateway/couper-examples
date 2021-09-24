@@ -84,3 +84,32 @@ Looking at the decoded payload you will find the claims `iss`and `iat` form the 
   "sub": "john.doe"
 }
 ```
+
+**Note:** If you create "local" tokens that are consumed by your API only, you can also use a `jwt` block with a `signing_ttl`, e.g.:
+
+```hcl
+...
+  endpoint "/token/local" {
+    response {
+      json_body = {
+        access_token = jwt_sign("LocalToken", {})
+        token_type = "Bearer"
+        expires_in = "600"
+      }
+    }
+  }
+  api {
+    access_control = ["LocalToken"]
+    ...
+  }
+}
+definitions {
+  ...
+  jwt "LocalToken" {
+    header = "Authorization"
+    signature_algorithm = "HS256"
+    key = "Th3$e(rEt"
+    signing_ttl = "600s"
+  }
+}
+```
