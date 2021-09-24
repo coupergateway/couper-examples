@@ -9,7 +9,7 @@ function getUserinfo() {
   xhr.open("GET", "/api/userinfo");
   xhr.addEventListener("load", function(ev) {
     if (xhr.status === 200) {
-      document.getElementById("userinfo").value = xhr.response;
+      document.getElementById("userinfo").value = JSON.stringify(JSON.parse(xhr.response), null, "  ");
     } else if (xhr.status === 401 || xhr.status === 403) {
       login();
     }
@@ -29,6 +29,6 @@ window.addEventListener("load", getUserinfo);
   </head>
   <body>
     <h1>SAML Demo</h1>
-    <p>userinfo: <textarea id="userinfo" name="userinfo"></textarea></p>
+    <p>userinfo: <textarea id="userinfo" name="userinfo" rows="7" cols="55"></textarea></p>
   <body>
 </html>
