@@ -112,21 +112,6 @@ definitions {
 
 This endpoint is protected by the `saml` access control, which validates the received SAML response and stores some data from the contained SAML assertion in `request.context.SSO`. From this information we create a JWT and send it to the browser via the `set-cookie` header. The `status` code `303` together with the `location` header causes the browser to load the HTML page at `http://localhost:8080/`.
 
-For the `jwt_sign` function we add a `jwt_signing_profile` block to the `definitions` (see [Creating JWT](../creating-jwt/README.md) for more information):
-
-```hcl
-...
-definitions {
-  jwt_signing_profile "UserToken" {
-    signature_algorithm = "HS256"
-    key = "Th3$e(rEt"
-    ttl = "1h"
-  }
-
-  saml "SSO" {
-...
-```
-
 Our simple example also has a small API which is protected by a `jwt` access control configured in the `definitions` (see [JWT Access Control](../jwt-access.control/README.md) for more information):
 
 ```hcl
@@ -139,14 +124,27 @@ server "saml" {
   }
 }
 definitions {
-  jwt_signing_profile "UserToken" {
-...
-  }
-
   jwt "UserToken" {
     signature_algorithm = "HS256"
     key = "Th3$e(rEt"
     cookie = "UserToken"
+  }
+
+  saml "SSO" {
+...
+  }
+```
+
+Because the API is the only consumer of the created tokens, we can use the same `jwt` block to configure the `jwt_sign` function in the `"/saml/acs"` endpoint by adding a `signing_ttl` attribute (see [Creating JWT](../creating-jwt/README.md) for more information). The created tokens will expire after one hour:
+
+```hcl
+...
+definitions {
+  jwt "UserToken" {
+    signature_algorithm = "HS256"
+    key = "Th3$e(rEt"
+    cookie = "UserToken"
+    signing_ttl = "1h"       # add signing_ttl
   }
 
   saml "SSO" {
@@ -170,31 +168,6 @@ We add an endpoint to the api block returning the claims from the JWT presented 
   }
 ...
 ```
-
-The `jwt_signing_profile` and `jwt` blocks share the same `signature_algorithm` and `key`. Because the API is the only consumer of the created tokens, we can simplify the configuration by merging the `jwt_signing_profile` and `jwt` blocks:
-
-```hcl
-...
-definitions {
-#  jwt_signing_profile "UserToken" {
-#    signature_algorithm = "HS256"
-#    key = "Th3$e(rEt"
-#    ttl = "1h"
-#  }
-
-  jwt "UserToken" {
-    signature_algorithm = "HS256"
-    key = "Th3$e(rEt"
-    cookie = "UserToken"
-    signing_ttl = "1h"       # add signing_ttl
-  }
-
-  saml "SSO" {
-...
-  }
-```
-
-**Note:** `ttl` in the `jwt_signing_profile` becomes `signing_ttl` in `jwt`.
 
 The frontend part of our demo application has only one HTML page (index.html) which is served from the `htdocs` directory:
 
