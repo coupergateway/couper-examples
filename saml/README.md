@@ -1,6 +1,6 @@
 # Single-Sign-On with SAML
 
-The Security Assertion Markup Language (SAML) 2.0 defines the Web Browser Single-Sign-On Profile (for more information see secion 4.1 in `https://www.oasis-open.org/committees/download.php/56782/sstc-saml-profiles-errata-2.0-wd-07.pdf`). In this profile the web browser sends a `GET` request containing the SAML request data to the SAML identity provider (IdP); the IdP authenticates the user and then causes the browser to send a `POST` request with the SAML response data containing an assertion with information about the authenticated user to the SAML service provider (SP).
+The Security Assertion Markup Language (SAML) 2.0 defines the Web Browser Single-Sign-On Profile (for more information see section 4.1 in `https://www.oasis-open.org/committees/download.php/56782/sstc-saml-profiles-errata-2.0-wd-07.pdf`). In this profile the web browser sends a `GET` request containing the SAML request data to the SAML identity provider (IdP); the IdP authenticates the user and then causes the browser to send a `POST` request with the SAML response data containing an assertion with information about the authenticated user to the SAML service provider (SP).
 
 ![SAML Flow](saml_flow.svg)
 
@@ -186,7 +186,7 @@ After loading the page, a request is sent to the API's `/userinfo` endpoint to g
 As our demo application is now complete, we can start it:
 
 ```sh
-docker-compose up
+$ docker-compose up
 ```
 
 We point our browser to `http://localhost:8080/`. For a short time, the browser shows the SAML Demo page with a blank textarea, indicating that no information about the user is available.
@@ -204,7 +204,7 @@ The browser then loads the SAML Demo page again, now showing some user informati
 
 We can play around with this demo by removing
 
-* either only the `UserToken` cookie (in chrome-based browsers you may have to make a navigational request to `http://localhost:8080/api/userinfo` to see it in the developer tools),
+* either only the `UserToken` cookie (in Chrome-based browsers you may have to make a navigational request to `http://localhost:8080/api/userinfo` to see it in the developer tools),
 * or the `UserToken`, `PHPSESSIDIDP` and `SimpleSAMLAuthTokenIdp` cookies.
 
 Watch the network tab of the browser's developer tools to see what happens.
