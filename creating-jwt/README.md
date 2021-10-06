@@ -77,7 +77,7 @@ When you look at the decoded `access_token`, the header contains the `alg` prope
 }
 ```
 
-Looking at the decoded payload you will find the claims `iss` and `iat` from the `jwt_signing_profile`, a calculated `exp` claim and the two additional claims `aud`and `sub`from the `jwt_sign()` function.
+Looking at the decoded payload you will find the claims `iss` and `iat` from the `jwt_signing_profile`, a calculated `exp` claim and the two additional claims `aud` and `sub` from the `jwt_sign()` function.
 
 ```json
 {
