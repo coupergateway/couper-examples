@@ -21,5 +21,8 @@ definitions {
       iss = "MyAS"
       iat = unixtime()
     }
+    headers = {
+      foo = "bar"
+    }
   }
 }

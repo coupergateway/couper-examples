@@ -39,41 +39,45 @@ definitions {
       iss = "MyAS"
       iat = unixtime()
     }
+    headers = {
+      foo = "bar"
+    }
   }
 }
 ```
 
-In the `jwt_signing_profile` block we specify the signature algorithm (RS256),
-the file containing the private key (priv_key.pem), the time-to-live of the
-token and some default claims. The `unixtime()` function returns the current
+In the `jwt_signing_profile` block we specify the signature algorithm (`RS256`),
+the file containing the private key (`priv_key.pem`), the time-to-live of the
+token, some default claims and a header field. The `unixtime()` function returns the current
 UNIX timestamp in seconds as a number.
 
 Call Couper with
 
 ```sh
-curl -s --data-urlencode "username=john.doe" http://localhost:8080/token
+$ curl -s --data-urlencode "username=john.doe" http://localhost:8080/token
 ```
 
 The response looks similar to
 
 ```json
 {
-  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUaGVfQXVkaWVuY2UiLCJleHAiOjE2MTY3NjU2OTMsImlhdCI6MTYxNjc2NTA5MywiaXNzIjoiTXlBUyIsInN1YiI6ImpvaG4uZG9lIn0.CV5BlAhyqdnVDdOF3-T1POGbdT-TK3lIdgvh8iszYxcVimPmxP3ER9NkM5ZEkgrwtTLu2AIlnXJQkWXEi4s3G7980aPDmBQhKrEldXq2yWCj8DTuA3PDLfj7giAcSf82WUI5Dhu9JORZ3iSAOwJ3f06j8Oc0qlABXWuYzf4aaVc",
+  "access_token": "eyJhbGciOiJSUzI1NiIsImZvbyI6ImJhciIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUaGVfQXVkaWVuY2UiLCJleHAiOjE2MzM1MTIwNzksImlhdCI6MTYzMzUxMTQ3OSwiaXNzIjoiTXlBUyIsInN1YiI6ImpvaG4uZG9lIn0.PcTlxK2nSnufZ2A85sr3VxScCb9Qw_6DcLcIvAVvN0EYk1TDWkiM0nvvm3viialwQDGIWTZOHeJtnGPC7F283rayqv-iqe2x3EyxN1BwfG966NhRkfI-mmK8kx9C_e6lrKSHMTh9AaEQOhN_crn6OaxYc13eoG9O8sN-rY7x1mA",
   "expires_in": "600",
   "token_type": "Bearer"
 }
 ```
 
-When you look at the decoded version of the `access_token`, the header contains the `alg` property configured in our `jwt_signing_profile`.
+When you look at the decoded `access_token`, the header contains the `alg` property as well as the `foo` field as configured in our `jwt_signing_profile`.
 
 ```json
 {
   "alg": "RS256",
-  "typ": "JWT"
+  "typ": "JWT",
+  "foo": "bar"
 }
 ```
 
-Looking at the decoded payload you will find the claims `iss`and `iat` form the `jwt_signing_profile`, a calculated `exp` claim and the two additional claims `aud`and `sub`from the `jwt_sign()` function.  
+Looking at the decoded payload you will find the claims `iss` and `iat` from the `jwt_signing_profile`, a calculated `exp` claim and the two additional claims `aud`and `sub`from the `jwt_sign()` function.
 
 ```json
 {
