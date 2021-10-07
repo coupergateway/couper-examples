@@ -3,7 +3,7 @@
 To create and sign JWT, you can use the `jwt_sign()` function and the
 `jwt_signing_profile` block:
 
-E.g. let's create as simple OAuth authorization server token endpoint:
+E.g. let's create a simple OAuth authorization server token endpoint:
 
 ```hcl
 server "simple-oauth-as" {
@@ -40,7 +40,7 @@ definitions {
       iat = unixtime()
     }
     headers = {
-      foo = "bar"
+      kid = "my-jwk-id"
     }
   }
 }
@@ -48,7 +48,7 @@ definitions {
 
 In the `jwt_signing_profile` block we specify the signature algorithm (`RS256`),
 the file containing the private key (`priv_key.pem`), the time-to-live of the
-token, some default claims and a header field. The `unixtime()` function returns the current
+token, some default claims and the header field `kid`. The `unixtime()` function returns the current
 UNIX timestamp in seconds as a number.
 
 Call Couper with
@@ -61,19 +61,19 @@ The response looks similar to
 
 ```json
 {
-  "access_token": "eyJhbGciOiJSUzI1NiIsImZvbyI6ImJhciIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUaGVfQXVkaWVuY2UiLCJleHAiOjE2MzM1MTIwNzksImlhdCI6MTYzMzUxMTQ3OSwiaXNzIjoiTXlBUyIsInN1YiI6ImpvaG4uZG9lIn0.PcTlxK2nSnufZ2A85sr3VxScCb9Qw_6DcLcIvAVvN0EYk1TDWkiM0nvvm3viialwQDGIWTZOHeJtnGPC7F283rayqv-iqe2x3EyxN1BwfG966NhRkfI-mmK8kx9C_e6lrKSHMTh9AaEQOhN_crn6OaxYc13eoG9O8sN-rY7x1mA",
+  "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6Im15LWp3ay1pZCIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUaGVfQXVkaWVuY2UiLCJleHAiOjE2MzM1OTE0OTIsImlhdCI6MTYzMzU5MDg5MiwiaXNzIjoiTXlBUyIsInN1YiI6ImpvaG4uZG9lIn0.qv6E3ILUe_9WR7wUhN4ZU6HWR-YoyyTNdXhf7TmiteUwXXpqUqngRqw_1h4CXJbPs250AaUf3BLeK7hJTxThCwBJl5aolngmPVnHcEiby6mq-EWOMjG-XP6NkJNI_GzmtWjpRIGcQ9zS8qMONE_GHRn_QvrtxR9rudVr6vUkLbN_6UJSETEaEH-WaKWRXUc7tsSQvB5wqnX2mVvmwchDG7lDLxL5oWM7GbpuEZQVdOEBgrLv-9D1yGkzcbaP1Y0AJWH9JaS-vpWSfwfUVvCr-Yf-iTA0EyEPFLGsTi9plz-8x5Qj_17SCSHN8M1j9MXJj_aSMH4-sVgIJf85C-EgIg",
   "expires_in": "600",
   "token_type": "Bearer"
 }
 ```
 
-When you look at the decoded `access_token`, the header contains the `alg` property as well as the `foo` field as configured in our `jwt_signing_profile`.
+When you look at the decoded `access_token`, the header contains the `alg` property as well as the `kid` field as configured in our `jwt_signing_profile`.
 
 ```json
 {
   "alg": "RS256",
-  "typ": "JWT",
-  "foo": "bar"
+  "kid": "my-jwk-id",
+  "typ": "JWT"
 }
 ```
 
@@ -82,8 +82,8 @@ Looking at the decoded payload you will find the claims `iss` and `iat` from the
 ```json
 {
   "aud": "The_Audience",
-  "exp": 1616765693,
-  "iat": 1616765093,
+  "exp": 1633591492,
+  "iat": 1633590892,
   "iss": "MyAS",
   "sub": "john.doe"
 }

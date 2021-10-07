@@ -22,7 +22,7 @@ definitions {
       iat = unixtime()
     }
     headers = {
-      foo = "bar"
+      kid = "my-jwk-id"
     }
   }
 }
