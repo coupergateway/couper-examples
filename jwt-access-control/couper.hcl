@@ -16,6 +16,7 @@ definitions {
   jwt "JWTToken" {
     signature_algorithm = "RS256"
     key_file = "pub.pem"
+#    jwks_url = "https://demo-idp.couper.io/jwks.json"
     header = "Authorization"
 
     required_claims = ["iss"]

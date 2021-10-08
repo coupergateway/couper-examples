@@ -263,6 +263,16 @@ For testing purposes, you could simply write the `key` into your configuration f
 The `key` and `key_file` attributes are mutually exclusive. But we
 need to define one of them. We favor `key_file`.
 
+If the tokens are created by a token provider, e.g. an OAuth2 authorization server, you can reference its JWKS resource via `jwks_url`:
+
+```hcl
+#    signature_algorithm = "RS256"
+#    key_file = "pub.pem"
+    jwks_url = "https://demo-idp.couper.io/jwks.json"
+```
+
+Note, that `jwks_url` and the combination of `signature_algorithm` and `key_file` or `key` are mutually exclusive.
+
 ## More JWT claims checks
 
 To ensure that a request passes this access control, if a specific claim is present in the JWT (e.g. `iss` meaning "issuer"), we add to the `jwt` block:
