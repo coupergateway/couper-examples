@@ -59,14 +59,15 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImFzZGYifQ.eyJzdWIiOiJzb21lX3VzZXIiL
 The tokens contain an `RS256` signature the can be validated with this public key:
 
 ```sh
------BEGIN RSA PUBLIC KEY-----
-MIIBCgKCAQEAzYkjqxZXTs657BrVmOjRd2GqDi64XjLUbsOGAludYIxuOdAsrRQ+
-RLUIOSWvS5pBkfmq5ww/BWP/ovHyNZ1OVLKoJn/WJYBQ3P5NTM691eUtvU9DvyTP
-IN1zH6NL3feLD1gCkET8KCZI/xWNaZlpKJvojVrMp2NW84BfTa2p/0AwsD0+0LzP
-yflyH2LaOBQFNwg+EAKJzWdTOhyr1fwAqpLzlIVUf0P4MxZellyaWlaSbYGak0wH
-22kwTvEsa5DMOgvUnhPntBS+CSwhTNQwRTR2ydbZCoa0cL/OsPlAQxucnrOHrNlf
-hJ7t6oCR2/zK1LdQxP7GEUnWvSd1y/yUiwIDAQAB
------END RSA PUBLIC KEY-----
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzYkjqxZXTs657BrVmOjR
+d2GqDi64XjLUbsOGAludYIxuOdAsrRQ+RLUIOSWvS5pBkfmq5ww/BWP/ovHyNZ1O
+VLKoJn/WJYBQ3P5NTM691eUtvU9DvyTPIN1zH6NL3feLD1gCkET8KCZI/xWNaZlp
+KJvojVrMp2NW84BfTa2p/0AwsD0+0LzPyflyH2LaOBQFNwg+EAKJzWdTOhyr1fwA
+qpLzlIVUf0P4MxZellyaWlaSbYGak0wH22kwTvEsa5DMOgvUnhPntBS+CSwhTNQw
+RTR2ydbZCoa0cL/OsPlAQxucnrOHrNlfhJ7t6oCR2/zK1LdQxP7GEUnWvSd1y/yU
+iwIDAQAB
+-----END PUBLIC KEY-----
 ```
 
 In a real world setup, you would call some kind of login endpoint that
