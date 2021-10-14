@@ -287,6 +287,39 @@ could set a `secure`, `httpOnly` cookie. This delegates the secure
 storage in the client to the browser. Furthermore, the browser will
 send it automatically to our API.
 
+Another means of getting the token is to provide an expression via the `token_value` attribute.
+The following configuration tells Couper to get the token from a query parameter named `token`:
+
+```hcl
+  jwt "JWTToken" {
+    token_value = request.query.token[0]
+    …
+  }
+```
+
+```sh
+$ curl -i "http://localhost:8080/private/headers?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImFzZGYifQ.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIn0.uSp2uAxubCuAGqMLS2S67aCK5DTvVVLi0LcxV5bSrTiiXE1wUb1h9IYZ4oXIKFWnCsXuIqTUl-UBn9kcJ7NJvagCaKAqk2_uRMKvFOA9lWT228FAYL58twaue-Ut_3Z5U1MfMYJxq6ADKzjgUW-bZQOceBP7yZ-Bedewmq2ZtNzLhoO-RLiCkmrLlIKcx0LCTOZOYFT7g38XLOWHcG1QQ8U9qBZMAm9j4wXgk4UoCJj1h4tS9He2YyVfB_w7y1kyXmpd_Tn3onU2z6I6qKpkRfh8sBUJ9AP50Iub85-O4mKw23gNTtw6uHhc33uBydenV9M3EMayCWkKTwEGmkpgUw"
+HTTP/1.1 200 OK
+…
+```
+
+Finally, we transfer our token in the JSON body of the request:
+
+```hcl
+  jwt "JWTToken" {
+    token_value = request.json_body.token
+    …
+  }
+```
+
+Note that we need to set the appropriate `Content-Type` header to have the `request.json_body` variable filled:
+
+```sh
+$ curl -i http://localhost:8080/private/post -H 'Content-Type: application/json' --data-raw '{"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImFzZGYifQ.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIn0.uSp2uAxubCuAGqMLS2S67aCK5DTvVVLi0LcxV5bSrTiiXE1wUb1h9IYZ4oXIKFWnCsXuIqTUl-UBn9kcJ7NJvagCaKAqk2_uRMKvFOA9lWT228FAYL58twaue-Ut_3Z5U1MfMYJxq6ADKzjgUW-bZQOceBP7yZ-Bedewmq2ZtNzLhoO-RLiCkmrLlIKcx0LCTOZOYFT7g38XLOWHcG1QQ8U9qBZMAm9j4wXgk4UoCJj1h4tS9He2YyVfB_w7y1kyXmpd_Tn3onU2z6I6qKpkRfh8sBUJ9AP50Iub85-O4mKw23gNTtw6uHhc33uBydenV9M3EMayCWkKTwEGmkpgUw"}'
+HTTP/1.1 200 OK
+…
+```
+
 ## More Key Configuration
 
 In our code example, we specify a `key_file` attribute referencing a file containing the key. That is a good way, if you actually have the key in a file or if you want to mount a Kubernetes secret to a file.

@@ -18,6 +18,8 @@ definitions {
     header = "Authorization"
     # header = "Token"
     # cookie = "token"
+    # token_value = request.query.token[0]
+    # token_value = request.json_body.token
     signature_algorithm = "RS256"
     key_file = "pub.pem"
 
