@@ -2,7 +2,7 @@ server "secured-api" {
   api {
     access_control = ["JWTToken"]
     endpoint "/private/**" {
-      # remove_request_headers = ["Token"]
+      # remove_request_headers = ["API-Token"]
       proxy {
         path = "/**"
         backend {
@@ -16,14 +16,14 @@ server "secured-api" {
 definitions {
   jwt "JWTToken" {
     header = "Authorization"
-    # header = "Token"
+    # header = "API-Token"
     # cookie = "token"
     # token_value = request.query.token[0]
     # token_value = request.json_body.token
     signature_algorithm = "RS256"
     key_file = "pub.pem"
 
-    # jwks_url = "http://localhost:9000/jwks.json"
+    # jwks_url = "https://demo-idp.couper.io/jwks.json"
 
     required_claims = ["iss"]
     claims = {

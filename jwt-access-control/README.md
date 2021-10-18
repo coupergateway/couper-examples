@@ -394,7 +394,7 @@ To ensure that a request passes this access control, only if a specific claim is
   }
 ```
 
-Any JWT without an `iss` claim, will now be rejected.
+Any JWT without an `iss` claim will now be rejected.
 
 If we additionally want to specify a value for a required claim (e.g. `"some_user"` for the `sub` claim), we further add:
 
@@ -410,7 +410,7 @@ If we additionally want to specify a value for a required claim (e.g. `"some_use
 Tokens with different `sub` claims will now be rejected.
 
 JWT tokens shouldn't last forever – in contrast to the one we used above.
-By explicitly requiring the `exp` claim you can force the issuer of your tokens to always include an expiry time:
+By explicitly requiring the `exp` claim, Couper won't accept any tokens that do not have an expiry time:
 
 ```hcl
   jwt "JWTToken" {
