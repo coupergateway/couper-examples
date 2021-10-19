@@ -18,7 +18,7 @@ definitions {
     header = "Authorization"
     # header = "API-Token"
     # cookie = "token"
-    # token_value = request.query.token[0]
+    # token_value = request.form_body.token[0]
     # token_value = request.json_body.token
     signature_algorithm = "RS256"
     key_file = "pub.pem"
