@@ -11,6 +11,24 @@ server "simple-oauth-as" {
       }
     }
   }
+  endpoint "/token/local" {
+    response {
+      json_body = {
+        access_token = jwt_sign("LocalToken", {})
+        token_type = "Bearer"
+        expires_in = "600"
+      }
+    }
+  }
+
+  api {
+    access_control = ["LocalToken"]
+    endpoint "/**" {
+      response {
+        json_body = { foo = 1}
+      }
+    }
+  }
 }
 definitions {
   jwt_signing_profile "myjwt" {
@@ -21,5 +39,11 @@ definitions {
       iss = "MyAS"
       iat = unixtime()
     }
+  }
+  jwt "LocalToken" {
+    header = "Authorization"
+    signature_algorithm = "HS256"
+    key = "Th3$e(rEt"
+    signing_ttl = "600s"
   }
 }
