@@ -39,6 +39,9 @@ definitions {
       iss = "MyAS"
       iat = unixtime()
     }
+    headers = {
+      kid = "my-jwk-id"
+    }
   }
   jwt "LocalToken" {
     header = "Authorization"
