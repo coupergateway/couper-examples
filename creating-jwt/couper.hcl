@@ -1,4 +1,4 @@
-server "simple-oauth-as" {
+server {
   endpoint "/token" {
     response {
       json_body = {
@@ -11,6 +11,7 @@ server "simple-oauth-as" {
       }
     }
   }
+
   endpoint "/token/local" {
     response {
       json_body = {
@@ -30,6 +31,7 @@ server "simple-oauth-as" {
     }
   }
 }
+
 definitions {
   jwt_signing_profile "myjwt" {
     signature_algorithm = "RS256"
@@ -43,6 +45,7 @@ definitions {
       kid = "my-jwk-id"
     }
   }
+
   jwt "LocalToken" {
     header = "Authorization"
     signature_algorithm = "HS256"

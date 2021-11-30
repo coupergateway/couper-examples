@@ -11,7 +11,7 @@ redirect via a `301` status code and a `location` header specifying the
 redirect target:
 
 ```hcl
-server "responses" {
+server {
   endpoint "/" {
     response {
       status = 301
@@ -44,7 +44,7 @@ The endpoint is protected by the "JWTToken" access control. The token claims
 are reflected to the client.
 
 ```hcl
-server "responses" {
+server {
   endpoint "/userinfo" {
     access_control = ["JWTToken"]
     response {
@@ -53,6 +53,7 @@ server "responses" {
     }
   }
 }
+
 definitions {
   jwt "JWTToken" {
     header = "Authorization"
@@ -80,7 +81,7 @@ _environment variables_. It could be used to initialize the app in the browser.
 Adding the `couper.version` might be useful as well.
 
 ```hcl
-server "responses" {
+server {
   endpoint "/app/conf" {
     response {
       json_body = {

@@ -17,8 +17,7 @@ A basic gateway configuration defines upstream backend services and
 [`couper.hcl`](couper.hcl):
 
 ```hcl
-server "my-api" {
-
+server {
   api {
     endpoint "/example/**" {
       path = "/**"
@@ -29,7 +28,6 @@ server "my-api" {
       }
     }
   }
-  
 }
 ```
 

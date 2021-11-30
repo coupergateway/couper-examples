@@ -1,5 +1,4 @@
-server "multiple-requests" {
-
+server {
   endpoint "/headers" {
     request "first" {
         url = "https://httpbin.org/headers"
@@ -31,5 +30,4 @@ server "multiple-requests" {
       x-additional-status = backend_responses.additional.status
     }
   }
-
 }

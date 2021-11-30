@@ -1,4 +1,4 @@
-server "saml" {
+server {
   files {
     document_root = "htdocs"
   }
@@ -40,6 +40,7 @@ server "saml" {
     }
   }
 }
+
 definitions {
   jwt "UserToken" {
     signature_algorithm = "HS256"

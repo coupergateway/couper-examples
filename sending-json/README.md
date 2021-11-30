@@ -7,7 +7,7 @@ serialization as the body of either `request` or `response`.
 `Content-Type` header.
 
 ```hcl
-server "json" {
+server {
   endpoint "/request" {
     request {
       url = "https://httpbin.org/anything"

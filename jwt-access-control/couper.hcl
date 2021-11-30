@@ -1,4 +1,4 @@
-server "secured-api" {
+server {
   api {
     access_control = ["JWTToken"]
     endpoint "/private/**" {

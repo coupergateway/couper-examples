@@ -65,7 +65,7 @@ definitions {
 In the `server` block we configure an endpoint that returns the SAML request URL:
 
 ```hcl
-server "saml" {
+server {
   endpoint "/saml/login" {
     response {
       headers = {
@@ -77,6 +77,7 @@ server "saml" {
     }
   }
 }
+
 definitions {
 ...
 ```
@@ -86,7 +87,7 @@ The `saml_sso_url()` function creates this URL from information provided in the 
 The second endpoint is for the assertion consumer service:
 
 ```hcl
-server "saml" {
+server {
   endpoint "/saml/login" {
 ...
   }
@@ -106,6 +107,7 @@ server "saml" {
     }
   }
 }
+
 definitions {
 ...
 ```
@@ -115,7 +117,7 @@ This endpoint is protected by the `saml` access control, which validates the rec
 Our simple example also has a small API which is protected by a `jwt` access control configured in the `definitions` (see [JWT Access Control](../jwt-access.control/README.md) for more information):
 
 ```hcl
-server "saml" {
+server {
 ...
 
   api {
@@ -123,6 +125,7 @@ server "saml" {
     access_control = ["UserToken"]
   }
 }
+
 definitions {
   jwt "UserToken" {
     signature_algorithm = "HS256"
@@ -172,7 +175,7 @@ We add an endpoint to the api block returning the claims from the JWT presented 
 The frontend part of our demo application has only one HTML page (index.html) which is served from the `htdocs` directory:
 
 ```hcl
-server "saml" {
+server {
   files {
     document_root = "htdocs"
   }

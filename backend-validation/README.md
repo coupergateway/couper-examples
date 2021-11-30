@@ -38,7 +38,7 @@ paths:
 Here is the full Couper configuration:
 
 ```hcl
-server "my-api" {
+server {
   api {
     endpoint "/validate" {
       proxy {

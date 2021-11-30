@@ -1,4 +1,4 @@
-server "backend-configuration" {
+server {
   endpoint "/downloads/**" {
     proxy {
       backend "httpbin" {

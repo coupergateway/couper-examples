@@ -1,4 +1,4 @@
-server "file-server" {
+server {
   files {
     document_root = "htdocs"
   }
@@ -15,6 +15,5 @@ server "file-server" {
         }
       }
     }
-
   }
 }

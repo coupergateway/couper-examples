@@ -1,4 +1,4 @@
-server "responses" {
+server {
   endpoint "/" {
     response {
       status = 301

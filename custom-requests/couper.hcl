@@ -1,5 +1,4 @@
-server "custom-requests" {
-
+server {
   endpoint "/get" {
     request {
       url = "https://httpbin.org/anything"
@@ -28,7 +27,6 @@ server "custom-requests" {
       json_body = backend_responses.post.json_body
     }
   }
-
 
   endpoint "/use-backend" {
     request {

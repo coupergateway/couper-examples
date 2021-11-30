@@ -6,7 +6,7 @@ To create and sign JWT, you can use the `jwt_sign()` function and the
 E.g. let's create a simple OAuth authorization server token endpoint:
 
 ```hcl
-server "simple-oauth-as" {
+server {
   endpoint "/token" {
     response {
       json_body = {
@@ -107,6 +107,7 @@ Looking at the decoded payload you will find the claims `iss` and `iat` from the
     ...
   }
 }
+
 definitions {
   ...
   jwt "LocalToken" {

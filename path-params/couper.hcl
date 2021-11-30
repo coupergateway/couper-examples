@@ -1,4 +1,4 @@
-server "path-params-example" {
+server {
   api {
     endpoint "/my/{category}/view" {
       proxy {
