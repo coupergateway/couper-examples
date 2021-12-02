@@ -7,7 +7,7 @@ In this example we show Couper's standard error handling and demonstrate how you
 Suppose, we have an endpoint `/test` which we protect with a basic_auth access control:
 
 ```hcl
-server "error-handling" {
+server {
   api {
     endpoint "/test" {
       access_control = ["ba"]
@@ -17,6 +17,7 @@ server "error-handling" {
     }
   }
 }
+
 definitions {
   basic_auth "ba" {
     user = "john.doe"

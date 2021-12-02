@@ -16,7 +16,7 @@ We have a basic Couper configuration that defines an upstream backend service an
 [`couper.hcl`](couper.hcl):
 
 ```hcl
-server "my-api" {
+server {
   api {
     endpoint "/example/**" {
       path = "/**"
@@ -39,7 +39,7 @@ BACKEND_ORIGIN=https://httpbin.org
 Now we change the Couper configuration to read the origin host from that variable:
 
 ```hcl
-server "my-api" {
+server {
   api {
     endpoint "/example/**" {
       path = "/**"

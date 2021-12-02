@@ -17,6 +17,7 @@ server "client" {
     }
   }
 }
+
 server "resource-server" {
   hosts = ["localhost:8081"]
   api {
@@ -28,6 +29,7 @@ server "resource-server" {
     }
   }
 }
+
 #server "authorization-server" {
 #  hosts = ["localhost:8082"]
 #  endpoint "/token" {
@@ -39,6 +41,7 @@ server "resource-server" {
 #    }
 #  }
 #}
+
 definitions {
 #  jwt_signing_profile "token" {
 #    signature_algorithm = "HS256"

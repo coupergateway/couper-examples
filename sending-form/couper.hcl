@@ -1,4 +1,4 @@
-server "form" {
+server {
   endpoint "/form" {
     request {
       url = "https://httpbin.org/anything"

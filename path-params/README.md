@@ -8,7 +8,7 @@ The `path_params` [variable](https://github.com/avenga/couper/tree/master/docs#v
 An enpoint configured with `/my/{category}/view` will make the denoted part accessible under `request.path_params.category`.
 
 ```hcl
-server "path-params-example" {
+server {
   api {
     endpoint "/my/{category}/view" {
       proxy {

@@ -124,7 +124,7 @@ Note the headers: Couper has set the default content type `text/plain` for the b
 Of course, custom requests can also use defined backends:
 
 ```hcl
-server "custom-requests" {
+server {
   endpoint "/use-backend" {
     request {
       backend "httpbin" {

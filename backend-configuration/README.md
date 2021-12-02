@@ -3,7 +3,7 @@
 A `backend` block defines the connection to a local/remote backend service.
 
 ```hcl
-server "backend-configuration" {
+server {
   endpoint "/**" {
     path = "/**"
     proxy {
@@ -25,7 +25,7 @@ simultaneous connections (in any state - active or idle) to the backend service 
 `max_connections` and limit the total request duration via the `timeout` setting:
 
 ```hcl
-server "backend-configuration" {
+server {
   endpoint "/**" {
     path = "/**"
     proxy {

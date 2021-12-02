@@ -1,4 +1,4 @@
-server "secured-api" {
+server {
   access_control = ["JWTToken"]
 
   api {

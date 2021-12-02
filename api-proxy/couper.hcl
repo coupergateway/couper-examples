@@ -1,5 +1,4 @@
-server "my-api" {
-
+server {
   api {
     // uncomment the base_path to see how local paths "shift" without
     // affecting backend requests:

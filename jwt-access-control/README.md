@@ -80,7 +80,7 @@ example](/api-proxy/README.md) we have used
 [httpbin](https://httpbin.org/). Let's start with that:
 
 ```hcl
-server "secured-api" {
+server {
   api {
     endpoint "/private/**" {
       proxy {
@@ -147,7 +147,7 @@ moment. We need to use that access control in our `server` by
 referencing its name in the `access_control` attribute:
 
 ```hcl
-server "secured-api" {
+server {
   api {
     access_control = ["JWTToken"]
     # …

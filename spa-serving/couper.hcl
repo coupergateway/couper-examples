@@ -1,4 +1,4 @@
-server "spa" {
+server {
     // file server mounted on /, existing files take precedence
     files {
         document_root = "htdocs"

@@ -1,4 +1,4 @@
-server "query-params-example" {
+server {
   endpoint "/remove" {
     proxy {
       backend {

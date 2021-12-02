@@ -14,7 +14,7 @@ under `request.query.category[0]` and the `snakes` under `request.query.category
 The `remove_query_params` attribute removes query parameters from the backend request.
 
 ```hcl
-server "query-params-example" {
+server {
   endpoint "/remove" {
     proxy {
       backend {
@@ -38,7 +38,7 @@ The `set_query_params` attribute sets query parameters in the backend request. I
 The values of the parameters can be a string, or an array if you need to set multiple parameters with the same name:
 
 ```hcl
-server "query-params-example" {
+server {
   endpoint "/set" {
     proxy {
       backend {
@@ -67,7 +67,7 @@ The `add_query_params` attribute appends query parameters in the backend request
 In this example, we add a single value parameter. Therefore we use a string
 
 ```hcl
-server "remove-query-params-example" {
+server {
   endpoint "/add" {
     proxy {
       backend {

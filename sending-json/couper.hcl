@@ -1,4 +1,4 @@
-server "json" {
+server {
   endpoint "/request" {
     request {
       url = "https://httpbin.org/anything"

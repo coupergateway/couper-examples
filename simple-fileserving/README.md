@@ -12,7 +12,7 @@ Let's do that with Couper!
 The core configuration looks like this:
 
 ```hcl
-server "file-server" {
+server {
   files {
     document_root = "htdocs"
   }
@@ -33,7 +33,7 @@ built-in error page with our beloved Couper mascot.
 You can define your own error document like this:
 
 ```hcl
-server "file-server" {
+server {
   files {
     document_root = "htdocs"
     error_file = "error.html"

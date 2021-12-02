@@ -6,7 +6,7 @@ The `form_body` attribute sets the body of a `request` in "HTML form" encoding.
 for the `Content-Type` header.
 
 ```hcl
-server "form" {
+server {
   endpoint "/form" {
     request {
       url = "https://httpbin.org/anything"

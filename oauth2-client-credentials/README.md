@@ -98,6 +98,7 @@ server "resource-server" {
     }
   }
 }
+
 definitions {
   jwt "token" {
     signature_algorithm = "HS256"

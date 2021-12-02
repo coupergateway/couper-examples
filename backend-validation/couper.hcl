@@ -1,4 +1,4 @@
-server "my-api" {
+server {
   api {
     endpoint "/validate" {
       proxy {

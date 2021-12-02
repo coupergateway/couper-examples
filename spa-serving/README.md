@@ -29,7 +29,7 @@ Let's see how the configuration would look like.
 ## Configuration
 
 ```hcl
-server "spa" {
+server {
     files {
         document_root = "htdocs"
     }

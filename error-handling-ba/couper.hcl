@@ -1,4 +1,4 @@
-server "error-handling" {
+server {
   api {
     endpoint "/test" {
       access_control = ["ba"]
@@ -8,6 +8,7 @@ server "error-handling" {
     }
   }
 }
+
 definitions {
   basic_auth "ba" {
     user = "john.doe"

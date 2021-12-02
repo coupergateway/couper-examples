@@ -8,7 +8,7 @@ it uses `HS256` as the signing algorithm. So we use that for our
 Couper configuration:
 
 ```hcl
-server "secured-api" {
+server {
   access_control = ["JWTToken"]
   api {
     endpoint "/private/**" {
