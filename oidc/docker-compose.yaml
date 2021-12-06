@@ -1,0 +1,24 @@
+version: "3"
+services:
+  rp:
+    image: avenga/couper
+    container_name: relying-party
+    ports:
+      - 8080:8080
+    depends_on:
+      - op
+    volumes:
+      - ./relying-party:/conf
+    environment:
+      COUPER_WATCH: "true"
+      RP_CLIENT_ID: "foo"
+      RP_CLIENT_SECRET: "bar"
+  op:
+    image: avenga/couper
+    container_name: openid-provider
+    ports:
+      - 8081:8080
+    volumes:
+      - ./openid-provider:/conf
+    environment:
+      COUPER_WATCH: "true"

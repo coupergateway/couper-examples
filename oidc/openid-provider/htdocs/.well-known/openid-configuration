@@ -1,0 +1,8 @@
+{
+  "issuer": "http://host.docker.internal:8081",
+  "authorization_endpoint": "http://host.docker.internal:8081/auth",
+  "token_endpoint": "http://host.docker.internal:8081/token",
+  "userinfo_endpoint": "http://host.docker.internal:8081/userinfo",
+  "jwks_uri": "http://host.docker.internal:8081/jwks.json",
+  "code_challenge_methods_supported": ["S256"]
+}

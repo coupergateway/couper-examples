@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>OIDC Demo</title>
+    <script>
+function getUserinfo() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/api/userinfo");
+  xhr.addEventListener("load", function(ev) {
+    if (xhr.status === 200) {
+      document.getElementById("userinfo").value = JSON.stringify(JSON.parse(xhr.response), null, "  ");
+    } else if (xhr.status === 401 || xhr.status === 403) {
+      login();
+    }
+  });
+  xhr.send();
+}
+function login() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/oidc/login");
+  xhr.addEventListener("load", function(ev) {
+    location.href = JSON.parse(xhr.response).url;
+  });
+  sp = new URLSearchParams()
+  sp.append("url", location.href)
+  xhr.send(sp);
+}
+window.addEventListener("load", getUserinfo);
+    </script>
+  </head>
+  <body>
+    <h1>OIDC Demo</h1>
+    <p>userinfo: <textarea id="userinfo" name="userinfo" rows="8" cols="40"></textarea></p>
+  <body>
+</html>
