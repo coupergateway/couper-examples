@@ -1,8 +1,8 @@
 {
-  "issuer": "http://host.docker.internal:8081",
-  "authorization_endpoint": "http://host.docker.internal:8081/auth",
-  "token_endpoint": "http://host.docker.internal:8081/token",
-  "userinfo_endpoint": "http://host.docker.internal:8081/userinfo",
-  "jwks_uri": "http://host.docker.internal:8081/jwks.json",
+  "issuer": "http://testop:8080",
+  "authorization_endpoint": "http://localhost:8081/auth",
+  "token_endpoint": "http://testop:8080/token",
+  "userinfo_endpoint": "http://testop:8080/userinfo",
+  "jwks_uri": "http://testop:8080/jwks.json",
   "code_challenge_methods_supported": ["S256"]
 }

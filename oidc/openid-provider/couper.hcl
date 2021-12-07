@@ -20,7 +20,7 @@ server "oauth-as" {
         }
         json_body = {
           access_token = jwt_sign("token", {
-            aud = "http://host.docker.internal:8081"
+            aud = "http://testop:8080"
             cid = request.headers.authorization != null ? split(":", base64_decode(substr(request.headers.authorization, 6, -1)))[0] : request.form_body.client_id[0]
             sub = "qibneqin1p41v9"
           })
@@ -59,7 +59,7 @@ definitions {
     ttl = "1h"
     key_file = "pkcs8.key"
     claims = {
-      iss = "http://host.docker.internal:8081"
+      iss = "http://testop:8080"
       iat = unixtime()
     }
     headers = {
@@ -68,12 +68,12 @@ definitions {
   }
 
   jwt "token" {
-    jwks_url = "http://host.docker.internal:8081/jwks.json"
+    jwks_url = "http://localhost:8080/jwks.json"
     header = "authorization"
     required_claims = ["iat", "exp"]
     claims = {
-      iss = "http://host.docker.internal:8081"
-      aud = "http://host.docker.internal:8081"
+      iss = "http://testop:8080"
+      aud = "http://testop:8080"
     }
   }
 }

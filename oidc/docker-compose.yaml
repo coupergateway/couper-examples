@@ -16,6 +16,7 @@ services:
   op:
     image: avenga/couper
     container_name: openid-provider
+    hostname: testop
     ports:
       - 8081:8080
     volumes:
