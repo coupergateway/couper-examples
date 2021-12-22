@@ -234,12 +234,17 @@ server "client" {
         expected_status = [200]
       }
       # The reference to backend_responses.token makes Couper wait for request "token"'s response.
-      request {
-        url = "http://localhost:8082/res"
+      request "pr" {
+        url = "http://localhost:8082/protected-res"
         headers = {
           authorization = "Bearer ${backend_responses.token.json_body.access_token}"
         }
         json_body = { a = true, b = 2 }
+      }
+      response {
+        json_body = {
+          pr = backend_responses.pr.json_body
+        }
       }
     }
   }
@@ -247,3 +252,6 @@ server "client" {
 ...
 ```
 
+Couper creates a sequence consisting of both requests.
+
+If we added another request without any reference to one of the requests in the sequence, this request would be started in parallel with the sequence.

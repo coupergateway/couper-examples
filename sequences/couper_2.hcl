@@ -10,12 +10,22 @@ server "client" {
         expected_status = [200]
       }
       # The reference to backend_responses.token makes Couper wait for request "token"'s response.
-      request {
-        url = "http://localhost:8082/res"
+      request "pr" {
+        url = "http://localhost:8082/protected-res"
         headers = {
           authorization = "Bearer ${backend_responses.token.json_body.access_token}"
         }
         json_body = { a = true, b = 2 }
+      }
+#      request "ur" {
+#        url = "http://localhost:8082/unprotected-res"
+#        json_body = { c = "foo" }
+#      }
+      response {
+        json_body = {
+          pr = backend_responses.pr.json_body
+#          ur = backend_responses.ur.json_body
+        }
       }
     }
   }
@@ -34,11 +44,18 @@ server "token-provider" {
   }
 }
 
-server "protected-service" {
+server "service" {
   hosts = ["*:8082"]
   api {
-    access_control = ["Token"]
-    endpoint "/res" {
+    endpoint "/protected-res" {
+      access_control = ["Token"]
+      response {
+        json_body = {
+          you_sent = request.json_body
+        }
+      }
+    }
+    endpoint "/unprotected-res" {
       response {
         json_body = {
           you_sent = request.json_body
