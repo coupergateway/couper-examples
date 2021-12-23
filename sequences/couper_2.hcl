@@ -70,6 +70,5 @@ definitions {
     signature_algorithm = "HS256"
     key = "$e(r3T"
     signing_ttl = "10m"
-    header = "authorization"
   }
 }
