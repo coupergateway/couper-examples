@@ -133,6 +133,8 @@ definitions {
 }
 ```
 
+Here we read the token from the `Authorization` header.
+As this is the default, we simply could have omitted that line.
 The `Authorization` header has a special meaning in HTTP. To carry
 any kind of API token, the `Bearer` prefix is necessary:
 
