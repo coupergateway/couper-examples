@@ -153,7 +153,7 @@ definitions {
   }
 
   oidc "MyOIDC" {
-...
+# ...
   }
 ```
 
