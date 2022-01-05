@@ -72,6 +72,7 @@ Press `CTRL+C` to exit.
 * [Single-Sign-On with SAML](saml/README.md)
 * [Error Handling for Access Controls](error-handling-ba/README.md)
 * [Userinfo Endpoint](static-responses/README.md)
+* [OpenID Connect](oidc/README.md)
 
 ### Running Couper
 
