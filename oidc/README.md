@@ -183,7 +183,7 @@ server {
   }
 
   endpoint "/oidc/login" {
-...
+# ...
 ```
 
 After loading the page, a request is sent to the API's `/userinfo` endpoint to get and show some information about a user. If the JWT access control rejects the request, a request is sent to the `/oidc/login` endpoint creating the authorization URL, which the browser then calls to start the authentication process.
