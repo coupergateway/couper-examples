@@ -110,6 +110,7 @@ server {
     }
   }
 }
+
 definitions {
 ...
 ```
