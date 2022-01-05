@@ -112,6 +112,8 @@ Finally, let's log some login event data containing e.g. the `user` field of the
     }
 ```
 
+(Note that, for `basic_auth` access controls, the user is logged as top-level `auth_user` in the `couper_access` log anyway.)
+
 We try the login request again, and find a
 ```json
 "custom": {
