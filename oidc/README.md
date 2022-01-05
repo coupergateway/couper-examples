@@ -77,7 +77,7 @@ server {
   }
 }
 definitions {
-...
+# ...
 ```
 
 The `oauth2_authorization_url()` function creates this URL from information provided in the `oidc` block.
