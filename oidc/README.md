@@ -171,7 +171,7 @@ We add an endpoint to the api block returning the claims from the JWT presented 
       }
     }
   }
-...
+# ...
 ```
 
 The frontend part of our demo application has only one HTML page (index.html) which is served from the `htdocs` directory:
