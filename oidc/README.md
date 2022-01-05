@@ -87,7 +87,7 @@ The second endpoint is the redirect endpoint receiving the authorization code pr
 ```hcl
 server {
   endpoint "/oidc/login" {
-...
+# ...
   }
 
   endpoint "/oidc/redir" {
