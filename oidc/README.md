@@ -121,7 +121,7 @@ Our simple example also has a small API which is protected by a `jwt` access con
 
 ```hcl
 server {
-...
+# ...
 
   api {
     base_path = "/api"
