@@ -64,7 +64,7 @@ The login endpoint creates a JWT containing a `sub` claim. Let's add that to the
 
 ```hcl
   jwt "MyToken" {
-    ...
+#   ...
     custom_log_fields = {
       sub = request.context.MyToken.sub
     }
@@ -104,7 +104,7 @@ Finally, let's log some login event data containing e.g. the `user` field of the
 
 ```hcl
     endpoint "/login" {
-      ...
+#     ...
       custom_log_fields = {
         event_type = "login"
         user = request.context.ba.user
