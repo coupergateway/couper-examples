@@ -160,7 +160,7 @@ definitions {
 We add an endpoint to the api block returning the claims from the JWT presented in the `UserToken` cookie:
 
 ```hcl
-...
+# ...
   api {
     base_path = "/api"
     access_control = ["UserToken"]
