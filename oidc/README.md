@@ -136,7 +136,7 @@ definitions {
   }
 
   oidc "MyOIDC" {
-...
+# ...
   }
 ```
 
