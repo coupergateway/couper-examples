@@ -143,7 +143,7 @@ definitions {
 Because the API is the only consumer of the created tokens, we can use the same `jwt` block to configure the `jwt_sign` function in the `"/oidc/redir"` endpoint by adding a `signing_ttl` attribute (see [Creating JWT](../creating-jwt/README.md) for more information). The created tokens will expire after one hour:
 
 ```hcl
-...
+# ...
 definitions {
   jwt "UserToken" {
     signature_algorithm = "HS256"
