@@ -23,8 +23,8 @@ server "sequence" {
           }
         }
         custom_log_fields = {
-          add = backend_responses.add.json_body
-          default = backend_responses.default.json_body
+          add = backend_responses.add.body
+          default = backend_responses.default.body
         }
       }
     }

@@ -184,8 +184,8 @@ And we can log some additionaly information about the requests in the case of an
           ...
         }
         custom_log_fields = {
-          add = backend_responses.add.json_body
-          default = backend_responses.default.json_body
+          add = backend_responses.add.body
+          default = backend_responses.default.body
         }
       }
 # ...
@@ -194,7 +194,7 @@ And we can log some additionaly information about the requests in the case of an
 This adds a new field to the log message:
 
 ```
-... custom="map[add:map[error:map[id:c71ldd5916bht5pkuqig message:expression evaluation error path:/add status:500]]]" ...
+... custom="map[add:{\n  \"error\": {\n    \"id\":      \"c7bccg5916bqal216ajg\",\n    \"message\": \"expression evaluation error\",\n    \"path\":    \"/add\",\n    \"status\":  500\n  }\n}\n]" ...
 ```
 
 showing that the proxy `"add"` responded with a status code `500` and the error message `"expression evaluation error"`.
@@ -212,7 +212,7 @@ If we change the `request` to
 and send a "proper" array, the `custom` field in the log message now shows that proxy `"add"` produced a "proper" result, while request `"default"` has an error:
 
 ```
-... custom="map[default:map[error:map[id:c71lgcd916bht5pkuqk0 message:expression evaluation error path:/multiply status:500]] add:map[result:46]]" ...
+... custom="map[add:{\"result\":46} default:{\n  \"error\": {\n    \"id\":      \"c7bcdgl916bqal216am0\",\n    \"message\": \"expression evaluation error\",\n    \"path\":    \"/multiply\",\n    \"status\":  500\n  }\n}\n]" ...
 ```
 
 ---
