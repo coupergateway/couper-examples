@@ -3,15 +3,15 @@ server "sequence" {
   api {
     endpoint "/connect" {
       # proxy: pass the client request body to /add
-      proxy "p" {
+      proxy "add" {
         url = "http://localhost:8081/add"
-        # store response in backend_responses.p
+        # store response in backend_responses.add
         expected_status = [200]
       }
       # "default" request: pass response to client
       request {
         url = "http://localhost:8081/multiply"
-        json_body = [ backend_responses.p.json_body.result, 4 ]
+        json_body = [ backend_responses.add.json_body.result, 4 ]
         expected_status = [200]
       }
       error_handler "unexpected_status" {
@@ -23,7 +23,7 @@ server "sequence" {
           }
         }
         custom_log_fields = {
-          p = backend_responses.p.json_body
+          add = backend_responses.add.json_body
           default = backend_responses.default.json_body
         }
       }

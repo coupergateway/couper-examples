@@ -38,25 +38,25 @@ server "sequence" {
   api {
     endpoint "/connect" {
       # proxy: pass the client request body to /add
-      proxy "p" {
+      proxy "add" {
         url = "http://localhost:8081/add"
-        # store response in backend_responses.p
+        # store response in backend_responses.add
       }
       # "default" request: pass response to client
       request {
         url = "http://localhost:8081/multiply"
-        json_body = [ backend_responses.p.json_body.result, 4 ]
+        json_body = [ backend_responses.add.json_body.result, 4 ]
       }
     }
   }
 }
 ```
 
-The proxy configured by the `proxy` block labelled `"p"` sends the client request to the first service endpoint (`/add`) and stores the result in `backend_responses.p`.
+The proxy configured by the `proxy` block labelled `"add"` sends the client request to the first service endpoint (`/add`) and stores the result in `backend_responses.add`.
 The request configured by the `request` block without a label (so having the implicit label `"default"`) sends a new array with two numbers: the result of the first computation, and `4`.
 As the `request` block has no label, the response from this request is then passed to the client.
 
-By using a reference to proxy `"p"` in an attribute of the `request` block, Couper knows that it has to send the default request only *after* having received the response from the proxy. Without such references `proxy` requests and an explicit `request`s are sent in parallel.
+By using a reference to proxy `"add"` in an attribute of the `request` block, Couper knows that it has to send the default request only *after* having received the response from the proxy. Without such references `proxy` requests and an explicit `request`s are sent in parallel.
 
 Let's try this by sending the numbers `12` and `34`:
 
@@ -109,7 +109,7 @@ But we can stop the sequence earlier by configuring the expected status code for
 
 ```hcl
 # ...
-      proxy "p" {
+      proxy "add" {
         ...
         expected_status = [200]                  # ←
       }
@@ -184,7 +184,7 @@ And we can log some additionaly information about the requests in the case of an
           ...
         }
         custom_log_fields = {
-          p = backend_responses.p.json_body
+          add = backend_responses.add.json_body
           default = backend_responses.default.json_body
         }
       }
@@ -194,10 +194,10 @@ And we can log some additionaly information about the requests in the case of an
 This adds a new field to the log message:
 
 ```
-... custom="map[p:map[error:map[id:c71ldd5916bht5pkuqig message:expression evaluation error path:/add status:500]]]" ...
+... custom="map[add:map[error:map[id:c71ldd5916bht5pkuqig message:expression evaluation error path:/add status:500]]]" ...
 ```
 
-showing that the proxy `"p"` responded with a status code `500` and the error message `"expression evaluation error"`.
+showing that the proxy `"add"` responded with a status code `500` and the error message `"expression evaluation error"`.
 
 If we change the `request` to
 
@@ -205,14 +205,14 @@ If we change the `request` to
 # ...
       request {
         url = "http://localhost:8081/multiply"
-        json_body = [ backend_responses.p.json_body.result, "bar" ]  # ← "bar" instead of 4
+        json_body = [ backend_responses.add.json_body.result, "bar" ]  # ← "bar" instead of 4
       }
 # ...
 ```
-and send a "proper" array, the `custom` field in the log message now shows that proxy `"p"` produced a "proper" result, while request `"default"` has an error:
+and send a "proper" array, the `custom` field in the log message now shows that proxy `"add"` produced a "proper" result, while request `"default"` has an error:
 
 ```
-... custom="map[default:map[error:map[id:c71lgcd916bht5pkuqk0 message:expression evaluation error path:/multiply status:500]] p:map[result:46]]" ...
+... custom="map[default:map[error:map[id:c71lgcd916bht5pkuqk0 message:expression evaluation error path:/multiply status:500]] add:map[result:46]]" ...
 ```
 
 ---
