@@ -1,6 +1,6 @@
 # Request Sequences
 
-Imagine, there are two micro-services, and we want to pass to the second service data from the response of the first. Using Couper, we can connect both services, using an implicit sequence.
+Imagine, there are two micro-services, and we want to pass to the second service data from the response of the first. With Couper, we can connect both services, without one service knowing the other, by using an implicit sequence.
 
 Let's look at an example:
 
