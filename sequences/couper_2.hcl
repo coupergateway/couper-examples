@@ -17,20 +17,16 @@ server "client" {
         }
         json_body = { a = true, b = 2 }
       }
-#      request "ur" {
-#        url = "http://localhost:8082/unprotected-res"
-#        json_body = { c = "foo" }
-#      }
       response {
         json_body = {
           pr = backend_responses.pr.json_body
-#          ur = backend_responses.ur.json_body
         }
       }
     }
   }
 }
 
+# for demonstration purposes only!
 server "token-provider" {
   hosts = ["*:8081"]
   api {
@@ -49,13 +45,6 @@ server "service" {
   api {
     endpoint "/protected-res" {
       access_control = ["Token"]
-      response {
-        json_body = {
-          you_sent = request.json_body
-        }
-      }
-    }
-    endpoint "/unprotected-res" {
       response {
         json_body = {
           you_sent = request.json_body
