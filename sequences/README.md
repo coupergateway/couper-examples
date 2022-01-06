@@ -108,7 +108,7 @@ Additionally, we see two entries in the `couper_backend` log, one for `/add` and
 But we can stop the sequence earlier by configuring the expected status code for each request:
 
 ```hcl
-...
+# ...
       proxy "p" {
         ...
         expected_status = [200]                  # ←
@@ -118,7 +118,7 @@ But we can stop the sequence earlier by configuring the expected status code for
         ...
         expected_status = [200]                  # ←
       }
-...
+# ...
 ```
 
 ```sh
@@ -163,7 +163,7 @@ Let's add an `error_handler` to handle the error:
           }
         }
       }
-...
+# ...
 ```
 
 ```sh
@@ -178,7 +178,7 @@ Content-Type: application/json
 And we can log some additionaly information about the requests in the case of an error:
 
 ```hcl
-...
+# ...
       error_handler "unexpected_status" {
         response {
           ...
@@ -188,7 +188,7 @@ And we can log some additionaly information about the requests in the case of an
           default = backend_responses.default.json_body
         }
       }
-...
+# ...
 ```
 
 This adds a new field to the log message:
@@ -202,12 +202,12 @@ showing that the proxy `"p"` responded with a status code `500` and the error me
 If we change the `request` to
 
 ```hcl
-...
+# ...
       request {
         url = "http://localhost:8081/multiply"
         json_body = [ backend_responses.p.json_body.result, "bar" ]  # ← "bar" instead of 4
       }
-...
+# ...
 ```
 and send a "proper" array, the `custom` field in the log message now shows that proxy `"p"` produced a "proper" result, while request `"default"` has an error:
 
@@ -249,7 +249,7 @@ server "client" {
     }
   }
 }
-...
+# ...
 ```
 
 Couper creates a sequence consisting of both requests.
