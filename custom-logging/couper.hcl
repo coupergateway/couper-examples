@@ -6,10 +6,10 @@ server {
       response {
         body = jwt_sign("MyToken", { sub = request.context.ba.user })
       }
-      custom_log_fields = {
-        ev_type = "login"
-        user = request.context.ba.user
-      }
+#      custom_log_fields = {
+#        ev_type = "login"
+#        user = request.context.ba.user
+#      }
     }
   }
   api {
@@ -47,15 +47,15 @@ definitions {
     signature_algorithm = "HS256"
     key = "$e(R3t"
     signing_ttl = "10m"
-    custom_log_fields = {
-      sub = request.context.MyToken.sub
-    }
+#    custom_log_fields = {
+#      sub = request.context.MyToken.sub
+#    }
   }
   backend "mail" {
     origin = "http://localhost:8081"
-    custom_log_fields = {
-      recipient = request.json_body.to
-      subject = request.json_body.subject
-    }
+#    custom_log_fields = {
+#      recipient = request.json_body.to
+#      subject = request.json_body.subject
+#    }
   }
 }
