@@ -4,47 +4,23 @@ Imagine, there are two micro-services, and we want to pass to the second service
 
 Let's look at an example:
 
-In `couper.hcl`, we set-up a "math" service with two endpoints: `/add` calculates the sum of two numbers given as a JSON array, `/multiply` also accepts an array of two numbers and multiplies the first by the second.
+Imagine a math service with two endpoints: `/add` calculates the sum of two numbers given as a JSON array, `/multiply` also accepts an array of two numbers and multiplies the first by the second.
+
+In `couper-math.hcl`, we set up a server connecting the two endpoints:
 
 ```hcl
-server "math" {
-  hosts = ["*:8081"]
-  api {
-    endpoint "/add" {
-      # expects an array with two numbers
-      response {
-        json_body = {
-          result = request.json_body[0] + request.json_body[1]
-        }
-      }
-    }
-    endpoint "/multiply" {
-      # expects an array with two numbers
-      response {
-        json_body = {
-          result = request.json_body[0] * request.json_body[1]
-        }
-      }
-    }
-  }
-}
-```
-
-Now we add another `server` block with an API endpoint connecting both service endpoints:
-
-```hcl
-server "sequence" {
+server {
   hosts = ["*:8080"]
   api {
     endpoint "/connect" {
       # proxy: pass the client request body to /add
       proxy "add" {
-        url = "http://localhost:8081/add"
+        url = "http://math:8081/add"
         # store response in backend_responses.add
       }
       # "default" request: pass response to client
       request {
-        url = "http://localhost:8081/multiply"
+        url = "http://math:8081/multiply"
         json_body = [ backend_responses.add.json_body.result, 4 ]
       }
     }
@@ -58,7 +34,13 @@ As the `request` block has no label, the response from this request is then pass
 
 By using a reference to proxy `"add"` in an attribute of the `request` block, Couper knows that it has to send the default request only *after* having received the response from the proxy. Without such references `proxy` requests and an explicit `request`s are sent in parallel.
 
-Let's try this by sending the numbers `12` and `34`:
+Let's start the example:
+
+```sh
+$ docker-compose -f docker-compose-math.yml up
+```
+
+And try it by sending the numbers `12` and `34`:
 
 ```sh
 $ curl -si -H "Content-Type: application/json" -d '[12, 34]' localhost:8080/connect
@@ -91,19 +73,35 @@ Content-Type: application/json
 }
 ```
 
-Hmm, this is an error from the `/multiply` endpoint. But looking at the logs, we see that already the `/add` endpoint logged an error:
+Hmm, this is an error from the `/multiply` endpoint. But looking at the logs, we see that already the request to the `/add` endpoint returned a `500`:
 
-```
-Invalid operand; Unsuitable value for right operand: a number is required.  ... endpoint=/add error_type=evaluation
+```json
+{
+  "backend":"default",
+  "request": {
+    "name": "add"
+  },
+  "status":500,
+  "type":"couper_backend",
+  "url":"http://math:8081/add"
+}
 ```
 
-An the `/multiply` endpoint logged another message:
+Additionally, we see another entry in the `couper_backend` log:
 
-```
-Operation failed; Error during operation: argument must not be null.  ... endpoint=/multiply error_type=evaluation
+```json
+{
+  "backend":"default",
+  "request": {
+    "name": "default"
+  },
+  "status":500,
+  "type":"couper_backend"
+  "url":"http://math:8081/multiply"
+}
 ```
 
-Additionally, we see two entries in the `couper_backend` log, one for `/add` and one for `/multiply`. So Couper sent the second request, even though the first produced an unexpected result.
+So Couper sent the second request, even though the first produced an unexpected result.
 
 But we can stop the sequence earlier by configuring the expected status code for each request:
 
@@ -142,8 +140,13 @@ Now we see only one entry in the `couper_backend` log (for `/add`).
 
 We also see an error in the `couper_access` log:
 
-```
-endpoint error: endpoint error ... endpoint=/connect error_type=sequence
+```json
+{
+  "error_type": "unexpected_status",
+  "level": "error",
+  "message": "endpoint error",
+  "type": "couper_access"
+}
 ```
 
 Let's add an `error_handler` to handle the error:
@@ -193,8 +196,13 @@ And we can log some additionaly information about the requests in the case of an
 
 This adds a new field to the log message:
 
-```
-... custom="map[add:{\n  \"error\": {\n    \"id\":      \"c7bccg5916bqal216ajg\",\n    \"message\": \"expression evaluation error\",\n    \"path\":    \"/add\",\n    \"status\":  500\n  }\n}\n]" ...
+```json
+{
+  "custom": {
+    "add": "{\n  \"error\": {\n    \"id\":      \"c7bvae8plt7t9hpdkaqg\",\n    \"message\": \"expression evaluation error\",\n    \"path\":    \"/add\",\n    \"status\":  500\n  }\n}\n"
+  },
+  "error_type": "unexpected_status"
+}
 ```
 
 showing that the proxy `"add"` responded with a status code `500` and the error message `"expression evaluation error"`.
@@ -204,15 +212,21 @@ If we change the `request` to
 ```hcl
 # ...
       request {
-        url = "http://localhost:8081/multiply"
+        url = "http://math:8081/multiply"
         json_body = [ backend_responses.add.json_body.result, "bar" ]  # ← "bar" instead of 4
       }
 # ...
 ```
 and send a "proper" array, the `custom` field in the log message now shows that proxy `"add"` produced a "proper" result, while request `"default"` has an error:
 
-```
-... custom="map[add:{\"result\":46} default:{\n  \"error\": {\n    \"id\":      \"c7bcdgl916bqal216am0\",\n    \"message\": \"expression evaluation error\",\n    \"path\":    \"/multiply\",\n    \"status\":  500\n  }\n}\n]" ...
+```json
+{
+  "custom": {
+    "add": "{\"result\":46}",
+    "default": "{\n  \"error\": {\n    \"id\":      \"c7bvbgoplt7t9hpdkarg\",\n    \"message\": \"expression evaluation error\",\n    \"path\":    \"/multiply\",\n    \"status\":  500\n  }\n}\n"
+  },
+  "error_type": "unexpected_status"
+}
 ```
 
 ---
@@ -227,7 +241,7 @@ server "client" {
   api {
     endpoint "/" {
       request "token" {
-        url = "http://localhost:8081/token"
+        url = "http://math:8081/token"
         form_body = {
           sub = "myself"
         }

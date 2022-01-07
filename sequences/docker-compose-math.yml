@@ -1,0 +1,20 @@
+version: "3"
+services:
+  couper:
+    image: avenga/couper
+    ports:
+      - 8080:8080
+    volumes:
+      - ./couper-math.hcl:/conf/couper.hcl
+    environment:
+      # hot reload config
+      - COUPER_WATCH=true
+  math:
+    image: avenga/couper
+    ports:
+      - 8081:8081
+    volumes:
+      - ./math:/conf
+    environment:
+      # hot reload config
+      - COUPER_WATCH=true
