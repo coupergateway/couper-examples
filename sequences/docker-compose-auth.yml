@@ -1,0 +1,29 @@
+version: "3"
+services:
+  couper:
+    image: avenga/couper
+    ports:
+      - 8080:8080
+    volumes:
+      - ./couper-auth.hcl:/conf/couper.hcl
+    environment:
+      # hot reload config
+      - COUPER_WATCH=true
+  token-provider:
+    image: avenga/couper
+    ports:
+      - 8081:8081
+    volumes:
+      - ./auth/tp:/conf
+    environment:
+      # hot reload config
+      - COUPER_WATCH=true
+  resource:
+    image: avenga/couper
+    ports:
+      - 8082:8082
+    volumes:
+      - ./auth/rs:/conf
+    environment:
+      # hot reload config
+      - COUPER_WATCH=true

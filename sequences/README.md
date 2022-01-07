@@ -233,15 +233,15 @@ and send a "proper" array, the `custom` field in the log message now shows that 
 
 Another use case for a sequence is the provisioning of an access token prior to a request that must be authorized.
 
-See `couper_2.hcl` for an example:
+See `couper_auth.hcl` for an example:
 
 ```hcl
-server "client" {
+server {
   hosts = ["*:8080"]
   api {
     endpoint "/" {
       request "token" {
-        url = "http://math:8081/token"
+        url = "http://token-provider:8081/token"
         form_body = {
           sub = "myself"
         }
@@ -249,7 +249,7 @@ server "client" {
       }
       # The reference to backend_responses.token makes Couper wait for request "token"'s response.
       request "pr" {
-        url = "http://localhost:8082/protected-res"
+        url = "http://resource:8082/protected-res"
         headers = {
           authorization = "Bearer ${backend_responses.token.json_body.access_token}"
         }
@@ -263,7 +263,6 @@ server "client" {
     }
   }
 }
-# ...
 ```
 
 Couper creates a sequence consisting of both requests.
