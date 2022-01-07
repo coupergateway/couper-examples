@@ -187,8 +187,14 @@ And we can log some additionaly information about the requests in the case of an
           ...
         }
         custom_log_fields = {
-          add = backend_responses.add.body
-          default = backend_responses.default.body
+          add = {
+            message = backend_responses.add.json_body.error.message
+            status = backend_responses.add.json_body.error.status
+          }
+          default = {
+            message = backend_responses.default.json_body.error.message
+            status = backend_responses.default.json_body.error.status
+          }
         }
       }
 # ...
@@ -199,7 +205,10 @@ This adds a new field to the log message:
 ```json
 {
   "custom": {
-    "add": "{\n  \"error\": {\n    \"id\":      \"c7bvae8plt7t9hpdkaqg\",\n    \"message\": \"expression evaluation error\",\n    \"path\":    \"/add\",\n    \"status\":  500\n  }\n}\n"
+    "add": {
+      "message": "expression evaluation error",
+      "status": 500
+    }
   },
   "error_type": "unexpected_status"
 }
@@ -222,8 +231,11 @@ and send a "proper" array, the `custom` field in the log message now shows that 
 ```json
 {
   "custom": {
-    "add": "{\"result\":46}",
-    "default": "{\n  \"error\": {\n    \"id\":      \"c7bvbgoplt7t9hpdkarg\",\n    \"message\": \"expression evaluation error\",\n    \"path\":    \"/multiply\",\n    \"status\":  500\n  }\n}\n"
+    "add": {},
+    "default": {
+      "message": "expression evaluation error",
+      "status": 500
+    }
   },
   "error_type": "unexpected_status"
 }

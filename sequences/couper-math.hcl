@@ -23,8 +23,14 @@ server {
           }
         }
         custom_log_fields = {
-          add = backend_responses.add.body
-          default = backend_responses.default.body
+          add = {
+            message = backend_responses.add.json_body.error.message
+            status = backend_responses.add.json_body.error.status
+          }
+          default = {
+            message = backend_responses.default.json_body.error.message
+            status = backend_responses.default.json_body.error.status
+          }
         }
       }
     }
