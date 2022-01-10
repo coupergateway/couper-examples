@@ -279,4 +279,44 @@ server {
 
 Couper creates a sequence consisting of both requests.
 
+Let's start the example:
+
+```sh
+$ docker-compose -f docker-compose-auth.yml up
+```
+
+and call the endpoint:
+
+```sh
+$ curl -si localhost:8080/
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{"pr":{"you_sent":{"a":true,"b":2}}}
+```
+
+In the backend log we see two entries:
+
+```json
+{
+  "request":{
+    "name":"token"
+  },
+  "status":200,
+  "type":"couper_backend",
+  "url":"http://token-provider:8081/token"
+}
+{
+  "depends_on":"token",
+  "request":{
+    "name":"pr"
+  },
+  "status":200,
+  "type":"couper_backend",
+  "url":"http://resource:8082/protected-res"
+}
+```
+
+The request named `pr` `depends_on` the response for the request named `token`.
+
 If we added another request without any reference to one of the requests in the sequence, this request would be started in parallel with the sequence.
