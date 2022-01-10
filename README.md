@@ -62,6 +62,7 @@ Press `CTRL+C` to exit.
 * [Sending JSON Content](sending-json/README.md)
 * [Sending Form Content](sending-form/README.md)
 * [Redirects](static-responses/README.md)
+* [Request Sequences](sequences/README.md)
 
 ### Authorization & Authentication
 
