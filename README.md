@@ -82,4 +82,4 @@ Press `CTRL+C` to exit.
 * [Using docker-compose](docker-compose/README.md)
 * [Kubernetes](kubernetes-configuration/README.md)
 * [Linking Docker Containers](linking-docker-containers/README.md)
-* [Custom Loggin](custom-logging/README.md)
+* [Custom Logging](custom-logging/README.md)
