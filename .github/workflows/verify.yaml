@@ -18,8 +18,14 @@ jobs:
       - name: 'setup docker'
         uses: docker-practice/actions-setup-docker@1.0.8
       - name: 'verify with avenga/couper:${{ inputs.image-tag }}'
+        continue-on-error: true # run output step
+        id: verify
         run: |
           docker version
           docker pull avenga/couper:${{ inputs.image-tag }}
           docker run avenga/couper:${{ inputs.image-tag }} version
-          for f in $(find . -type f -name \*.hcl); do docker run --rm -v "$(pwd)":/examples avenga/couper:${{ inputs.image-tag }} verify -f /examples/${f:1} || echo ${f:1}; done
+          for f in $(find . -type f -name \*.hcl); do docker run --rm -v "$(pwd)":/examples avenga/couper:${{ inputs.image-tag }} verify -f /examples/${f:1} || echo "::set-output name=file::${f:1}" && exit 1; done
+      - name: 'failed output'
+        if: failure() && steps.verify.outcome == 'failure'
+        run: |
+          echo "failed with file: ${{ steps.verify.outputs.file }}"
