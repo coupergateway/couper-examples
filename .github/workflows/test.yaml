@@ -1,0 +1,30 @@
+name: 'test configurations'
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  pull_request_review:
+    types: [ submitted ]
+
+jobs:
+  all:
+    if: github.event_name == 'pull_request_review'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tags: [ latest, edge ]
+    steps:
+      - uses: avenga/couper-examples/.github/workflows/verify.yml@master
+        with:
+          image-tag: ${{ matrix.tags }}
+  latest:
+    uses: avenga/couper-examples/.github/workflows/verify.yml@master
+    if: github.event_name == 'push'
+    with:
+      image-tag: 'latest'
+  edge:
+    uses: avenga/couper-examples/.github/workflows/verify.yml@master
+    if: github.event_name == 'pull_request'
+    with:
+      image-tag: 'edge'

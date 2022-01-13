@@ -1,0 +1,24 @@
+name: 'verify'
+
+on:
+  workflow_call:
+    inputs:
+      image-tag:
+        type: string
+        required: true
+
+jobs:
+  docker:
+    name: 'couper-verify'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: 'verify with avenga/couper:${ image-tag }'
+        uses: docker-practice/actions-setup-docker@1.0.8
+        run: |
+          docker version
+          docker pull avenga/couper:${ image-tag }
+          docker run avenga/couper:${ image-tag } version
+          for f in $(find . -type f -name \*.hcl); do docker run --rm -v "$(pwd)":/examples avenga/couper:${ image-tag } verify -f /examples/${f:1} || echo ${f:1}; done
