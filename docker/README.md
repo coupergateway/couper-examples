@@ -86,7 +86,7 @@ COPY couper.hcl /conf/
 Now we can build and run our custom Couper image:
 
 ```sh
-docker build --pull --load -t my-couper .
+docker build --pull --output=type=docker -t my-couper .
 ```
 
 Start our image named `my-couper`:
