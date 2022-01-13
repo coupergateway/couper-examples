@@ -59,16 +59,16 @@ You can press `CTRL + c` to stop the running Couper container.
 To be able to add custom resources which could be served from Couper like files or a SPA you can create
 your own `Dockerfile` which inherits from the official Couper Image.
 
-First we can create some content and place this into a new folder called `www`.
+First we can create some content and place this into a new folder called `htdocs`.
 We have used a simple [`html`-file](./build/www/index.html) here.
 
-Next to our `www` folder we will create a simple `couper.hcl` and insert a reference to `www`.
+Next to our `htdocs` folder we will create a simple `couper.hcl` and insert a reference to `htodcs`.
 
 ```hcl
 server {
   files {
     # we will copy this folder to this location in the next step
-    document_root = "/www"
+    document_root = "/htdocs"
   }
 }
 ```
@@ -78,7 +78,7 @@ Create a file named `Dockerfile` and insert the following content:
 ```Dockerfile
 FROM avenga/couper
 
-COPY www /www
+COPY htdocs /htdocs
 COPY couper.hcl /conf/
 
 ```

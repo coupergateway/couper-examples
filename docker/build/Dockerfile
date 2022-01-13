@@ -1,6 +1,6 @@
 FROM avenga/couper
 
-COPY www /www
+COPY htdocs /htodcs
 COPY couper.hcl /conf/
 
 # The base image command refers to /conf/couper.hcl on startup

@@ -1,5 +1,5 @@
 server {
   files {
-    document_root = "/www"
+    document_root = "/htdocs"
   }
 }
