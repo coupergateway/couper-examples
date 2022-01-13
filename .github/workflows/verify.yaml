@@ -24,9 +24,4 @@ jobs:
           docker version
           docker pull avenga/couper:${{ inputs.image-tag }}
           docker run avenga/couper:${{ inputs.image-tag }} version
-          for f in $(find . -type f -name \*.hcl); do docker run --rm -v "$(pwd)":/examples avenga/couper:${{ inputs.image-tag }} verify -f /examples/${f:1}; if [[ "$?" -ne 0 ]]; then echo "::set-output name=file::${f:1}" && exit 1; fi; done
-      - name: 'failed output'
-        if: steps.verify.outcome == 'failure'
-        run: |
-          echo "failed with file: ${{ steps.verify.outputs.file }}"
-          docker run --rm -v "$(pwd)":/examples avenga/couper:${{ inputs.image-tag }} verify -f /examples/${{ steps.verify.outputs.file }} 
+          for f in $(find . -type f -name \*.hcl); do docker run --rm -v "$(pwd)":/examples avenga/couper:${{ inputs.image-tag }} verify -f /examples/${f:1}; if [[ "$?" -ne 0 ]]; then echo "::warning file=${f:1}::failed"; exit 1; fi; done
