@@ -15,8 +15,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: 'verify with avenga/couper:${ image-tag }'
+      - name: 'setup docker'
         uses: docker-practice/actions-setup-docker@1.0.8
+      - name: 'verify with avenga/couper:${ image-tag }'
         run: |
           docker version
           docker pull avenga/couper:${ image-tag }
