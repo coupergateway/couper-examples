@@ -11,12 +11,12 @@ on:
 
 jobs:
   latest:
-    uses: avenga/couper-examples/.github/workflows/verify.yml@master
+    uses: avenga/couper-examples/.github/workflows/verify.yaml@master
     if: github.event_name != 'pull_request'
     with:
       image-tag: 'latest'
   edge:
-    uses: avenga/couper-examples/.github/workflows/verify.yml@master
+    uses: avenga/couper-examples/.github/workflows/verify.yaml@master
     if: github.event_name != 'push'
     with:
       image-tag: 'edge'
