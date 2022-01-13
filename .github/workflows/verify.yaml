@@ -17,9 +17,9 @@ jobs:
         uses: actions/checkout@v2
       - name: 'setup docker'
         uses: docker-practice/actions-setup-docker@1.0.8
-      - name: 'verify with avenga/couper:${{ image-tag }}'
+      - name: 'verify with avenga/couper:${{ inputs.image-tag }}'
         run: |
           docker version
-          docker pull avenga/couper:${{ image-tag }}
-          docker run avenga/couper:${{ image-tag }} version
-          for f in $(find . -type f -name \*.hcl); do docker run --rm -v "$(pwd)":/examples avenga/couper:${{ image-tag }} verify -f /examples/${f:1} || echo ${f:1}; done
+          docker pull avenga/couper:${{ inputs.image-tag }}
+          docker run avenga/couper:${{ inputs.image-tag }} version
+          for f in $(find . -type f -name \*.hcl); do docker run --rm -v "$(pwd)":/examples avenga/couper:${{ inputs.image-tag }} verify -f /examples/${f:1} || echo ${f:1}; done
