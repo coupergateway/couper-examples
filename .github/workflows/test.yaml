@@ -1,0 +1,22 @@
+name: 'test configurations'
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  pull_request_review:
+    types: [ submitted ]
+  schedule:
+    - cron: '0 9 * * 1-5' # mo-fr
+
+jobs:
+  latest:
+    uses: avenga/couper-examples/.github/workflows/verify.yml@master
+    if: github.event_name != 'pull_request'
+    with:
+      image-tag: 'latest'
+  edge:
+    uses: avenga/couper-examples/.github/workflows/verify.yml@master
+    if: github.event_name != 'push'
+    with:
+      image-tag: 'edge'
