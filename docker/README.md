@@ -78,7 +78,7 @@ Create a file named `Dockerfile` and insert the following content:
 ```Dockerfile
 FROM avenga/couper
 
-COPY htdocs /htdocs
+COPY htdocs/ /htdocs/
 COPY couper.hcl /conf/
 
 ```
