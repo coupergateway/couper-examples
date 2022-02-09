@@ -49,7 +49,7 @@ definitions {
   }
 
   oidc "MyOIDC" {
-    configuration_url = "http://host.docker.internal:8081/.well-known/openid-configuration"
+    configuration_url = "http://testop:8080/.well-known/openid-configuration"
     client_id = env.RP_CLIENT_ID
     client_secret = env.RP_CLIENT_SECRET
     redirect_uri = "/oidc/redir"
