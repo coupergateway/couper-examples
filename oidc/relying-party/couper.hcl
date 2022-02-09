@@ -21,13 +21,7 @@ server {
       status = 303
       headers = {
         set-cookie = [
-          "UserToken=${jwt_sign("UserToken", {
-            sub = request.context.MyOIDC.id_token_claims.sub
-            name = request.context.MyOIDC.id_token_claims.name
-            given_name = request.context.MyOIDC.id_token_claims.given_name
-            family_name = request.context.MyOIDC.id_token_claims.family_name
-            preferred_username = request.context.MyOIDC.id_token_claims.preferred_username
-          })};HttpOnly;Secure;Path=/api",
+          "UserToken=${jwt_sign("UserToken", { for k in ["sub", "name", "given_name", "family_name", "preferred_username"]: k => request.context.MyOIDC.id_token_claims[k] })};HttpOnly;Secure;Path=/api",
           "authvv=;HttpOnly;Secure;Path=/oidc/redir;Max-Age=0"
         ]
         location = relative_url(request.query.state[0])
