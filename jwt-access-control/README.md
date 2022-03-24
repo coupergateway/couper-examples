@@ -209,6 +209,8 @@ In fact, the token has expired, see Couper's log for details (`access control er
 $ curl -i http://localhost:8080/private/headers -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImFzZGYifQ.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIn0.uSp2uAxubCuAGqMLS2S67aCK5DTvVVLi0LcxV5bSrTiiXE1wUb1h9IYZ4oXIKFWnCsXuIqTUl-UBn9kcJ7NJvagCaKAqk2_uRMKvFOA9lWT228FAYL58twaue-Ut_3Z5U1MfMYJxq6ADKzjgUW-bZQOceBP7yZ-Bedewmq2ZtNzLhoO-RLiCkmrLlIKcx0LCTOZOYFT7g38XLOWHcG1QQ8U9qBZMAm9j4wXgk4UoCJj1h4tS9He2YyVfB_w7y1kyXmpd_Tn3onU2z6I6qKpkRfh8sBUJ9AP50Iub85-O4mKw23gNTtw6uHhc33uBydenV9M3EMayCWkKTwEGmkpgUw"
 HTTP/1.1 200 OK
 …
+Cache-Control: private
+…
 {
   "headers": {
     "Accept": "*/*", 
@@ -224,6 +226,8 @@ With the valid (perpetual) token, Couper has successfully authenticated and
 accepted the request and forwarded it to `httpbin.org`! 200 OK :)
 
 Did you notice that Couper automatically dropped the `Authorization` header and did not forward it upstream?
+
+You may also note that Couper added the `Cache-Control: private` response header field, in order to prevent downstream shared caching of resources protected by the JWT access control.
 
 ## More Transport Configuration
 
