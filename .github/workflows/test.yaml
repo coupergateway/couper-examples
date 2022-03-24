@@ -6,19 +6,17 @@ on:
   pull_request:
   pull_request_review:
     types: [ submitted ]
-  issue_comment:
-    types: [created, deleted]
   schedule:
     - cron: '0 9 * * 1-5' # mo-fr
 
 jobs:
   latest:
     uses: avenga/couper-examples/.github/workflows/verify.yaml@master
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' || github.event.review.state == 'approved'
     with:
       image-tag: 'latest'
   edge:
     uses: avenga/couper-examples/.github/workflows/verify.yaml@master
-    if: github.event_name != 'push'
+    if: github.event_name != 'push' || github.event.review.state == 'approved'
     with:
       image-tag: 'edge'
