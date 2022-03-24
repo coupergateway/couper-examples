@@ -6,6 +6,8 @@ on:
   pull_request:
   pull_request_review:
     types: [ submitted ]
+  issue_comment:
+    types: [created, deleted]
   schedule:
     - cron: '0 9 * * 1-5' # mo-fr
 
