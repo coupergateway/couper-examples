@@ -7,7 +7,7 @@ server {
           aud = "The_Audience"
         })
         token_type = "Bearer"
-        expires_at = "600"
+        expires_in = "600"
       }
     }
   }
