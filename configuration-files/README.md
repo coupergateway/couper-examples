@@ -38,6 +38,16 @@ server {
     bootstrap_file = "/htdocs/index.html"
     paths = ["/", "/app"]
   }
+
+  set_response_headers = {
+    x-service = env.SERVICE_NAME
+  }
+}
+
+defaults {
+  environment_variables = {
+    SERVICE_NAME = "example"
+  }
 }
 ```
 
@@ -51,7 +61,7 @@ server {
         base_path = "/api/v1/service-a"
         endpoint "/**" {
             proxy {
-                url = "http://${env.SERVICE_A_ORIGIN}/**"
+                url = "http://${env.SERVICE_A_ORIGIN}/"
             }
         }
     }
@@ -60,9 +70,15 @@ server {
 defaults {
     environment_variables = {
         SERVICE_A_ORIGIN = "http://localhost:8080"
+        SERVICE_NAME = "service-a"
     }
 }
 ```
+
+#### Environment Variables
+
+The `environment_variables` attribute within the `defaults` block has an exception during the merge process. The map-value
+will be merged by key instead of the whole map. This allows to override or add specific environment defaults.
 
 ### Result
 
@@ -72,7 +88,7 @@ The Couper container basically runs already with the argument `-d /conf` inside 
 our `./conf-a` directory to `/conf`. Also, the Couper welcome page already exists within `/htdocs`.
 
 ```shell
-docker run --pull -v $(PWD)/conf-a:/conf avenga/couper
+docker run --pull -v $(PWD)/conf-a:/conf -p 8080:8080 avenga/couper
 ```
 
 ```hcl
@@ -83,6 +99,10 @@ server {
 
   spa {
     bootstrap_file = "/htdocs/index.html"
+  }
+
+  set_response_headers = {
+    x-service = env.SERVICE_NAME
   }
 
   api "serviceA" {
@@ -98,6 +118,7 @@ server {
 defaults {
   environment_variables = {
     SERVICE_A_ORIGIN = "localhost:8080"
+    SERVICE_NAME = "service-a"
   }
 }
 ```
@@ -106,7 +127,15 @@ We can verify the running configuration with calls to `/`, `/app` or `/api/v1/se
 
 ```shell
 curl -i http://localhost:8080/api/v1/service-a
+
+# output
+# HTTP/1.1 200 OK
+# Couper-Request-Id: c9haiurm8vfs73bi7ku0
+# Server: couper.io
+# X-Service: service-a
 ```
+
+The `SERVICE_NAME` environment value `example` got also replaced with `service-a`. 
 
 You may have read how the files will be merged by file-name-order. A `couper.hcl` will be prioritized within this directory
 which makes this file a good starting point for our base configuration.

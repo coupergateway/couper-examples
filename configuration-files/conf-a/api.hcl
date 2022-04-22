@@ -12,5 +12,6 @@ server {
 defaults {
   environment_variables = {
     SERVICE_A_ORIGIN = "localhost:8080"
+    SERVICE_NAME = "service-a"
   }
 }
