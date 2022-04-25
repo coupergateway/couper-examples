@@ -23,4 +23,4 @@ jobs:
           docker version
           docker pull avenga/couper:${{ inputs.image-tag }}
           docker run avenga/couper:${{ inputs.image-tag }} version
-          for f in $(find . -type f -name \*.hcl); do echo ${f:1} && docker run --rm -v "$(pwd)":/examples avenga/couper:${{ inputs.image-tag }} verify -f /examples/${f:1}; if [[ "$?" -ne 0 ]]; then echo "::error file=${f:1}::verification failed" && exit 1; fi; done
+          for d in $(find . -type f -name \*.hcl -exec dirname {} \;); do echo ${d:1} && docker run --rm -v "$(pwd)":/examples avenga/couper:${{ inputs.image-tag }} verify -d /examples/${d:1}; if [[ "$?" -ne 0 ]]; then echo "::error directory=${d:1}::verification failed" && exit 1; fi; done
