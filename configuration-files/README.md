@@ -11,9 +11,9 @@
 
 # Configuration files
 
-Couper gets configured by a [configuration-file](https://github.com/avenga/couper/tree/master/docs#configuration-file) and
-with the [latest 1.9 release](https://github.com/avenga/couper/releases/latest) Couper has an option to handle multiple
-configuration-files: the configuration-directory. This directory can be passed as an argument along with a configuration-file
+Couper gets configured by a [configuration file](https://github.com/avenga/couper/tree/master/docs#configuration-file) and
+as of the [1.9 release](https://github.com/avenga/couper/releases/tag/v1.9.0) Couper has an option to handle multiple
+configuration files: the configuration directory. This directory can be passed as an argument along with a configuration file
 or as standalone argument.
 
 This enables you to split up a Couper configuration by content or even by environment. This is solved by [merging](https://github.com/avenga/couper/blob/master/docs/MERGE.md) the top-level
@@ -21,8 +21,8 @@ declarations and replacing nested ones. Details are explained in our [merge docu
 
 ## Split by topic
 
-Let's say we have some api endpoints which could be extracted out of a base configuration which just describes basics
-like files, spa serving or default environment variables.
+Let's say we have some API endpoints which could be extracted out of a base configuration which just describes basics
+like files, SPA serving or default environment variables.
 
 ### The base
 
@@ -53,7 +53,7 @@ defaults {
 
 ### API
 
-The API part describes two api services and their related environment default values for e.g. local development:
+The API part describes a service and the related environment default values for e.g. local development:
 
 ```hcl
 server {
@@ -77,8 +77,8 @@ defaults {
 
 #### Environment Variables
 
-The `environment_variables` attribute within the `defaults` block has an exception during the merge process. The map-value
-will be merged by key instead of the whole map. This allows to override or add specific environment defaults.
+The `environment_variables` map within the `defaults` block is handled differently during the merge process: Its values
+are merged one by one by their key instead of replacing the whole map. This allows to override or add specific environment defaults.
 
 ### Result
 
@@ -88,7 +88,7 @@ The Couper container basically runs already with the argument `-d /conf` inside 
 our `./conf-a` directory to `/conf`. Also, the Couper welcome page already exists within `/htdocs`.
 
 ```shell
-docker run --pull -v $(PWD)/conf-a:/conf -p 8080:8080 avenga/couper
+docker run --pull -v ${PWD}/conf-a:/conf -p 8080:8080 avenga/couper
 ```
 
 ```hcl
@@ -203,7 +203,7 @@ results in our expected error.
 
 ### Stage environment file
 
-So lets build the image again and let's add the `stage.hcl` to the build process.
+So let's build the image again and this time add the `stage.hcl` to the build process:
 
 ```hcl
 server {
@@ -245,14 +245,14 @@ server {
 }
 
 definitions {
-    jwt "my-jwt" {
-      jwks_url = "https://demo-idp.couper.io/jwks.json"
-      required_claims = ["role", "sub", "exp"]
-      claims = {
-        iss = "https://demo-idp.couper.io/"
-      }
+  jwt "my-jwt" {
+    jwks_url = "https://demo-idp.couper.io/jwks.json"
+    required_claims = ["role", "sub", "exp"]
+    claims = {
+      iss = "https://demo-idp.couper.io/"
     }
   }
+}
 ```
 
 We will build the docker image again and change the build arguments value.
@@ -283,7 +283,7 @@ We will get a 401 response without basic-auth related headers and no prompt. Add
 
 `"level":"error","message":"access control error: my-jwt: bearer required with authorization header"`
 
-Let's retry the request with a valid jwt token. Just visit [https://demo-idp.couper.io/](https://demo-idp.couper.io/) and copy the generated token. Use this token with our next call:
+Let's retry the request with a valid JWT token. Just visit [https://demo-idp.couper.io/](https://demo-idp.couper.io/) and copy the generated token. Use this token with our next call:
 
 ```shell
 curl -i -H "Authorization: Bearer <your-token>"  http://localhost:8080/
