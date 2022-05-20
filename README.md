@@ -70,6 +70,7 @@ Press `CTRL+C` to exit.
 * [Sending JWT Claims Upstream](sending-jwt-upstream/README.md)
 * [Permissions](permissions/README.md)
 * [Permissions (Role-based Access Control)](permissions-rbac/README.md)
+* [Permissions (Map)](permissions-map/README.md)
 * [Creating JWT](creating-jwt/README.md)
 * [OAuth2 Client Credentials Flow](oauth2-client-credentials/README.md)
 * [Single-Sign-On with SAML](saml/README.md)
