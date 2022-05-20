@@ -68,6 +68,7 @@ Press `CTRL+C` to exit.
 
 * [JWT Access Control](jwt-access-control/README.md)
 * [Sending JWT Claims Upstream](sending-jwt-upstream/README.md)
+* [Permissions](permissions/README.md)
 * [Creating JWT](creating-jwt/README.md)
 * [OAuth2 Client Credentials Flow](oauth2-client-credentials/README.md)
 * [Single-Sign-On with SAML](saml/README.md)
