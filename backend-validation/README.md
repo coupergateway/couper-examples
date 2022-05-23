@@ -82,7 +82,7 @@ The result should have status code `400` if you are accessing [localhost:8080/va
 entry should look like this:
 
 ```sh
-request validation: Parameter 'show_env' in query has an error: must have a value
+backend error: anonymous_4_13: parameter "show_env" in query has an error: value is required but missing
 ```
 
 Providing the required query parameter will fix the request: [http://localhost:8080/validate?show_env=true](http://localhost:8080/validate?show_env=true).
