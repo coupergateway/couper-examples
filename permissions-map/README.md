@@ -75,7 +75,7 @@ definitions {
 
 If seen as granted permissions (also called privileges), these permissions are in a hierarchical relationship to one another:
 
-The granted permission calendar.events also "contains" calendar.events.readonly, the granted permission calendar.readonly also "contains" calendar.events.readonly, and the granted permission calendar also "contains" both calendar.readonly and calendar.events.
+The granted permission _calendar.events_ also "contains" _calendar.events.readonly_, the granted permission _calendar.readonly_ also "contains" _calendar.events.readonly_, and the granted permission _calendar_ also "contains" both _calendar.readonly_ and _calendar.events_.
 
 This can be shown in a graph like this:
 ```
