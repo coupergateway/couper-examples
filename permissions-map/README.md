@@ -99,7 +99,7 @@ In Couper, these relationships are configured using the `jwt` block's `beta_perm
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
     beta_permissions_map = {    # ←
-      "calendar" = ["calendar.readonly", "calendar.events"]
+      "calendar" = ["calendar.readonly", "calendar.events"] # no need to list calendar.events.readonly here, as the map is called recursively
       "calendar.events" = ["calendar.events.readonly"]
       "calendar.readonly" = ["calendar.events.readonly"]
     }
