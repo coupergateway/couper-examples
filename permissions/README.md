@@ -218,3 +218,7 @@ server {
       }
     }
 ```
+
+See also the examples
+* [Permissions (Role-based Access Control)](../permissions-rbac/README.md)
+* [Permissions (Map)](../permissions-map/README.md)
