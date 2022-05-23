@@ -1,6 +1,6 @@
 server {
   api {
-    base_path = "/calendars"
+    base_path = "/{userid}/calendars"
 
     endpoint "/" {
       response {

@@ -59,5 +59,6 @@ definitions {
 
   backend "api" {
     origin = "http://api:8080"
+    path_prefix = request.context.Token.sub
   }
 }
