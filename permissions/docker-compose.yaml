@@ -14,8 +14,6 @@ services:
   api:
     image: avenga/couper:edge
     container_name: resource-api
-    ports:
-      - 8081:8080
     volumes:
       - ./resource-api:/conf
     environment:
