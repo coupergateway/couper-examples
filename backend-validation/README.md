@@ -85,6 +85,19 @@ entry should look like this:
 backend error: anonymous_4_13: parameter "show_env" in query has an error: value is required but missing
 ```
 
+The `error_type` in the log entry is `backend_openapi_validation`. If you want to handle this error, you can do that by defining an `error_handler` in `api` or `endpoint` blocks, e.g. like this:
+
+```hcl
+      error_handler "backend_openapi_validation" {
+        response {
+          status = 303
+          headers = {
+            location = "/somewhere"
+          }
+        }
+      }
+```
+
 Providing the required query parameter will fix the request: [http://localhost:8080/validate?show_env=true](http://localhost:8080/validate?show_env=true).
 
 You should see a json object from the previous response which we will validate partially with the following addition to the openapi file:
