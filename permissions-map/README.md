@@ -208,6 +208,6 @@ and the following log entry:
 ```
 access-control | {...,"handler":"api","level":"error","message":"method not allowed error: method PATCH not allowed by beta_required_permission","method":"PATCH",...
 ```
-This happens because the `PATCH` method is not mentioned in the `beta_required_permission` attribute value (neither explicitly, nor implicitly via "*").
+This happens because the `PATCH` method is not mentioned in the `beta_required_permission` attribute value (neither explicitly, nor implicitly via `"*"`).
 
 **Note:** The log message gives the indication that this `405` error results from `beta_required_permission` (and not from `allowed_methods`).
