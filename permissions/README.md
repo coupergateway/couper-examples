@@ -8,7 +8,7 @@ Suppose you have an API with four endpoints:
 * `/b/copy`
 * `/c`
 
-and you want to use couper for access control. No problem, you can use the `jwt` access control (see example [JWT Access Control](../jwt-access-control/README.md))
+and you want to use Couper for access control. No problem, you can use the `jwt` access control (see example [JWT Access Control](../jwt-access-control/README.md))
 
 ```hcl
 server {
@@ -44,7 +44,7 @@ But additionally, the API endpoints have certain permissions that have to be gra
 * `GET` requests to `/c` need no permission
 * other requests to `/c` need permission "c"
 
-You can configure this using the `beta_required_permission` attribute in the endpoint block.
+You can configure this using the `beta_required_permission` attribute in the `endpoint` block.
 
 First, we replace the wildcard `endpoint` bock with three more specific `endpoint` blocks:
 
@@ -86,7 +86,7 @@ Then we set the required permission for `/a`:
       }
     }
 ```
-That is simple. For the `/b/{action}` endpoint we can use a quoted template expression, because the permission consists of a prefix ("b:") and the value of the `action` path parameter ("send" or "copy").
+That is simple. For the `/b/{action}` endpoint we can use a quoted template expression (`${…}`), because the permission consists of a prefix ("b:") and the value of the `action` path parameter ("send" or "copy").
 
 ```hcl
     endpoint "/b/{action}" { # send, copy
@@ -203,7 +203,7 @@ In the log we see an entry like this:
 access-control | {...,"error_type":"beta_insufficient_permissions","handler":"api","level":"error","message":"access control error: required permission \"c:del\" not granted","method":"DELETE",...
 ```
 
-This error can be handled with an error_handler like this:
+This error can be handled with an `error_handler` like this:
 ```hcl
 server {
   api {
