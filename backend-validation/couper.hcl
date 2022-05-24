@@ -11,15 +11,6 @@ server {
           }
         }
       }
-
-      # error_handler "backend_openapi_validation" {
-      #   response {
-      #     status = 303
-      #     headers = {
-      #       location = "/somewhere"
-      #     }
-      #   }
-      # }
     }
   }
 }
