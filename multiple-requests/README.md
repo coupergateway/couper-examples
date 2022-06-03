@@ -50,9 +50,9 @@ X-First-Status: 200
 ```hcl
 endpoint "/example/**" {
   proxy {
-    path = "/**"
     backend {
       origin = "https://httpbin.org"
+      path = "/**"
     }
   }
   request "additional" {

@@ -2,10 +2,10 @@ server {
   api {
     endpoint "/example/**" {
       proxy {
-        path = "/**"
         backend {
           origin = "https://httpbin.org"
           //origin = env.BACKEND_ORIGIN
+          path = "/**"
         }
       }
     }

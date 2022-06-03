@@ -5,10 +5,10 @@ A `backend` block defines the connection to a local/remote backend service.
 ```hcl
 server {
   endpoint "/**" {
-    path = "/**"
     proxy {
       backend {
         origin = "https://httpbin.org"
+        path = "/**"
       }
     }
   }
@@ -27,10 +27,10 @@ simultaneous connections (in any state - active or idle) to the backend service 
 ```hcl
 server {
   endpoint "/**" {
-    path = "/**"
     proxy {
       backend {
         origin = "https://httpbin.org"
+        path = "/**"
         max_connections = 10
         timeout = "5s"
       }
