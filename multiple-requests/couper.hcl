@@ -1,7 +1,7 @@
 server {
   endpoint "/headers" {
     request "first" {
-        url = "https://httpbin.org/headers"
+      url = "https://httpbin.org/headers"
     }
     request "second" {
       url = "https://httpbin.org/status/404"
@@ -17,9 +17,9 @@ server {
 
   endpoint "/example/**" {
     proxy {
-      path = "/**"
       backend {
         origin = "https://httpbin.org"
+        path = "/**"
       }
     }
     request "additional" {

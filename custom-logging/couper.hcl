@@ -17,8 +17,9 @@ server {
     access_control = ["MyToken"]
     endpoint "/**" {
       proxy {
-        path = "/**"
-        backend = "mail"
+        backend "mail" {
+          path = "/**"
+        }
       }
     }
   }

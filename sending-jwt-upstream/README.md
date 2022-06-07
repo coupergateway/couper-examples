@@ -12,10 +12,10 @@ server {
   access_control = ["JWTToken"]
   api {
     endpoint "/private/**" {
-      path = "/**"
       proxy {
         backend {
           origin = "https://httpbin.org/"
+          path = "/**"
         }
       }
     }

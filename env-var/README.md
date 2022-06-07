@@ -19,10 +19,10 @@ We have a basic Couper configuration that defines an upstream backend service an
 server {
   api {
     endpoint "/example/**" {
-      path = "/**"
       proxy {
         backend {
           origin = "https://httpbin.org"
+          path = "/**"
         }
       }
     }
@@ -42,10 +42,10 @@ Now we change the Couper configuration to read the origin host from that variabl
 server {
   api {
     endpoint "/example/**" {
-      path = "/**"
       proxy {
         backend {
           origin = env.BACKEND_ORIGIN
+          path = "/**"
         }
       }
     }

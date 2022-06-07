@@ -7,9 +7,9 @@ server {
     // try /example/headers or /example/anything
     endpoint "/example/**" {
       proxy {
-        path = "/**"
         backend {
           origin = "https://httpbin.org"
+          path = "/**"
 
           // uncomment to set headers on the way
           //set_request_headers = {
