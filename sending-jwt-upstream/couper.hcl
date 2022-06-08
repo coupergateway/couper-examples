@@ -4,9 +4,9 @@ server {
   api {
     endpoint "/private/**" {
       proxy {
-        path = "/**"
         backend {
           origin = "https://httpbin.org/"
+          path = "/**"
 
           set_request_headers = {
             x-jwt-sub = request.context.JWTToken.sub

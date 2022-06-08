@@ -20,10 +20,10 @@ A basic gateway configuration defines upstream backend services and
 server {
   api {
     endpoint "/example/**" {
-      path = "/**"
       proxy {
         backend {
           origin = "https://httpbin.org"
+          path = "/**"
         }
       }
     }

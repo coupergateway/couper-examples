@@ -4,9 +4,9 @@ server {
     endpoint "/private/**" {
       # remove_request_headers = ["API-Token"]
       proxy {
-        path = "/**"
         backend {
           origin = "https://httpbin.org/"
+          path = "/**"
         }
       }
     }
