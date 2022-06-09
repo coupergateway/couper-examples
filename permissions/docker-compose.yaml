@@ -1,7 +1,7 @@
 version: "3"
 services:
   ac:
-    image: avenga/couper:edge
+    image: avenga/couper
     container_name: access-control
     ports:
       - 8080:8080
@@ -12,7 +12,7 @@ services:
     environment:
       COUPER_WATCH: "true"
   api:
-    image: avenga/couper:edge
+    image: avenga/couper
     container_name: resource-api
     volumes:
       - ./resource-api:/conf
