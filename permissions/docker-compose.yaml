@@ -1,0 +1,20 @@
+version: "3"
+services:
+  ac:
+    image: avenga/couper
+    container_name: access-control
+    ports:
+      - 8080:8080
+    depends_on:
+      - api
+    volumes:
+      - ./access-control:/conf
+    environment:
+      COUPER_WATCH: "true"
+  api:
+    image: avenga/couper
+    container_name: resource-api
+    volumes:
+      - ./resource-api:/conf
+    environment:
+      COUPER_WATCH: "true"
