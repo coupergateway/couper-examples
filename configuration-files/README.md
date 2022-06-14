@@ -1,20 +1,19 @@
 * [Configuration files](#configuration-files)
-    * [Split by topic](#split-by-topic)
-        * [The base](#the-base)
-        * [API](#api)
-        * [Result](#result)
-    * [Different Access-Control](#different-access-control)
-        * [Base](#base)
-        * [Dockerfile](#dockerfile)
-        * [Stage environment file](#stage-environment-file)
-        * [Production environment file](#production-environment-file)
+  * [Split by topic](#split-by-topic)
+    * [The base](#the-base)
+    * [API](#api)
+    * [Result](#result)
+  * [Different Access-Control](#different-access-control)
+    * [Base](#base)
+    * [Dockerfile](#dockerfile)
+    * [Stage environment file](#stage-environment-file)
+    * [Production environment file](#production-environment-file)
 
 # Configuration files
 
 Couper gets configured by a [configuration file](https://github.com/avenga/couper/tree/master/docs#configuration-file) and
 as of the [1.9 release](https://github.com/avenga/couper/releases/tag/v1.9.0) Couper has an option to handle multiple
-configuration files: the configuration directory. This directory can be passed as an argument along with a configuration file
-or as standalone argument.
+configuration files and configuration directories. Both can be passed as arguments and will be processed in order.
 
 This enables you to split up a Couper configuration by content or even by environment. This is solved by [merging](https://github.com/avenga/couper/blob/master/docs/MERGE.md) the top-level
 declarations and replacing nested ones. Details are explained in our [merge documentation](https://github.com/avenga/couper/blob/master/docs/MERGE.md).
@@ -78,7 +77,7 @@ defaults {
 #### Environment Variables
 
 The `environment_variables` map within the `defaults` block is handled differently during the merge process: Its values
-are merged one by one by their key instead of replacing the whole map. This allows to override or add specific environment defaults.
+are merged by their key instead of replacing the whole map. This allows to override or add specific environment defaults.
 
 ### Result
 
@@ -135,7 +134,7 @@ curl -i http://localhost:8080/api/v1/service-a
 # X-Service: service-a
 ```
 
-The `SERVICE_NAME` environment value `example` got also replaced with `service-a`. 
+The `SERVICE_NAME` environment value `example` got also replaced with `service-a`.
 
 You may have read how the files will be merged by file-name-order. A `couper.hcl` will be prioritized within this directory
 which makes this file a good starting point for our base configuration.
@@ -145,14 +144,12 @@ which makes this file a good starting point for our base configuration.
 Another possible case would be an access-control which may differ between a stage and production environment due to their complexity.
 Let's use this case to tailor a possible configuration setup.
 
-Basically we will have some base configuration again. This can be a single file or a directory. The environment related
-configuration will be added during the container build process. In this example we will call these build-arguments by hand but
-this environment-based conditional must be solved by your continuous-integration setup. If you have any questions, feel free
+Basically we will have some base configuration again. This can be a single file or a directory. To keep things simple, we will add all environment related configuration files during the container build process. If you want to ship a specific environment-based configuration file this conditional must be solved by your continuous-integration setup. If you have any questions, feel free
 to open a [discussion](https://github.com/avenga/couper/discussions).
 
 ### Base
 
-To keep things simple we just want to protect our file server. It's recommended to protect even your base with an unrealizable
+We simply want to protect our file server. It's recommended to protect even your base with an unrealizable
 `access_control` since the related CI job could not work properly which may result in an unprotected production environment.
 This is the reason why we will reference an undefined access-control. Couper won't start up in this case, and you may get
 instant feedback from your deployment jobs.
@@ -170,18 +167,14 @@ server {
 
 ### Dockerfile
 
-Docker provides build arguments which we will use to switch between our environment files while building the Couper container image.
-The `HCL_FILE` argument will fall back to `couper.hcl` if we do not provide this argument at all.
-
 ```Dockerfile
-FROM avenga/couper:edge
-
-ARG HCL_FILE=couper.hcl
+FROM avenga/couper:latest
 
 # copy base configuration
-COPY couper.hcl /conf/couper.hcl
-# copy environment base overlay configuration
-COPY $HCL_FILE /conf/
+COPY *.hcl /conf/
+
+# Switch to -f argument instead of -d
+CMD [ "run", "-f", "/conf/couper.hcl" ]
 ```
 
 So building the container with:
@@ -217,16 +210,14 @@ definitions {
 }
 ```
 
-To do so we add the docker related build argument:
-
 ```shell
-docker build -t couper-env-example --build-arg=HCL_FILE=stage.hcl -f Dockerfile .
+docker build -t couper-env-example -f Dockerfile .
 ```
 
-Now we will run our image again:
+Now we will run our image again and just combine the base (`couper.hcl`) with our `stage.hcl` file:
 
 ```shell
-docker run -p 8080:8080 couper-env-example
+docker run -p 8080:8080 couper-env-example run -f /conf/couper.hcl -f stage.hcl
 ```
 
 Just visit [http://localhost:8080/](http://localhost:8080/) in your browser, so you will see a basic-auth prompt.
@@ -255,16 +246,16 @@ definitions {
 }
 ```
 
-We will build the docker image again and change the build arguments value.
+We will build the docker image again to copy the newest files.
 
 ```shell
-docker build -t couper-env-example --build-arg=HCL_FILE=production.hcl -f Dockerfile .
+docker build -t couper-env-example -f Dockerfile .
 ```
 
 Now run our image again:
 
 ```shell
-docker run -p 8080:8080 couper-env-example
+docker run -p 8080:8080 couper-env-example run -f /conf/couper.hcl -f /conf/production.hcl
 ```
 
 If we visit our endpoint again:
