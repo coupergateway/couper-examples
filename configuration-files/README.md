@@ -136,9 +136,6 @@ curl -i http://localhost:8080/api/v1/service-a
 
 The `SERVICE_NAME` environment value `example` got also replaced with `service-a`.
 
-You may have read how the files will be merged by file-name-order. A `couper.hcl` will be prioritized within this directory
-which makes this file a good starting point for our base configuration.
-
 ## Different Access-Control
 
 Another possible case would be an access-control which may differ between a stage and production environment due to their complexity.
@@ -217,7 +214,7 @@ docker build -t couper-env-example -f Dockerfile .
 Now we will run our image again and just combine the base (`couper.hcl`) with our `stage.hcl` file:
 
 ```shell
-docker run -p 8080:8080 couper-env-example run -f /conf/couper.hcl -f stage.hcl
+docker run -p 8080:8080 couper-env-example run -f /conf/couper.hcl -f /conf/stage.hcl
 ```
 
 Just visit [http://localhost:8080/](http://localhost:8080/) in your browser, so you will see a basic-auth prompt.
