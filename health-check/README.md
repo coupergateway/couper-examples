@@ -75,7 +75,7 @@ definitions {
 
 Couper will now send `GET` requests to http://backend:8080/ every second and check
 the response status. By default, status codes of 200, 204 or 301 will be considered as healthy.
-If you want to accept other the these codes, you can set the `expected_status` attribute accordingly.
+If you want to accept other than the these codes, you can set the `expected_status` attribute accordingly.
 To change the check frequency, set the `interval` attribute, for example
 
 ```hcl
