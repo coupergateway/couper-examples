@@ -43,7 +43,7 @@ $ docker-compose pull && docker-compose up
 
 ```
 
-Then, we send a request…
+Then, in another shell we send a request…
 
 ```sh
 $ curl -i localhost:8080/
@@ -85,10 +85,10 @@ To change the check frequency, set the `interval` attribute, for example
     }
 ```
 
-Let's restart the services and filter the logs to better see what's going on:
+Let's filter the logs to better see what's going on:
 
 ```sh
-$ docker-compose up | grep 'new health state'
+$ docker-compose logs | grep 'new health state'
 … "level":"info","message":"new health state: healthy","timestamp":"2022-06-13T09:37:32Z",…
 … "level":"warning","message":"new health state: failing","timestamp":"2022-06-13T09:37:47Z",…
 … "level":"error","message":"unexpected statusCode: 500: new health state: unhealthy","timestamp":"2022-06-13T09:37:50Z",…
