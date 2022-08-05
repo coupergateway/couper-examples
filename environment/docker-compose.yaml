@@ -1,0 +1,14 @@
+version: "3"
+services:
+  gateway:
+    image: avenga/couper:edge
+    container_name: gateway
+    ports:
+      - 8080:8080
+    #depends_on:
+      #- backend
+    volumes:
+      - .:/conf
+    environment:
+      COUPER_WATCH: "true"
+      #COUPER_ENVIRONMENT: "devel" # "devel", "test" or "prod"
