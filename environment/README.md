@@ -2,11 +2,11 @@
 
 Usually a Couper configuration is supposed to run in different environments with
 oftentimes some slight changes. For example, we might have a
-protected "prod" setup which requires a valid JWT token to be accessed, a "test"
-setup which is secured by Basic Authentication and
+protected "prod" setup which requires a valid JWT token for access,
+a "test" setup which is secured by Basic Authentication and
 a "devel" setup which is open to use.
 
-To achieve this, we could wrap parts of the configuration intended for a specific
+To neatly implement the above setup, we could wrap the parts of the configuration intended for a specific
 environment in corresponding `environment` blocks:
 
 ```hcl
@@ -31,8 +31,8 @@ server {
 
 definitions {
   backend "backend" { … }
-  jwt "token" { … }
-  basic_auth "credentials" { … }
+  jwt "token" { … }               # for production
+  basic_auth "credentials" { … }  # for test
 }
 
 settings {
@@ -41,52 +41,55 @@ settings {
     beta_metrics = true
   }
 
-  # the default environment is "devel"
+  # set "devel" as default environment
   environment = "devel"
 }
 ```
 
-With that configuration only the blocks and attributes within the enabled
-environment will become active. When we new start Couper…
+When we start Couper with that configuration…
 
 ```sh
 $ docker-compose pull && docker-compose up
 
 ```
 
-… we can access `http://localhost:8080/` directly without error as the
-environment is set to `devel` in the `settings` block
-and all `access_control` attributes therefore have been disabled.
+… only the blocks and attributes within the default
+environment (`devel`) will become active.
+Therefore, all `access_control` attributes will be disabled so
+that we are allowed to access `http://localhost:8080/` directly
+without authentication.
 
-Let's now change that setting to `"test"`
+What happens if we change the default environment to `"test"`?
 
 ```hcl
 settings {
   …
-  # the default environment is "test"
+  # set "test" as default environment
   environment = "test"
 }
 ```
 
-which activated the `access_control = ["credentials"]` attribute as we are
-now in the `test` environment. We request `http://localhost:8080/` again and
-in the log we get
+This activates the `access_control = ["credentials"]` attribute
+of the `server` block. When we now request `http://localhost:8080/` again we get in the log…
 
 ```json
 {… "error_type":"basic_auth_credentials_missing",… "message":"access control error: credentials: credentials required", …}
 ```
+
+… which means that we have to provide username and password to gain access.
 
 Finally, if we set the `environment` to `prod`…
 
 ```hcl
 settings {
   …
-  # the default environment is "prod"
+  # set "prod" as default environment
   environment = "prod"
 }
 ```
 
-… and reissue the request, Couper now wants us to authenticate with a token:
+… the `access_control = ["token"]` attribute becomes active.
+When we now reissue the request, Couper wants us to authenticate with a token:
 
 ```json
 {… "error_type":"jwt_token_missing",… "message":"access control error: token: token required", …}
@@ -94,10 +97,9 @@ settings {
 
 Nice!
 
-Changing the default `environment` from `devel` to `test` and then `prod` was just for demonstration.
-Like all other settings, `environment` has a corresponding environment variable
-named `COUPER_ENVIRONMENT`. So generally the way to go is to set environment
-variable, for example in the `docker-compose.yaml`:
+Setting the environment by changing the default `environment` from `devel` to `test` and then to `prod` was just for demonstration.
+Like all other Couper settings, `environment` comes with a corresponding environment variable
+named `COUPER_ENVIRONMENT`. So generally the way to go is to set the environment with that variable, for example in the `docker-compose.yaml`…
 
 ```yaml
 services:
@@ -108,15 +110,15 @@ services:
       COUPER_ENVIRONMENT: "prod" # "devel", "test" or "prod"
 ```
 
-or on the command line:
+… or on the command line:
 
 ```sh
-$ COUPER_ENVIRONMENT="test" couper run
+$ COUPER_ENVIRONMENT=test couper run
 INFO[0000] couper uses "test" environment …
 …
 ```
 
-We could also use the `-e` option instead:
+There's also a command line option `-e` for that:
 
 ```sh
 $ couper run -e prod
@@ -124,8 +126,9 @@ INFO[0000] couper uses "prod" environment …
 …
 ```
 
-It is pretty convenient to have a specific `/info` endpoint providing information about the system.
-We can get the environment Couper currently runs in with the `couper.environment` variable:
+## `couper.environment`
+
+It is pretty convenient to have a specific `/info` endpoint providing information about the current setup. The environment Couper currently runs in can be read from the `couper.environment` variable:
 
 ```hcl
     endpoint "/info" {
@@ -138,13 +141,17 @@ We can get the environment Couper currently runs in with the `couper.environment
     }
 ```
 
+Requesting that endpoint in den `devel` environment provides:
+
 ```sh
 $ curl localhost:8080/info
 {"environment":"devel","version":"edge"}
 ```
 
-To break down things better, let's finally split the configuration into multiple files:
-Let's move all parts needed for production to `couper.prod.hcl`:
+## Multiple Configuration Files
+
+To break down things better, let's finally split the configuration into multiple files.
+We move all parts of the configuration needed for production to `prod.hcl` in the `conf` directory:
 
 ```hcl
 environment "prod" {
@@ -162,7 +169,7 @@ environment "prod" {
 }
 ```
 
-All the parts specific for testing go into `couper.test.hcl`:
+Next, we put all the parts specific for testing into `conf/test.hcl`:
 
 ```hcl
 environment "test" {
@@ -176,7 +183,7 @@ environment "test" {
 }
 ```
 
-The remainder of the configuration stays in `couper.hcl`:
+The remainder of the configuration finally goes into `conf/couper.hcl`:
 
 ```hcl
 server {
@@ -197,3 +204,49 @@ settings {
   environment = "devel"
 }
 ```
+
+At startup we provide Couper with all those files and, of course, the environment.
+
+On the command line we therefore add a `-d` option to specify the configuration directory.
+Setting the log level to `debug` makes us see which files are loaded:
+
+```sh
+$ couper run -d conf -log-level=debug -e test
+DEBU[0000] loaded files … files="[…/conf/couper.hcl …/conf/prod.hcl …/conf/test.hcl]" …
+```
+
+> 💡 The files in the configuration directory are loaded in lexicographical order.
+> Blocks defined in files loaded later are merged into blocks loaded earlier.
+> and might also override some settings.
+
+Instead of `-d` we could also use multiple `-f` options to specify the configuration files one by one:
+
+```sh
+$ couper run -f conf/couper.hcl -f conf/prod.hcl -f conf/test.hcl -log-level=debug -e test
+DEBU[0000] loaded files … files="[…/conf/couper.hcl …/conf/prod.hcl …/conf/test.hcl]" …
+```
+
+In the Docker setup the configuration is read from the container's `/conf`
+directory, so we could simply change the volume mapping in the `docker-compose.yaml` and restart the service:
+
+```yaml
+services:
+  gateway:
+    …
+    volumes:
+      - ./conf.new:/conf # map ./conf.new → /conf for multi file configuration
+    environment:
+      …
+```
+
+```sh
+$ docker-compose up
+…
+gateway    | {… "files":["/conf/couper.hcl","/conf/prod.hcl","/conf/test.hcl"],… "loaded files"}
+```
+
+## Conclusion
+
+In this example we've learned how to make use of Couper's `environment` features to
+prepare a configuration to run in different environments and how to
+read the configuration from multiple files or directories.

@@ -32,13 +32,13 @@ definitions {
     path = "/anything"
   }
 
-  # for prod setup
+  # for production
   jwt "token" {
     signature_algorithm = "HS256"
     key = "secr3T"
   }
 
-  # for test setup
+  # for test
   basic_auth "credentials" {
     user     = "user"
     password = "p4ssw0rd"
@@ -47,8 +47,10 @@ definitions {
 
 settings {
   environment "prod" {
-    # enable metrics on production
+    # enable metrics on production only
     beta_metrics = true
   }
-  environment = "prod"
+
+  # set "devel" as default environment
+  environment = "devel"
 }
