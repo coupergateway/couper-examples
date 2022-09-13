@@ -23,12 +23,12 @@ server {
 
     # endpoint "/a" {
       # beta_required_permission = "a"
-    #   proxy = "p"
+      # proxy = "p"
     # }
 
     # endpoint "/b/{action}" { # send, copy
       # beta_required_permission = "b:${request.path_params.action}"
-    #   proxy = "p"
+      # proxy = "p"
     # }
 
     # endpoint "/c" {
@@ -37,7 +37,7 @@ server {
       #   DELETE = "c:del"
       #   "*" = "c"
       # }
-    #   proxy = "p"
+      # proxy = "p"
     # }
   }
 }
