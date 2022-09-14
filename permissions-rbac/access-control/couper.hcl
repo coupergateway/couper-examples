@@ -8,18 +8,12 @@ server {
 
     endpoint "/a" {
       beta_required_permission = "a"
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
 
     endpoint "/b/{action}" { # send, copy
       beta_required_permission = "b:${request.path_params.action}"
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
 
     endpoint "/c" {
@@ -28,10 +22,7 @@ server {
         DELETE = "c:del"
         "*" = "c"
       }
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
   }
 }
@@ -46,6 +37,10 @@ definitions {
     #   admin = ["a", "b:send", "b:copy", "c", "c:del"]
     #   "*" = ["a"]
     # }
+  }
+
+  proxy "p" {
+    backend = "api"
   }
 
   backend "api" {

@@ -75,15 +75,36 @@ server {
 }
 ```
 
+Actually, we don't have to repeat the `proxy` block. We can define it once in the definitions block
+```hcl
+  proxy "p" {    # ←
+    backend = "api"
+  }
+
+  backend "api" {
+```
+
+and then reference it in the endpoints:
+```hcl
+    endpoint "/a" {
+      proxy = "p"    # ←
+    }
+
+    endpoint "/b/{action}" { # send, copy
+      proxy = "p"    # ←
+    }
+
+    endpoint "/c" {
+      proxy = "p"    # ←
+    }
+```
+
 Then we set the required permission for `/a`:
 
 ```hcl
     endpoint "/a" {
       beta_required_permission = "a"    # ←
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
 ```
 That is simple. For the `/b/{action}` endpoint we can use a quoted template expression (`${…}`), because the permission consists of a prefix ("b:") and the value of the `action` path parameter ("send" or "copy").
@@ -91,10 +112,7 @@ That is simple. For the `/b/{action}` endpoint we can use a quoted template expr
 ```hcl
     endpoint "/b/{action}" { # send, copy
       beta_required_permission = "b:${request.path_params.action}"    # ←
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
 ```
 
@@ -107,10 +125,7 @@ Last, the value of `beta_required_permission` can also be an object with a metho
         DELETE = "c:del" # permission for DELETE is c:del
         "*" = "c"        # permission for other methods is c
       }
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
 ```
 

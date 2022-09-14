@@ -13,10 +13,7 @@ server {
         POST = "calendar"
         GET = "calendar.readonly"
       }
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
 
     endpoint "/{calendarId}" {
@@ -26,10 +23,7 @@ server {
         PUT = "calendar"
         DELETE = "calendar"
       }
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
 
     endpoint "/{calendarId}/events" {
@@ -37,10 +31,7 @@ server {
         GET = "calendar.events.readonly"
         POST = "calendar.events"
       }
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
   }
 }
@@ -55,6 +46,10 @@ definitions {
     #   "calendar.events" = ["calendar.events.readonly"]
     #   "calendar.readonly" = ["calendar.events.readonly"]
     # }
+  }
+
+  proxy "p" {
+    backend = "api"
   }
 
   backend "api" {
