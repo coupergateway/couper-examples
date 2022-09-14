@@ -15,33 +15,30 @@ server {
     #   }
     # }
 
-    endpoint "/a" {
+    endpoint "/**" {
+      proxy {
+        backend = "api"
+      }
+    }
+
+    # endpoint "/a" {
       # beta_required_permission = "a"
+      # proxy = "p"
+    # }
 
-      proxy {
-        backend = "api"
-      }
-    }
-
-    endpoint "/b/{action}" { # send, copy
+    # endpoint "/b/{action}" { # send, copy
       # beta_required_permission = "b:${request.path_params.action}"
+      # proxy = "p"
+    # }
 
-      proxy {
-        backend = "api"
-      }
-    }
-
-    endpoint "/c" {
+    # endpoint "/c" {
       # beta_required_permission = {
       #   GET = ""
       #   DELETE = "c:del"
       #   "*" = "c"
       # }
-
-      proxy {
-        backend = "api"
-      }
-    }
+      # proxy = "p"
+    # }
   }
 }
 
@@ -51,6 +48,10 @@ definitions {
     key_file = "pub-key.pem"
     # beta_permissions_claim = "permissions"
   }
+
+  # proxy "p" {
+  #   backend = "api"
+  # }
 
   backend "api" {
     origin = "http://api:8080"

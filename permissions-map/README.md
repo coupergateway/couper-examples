@@ -29,10 +29,7 @@ server {
         POST = "calendar"
         GET = "calendar.readonly"
       }
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
 
     endpoint "/{calendarId}" {
@@ -42,10 +39,7 @@ server {
         PUT = "calendar"
         DELETE = "calendar"
       }
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
 
     endpoint "/{calendarId}/events" {
@@ -53,10 +47,7 @@ server {
         GET = "calendar.events.readonly"
         POST = "calendar.events"
       }
-
-      proxy {
-        backend = "api"
-      }
+      proxy = "p"
     }
   }
 }
@@ -65,6 +56,10 @@ definitions {
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
+  }
+
+  proxy "p" {
+    backend = "api"
   }
 
   backend "api" {
