@@ -63,7 +63,7 @@ What happens if we change the default environment to `"test"`?
 
 ```hcl
 settings {
-  …
+  # …
   # set "test" as default environment
   environment = "test"
 }
@@ -82,7 +82,7 @@ Finally, if we set the `environment` to `prod`…
 
 ```hcl
 settings {
-  …
+  # …
   # set "prod" as default environment
   environment = "prod"
 }
@@ -104,7 +104,7 @@ named `COUPER_ENVIRONMENT`. So generally the way to go is to use that variable t
 ```yaml
 services:
   gateway:
-    …
+    # …
     environment:
       COUPER_WATCH: "true"
       COUPER_ENVIRONMENT: "prod" # "devel", "test" or "prod"
@@ -234,7 +234,7 @@ directory, so we could simply change the volume mapping in the `docker-compose.y
 ```yaml
 services:
   gateway:
-    …
+    # …
     volumes:
       - ./conf.new:/conf # map ./conf.new → /conf for multi file configuration
     environment:
