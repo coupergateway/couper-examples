@@ -1,0 +1,14 @@
+version: "3"
+services:
+  gateway:
+    image: avenga/couper
+    container_name: gateway
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/conf
+      #- ./conf.new:/conf # map ./conf.new → /conf for multi file configuration
+    environment:
+      COUPER_WATCH: "true"
+      COUPER_LOG_LEVEL: debug
+      #COUPER_ENVIRONMENT: "devel" # "devel", "test" or "prod"
