@@ -61,7 +61,7 @@ Press `CTRL+C` to exit.
 * [Query Parameter Manipulation](query/README.md)
 * [Sending JSON Content](sending-json/README.md)
 * [Sending Form Content](sending-form/README.md)
-* [Redirects](static-responses/README.md)
+* [Redirects](static-responses/README.md#example-1-redirects)
 * [Request Sequences](sequences/README.md)
 
 ### Authorization & Authentication
@@ -75,13 +75,13 @@ Press `CTRL+C` to exit.
 * [OAuth2 Client Credentials Flow](oauth2-client-credentials/README.md)
 * [Single-Sign-On with SAML](saml/README.md)
 * [Error Handling for Access Controls](error-handling-ba/README.md)
-* [Userinfo Endpoint](static-responses/README.md)
+* [Userinfo Endpoint](static-responses/README.md#example-2-userinfo-endpoint)
 * [OpenID Connect](oidc/README.md)
 
 ### Running Couper
 
 * [Environment Variables](env-var/README.md)
-* [Emitting Environment Variables](static-responses/README.md)
+* [Emitting Environment Variables](static-responses/README.md#example-3-environment-variables)
 * [Using docker](docker/README.md)
 * [Using docker-compose](docker-compose/README.md)
 * [Kubernetes](kubernetes-configuration/README.md)
