@@ -295,7 +295,7 @@ scope = "foo bar"
 
 ## See also
 
-* [OAuth2 Block](https://github.com/avenga/couper/tree/master/docs/README.md#oauth2-block) (reference)
-* [JWT Block](https://github.com/avenga/couper/tree/master/docs/README.md#jwt-block) (reference)
-* [JWT Signing Profile Block](https://github.com/avenga/couper/tree/master/docs/README.md#jwt-signing-profile-block) (reference)
-* [jwt_sign() Function](https://github.com/avenga/couper/tree/master/docs/README.md#functions) (reference)
+* [OAuth2 Block](https://docs.couper.io/configuration/block/oauth2) (reference)
+* [JWT Block](https://docs.couper.io/configuration/block/jwt) (reference)
+* [JWT Signing Profile Block](https://docs.couper.io/configuration/block/jwt_signing_profile) (reference)
+* [jwt_sign() Function](https://docs.couper.io/configuration/functions) (reference)
