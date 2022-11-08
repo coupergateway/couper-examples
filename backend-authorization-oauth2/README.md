@@ -182,6 +182,67 @@ We can also specify the scope of the requested access token by setting the `scop
 scope = "foo bar"
 ```
 
+## Other OAuth2 grant types
+
+There are other OAuth2 grant types that can be configured with the `oauth2` block: password and jwt-bearer.
+
+**Note**, that, while the grant may contain information about a specific user (e.g. username or email address), the requested token is stored _per backend_. So there is no way to "switch" between users from one request to another. But both grant types may be useful to request a token for a service account.
+
+### The OAuth2 password grant
+
+For the password grant, set the `grant_type` attribute accordingly and provide the service account's `username` and `password` in addition to the client's `client_id` and `client_secret`:
+
+```hcl
+    oauth2 {
+      grant_type = "password"
+      token_endpoint = "..."
+      client_id = env.CLIENT_ID
+      client_secret = env.CLIENT_SECRET
+      username = env.SYSTEM_ACCOUNT_USERNAME
+      password = env.SYSTEM_ACCOUNT_PASSWORD
+    }
+```
+
+### The OAuth2 jwt-bearer grant
+
+For the jwt-bearer grant, set the `grant_type` attribute accordingly. You may either specify the `assertion` attribute with a JWT containing information about the service account received from somewhere else or create one using the `jwt_sign()` function:
+
+```hcl
+    oauth2 {
+      grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer"
+      token_endpoint = "..."
+      client_id = env.CLIENT_ID
+      assertion = backend_responses.foo.json_body.id_token
+#      assertion = jwt_sign("sp", {})
+    }
+...
+#definitions {
+#  jwt_signing_profile "sp" {
+#    ...
+#  }
+#}
+```
+
+Or a self-signed JWT assertion is created with a nested `jwt_signing_profile` block. E.g. to authorize Couper to access Google's spreadsheets API using a registered service account:
+
+```hcl
+    oauth2 {
+      grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer"
+      token_endpoint = "https://oauth2.googleapis.com/token"
+      jwt_signing_profile {
+        signature_algorithm = "RS256"
+        key_file = "priv_key.pem"                      # private_key from service account JSON
+        ttl = "10s"
+        claims = {
+          iss = env.SYSTEM_ACCOUNT_EMAIL               # client_email from service account JSON
+          scope = "https://www.googleapis.com/auth/spreadsheets.readonly"
+          aud = "https://oauth2.googleapis.com/token"  # the authorization server's token endpoint
+          iat = unixtime()
+        }
+      }
+    }
+```
+
 ## See also
 
 * [OAuth2 Block](https://docs.couper.io/configuration/block/oauth2) (reference)
