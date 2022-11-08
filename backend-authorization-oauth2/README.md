@@ -1,4 +1,4 @@
-# OAuth2 Client Credentials Flow
+# Backend Authorization using OAuth2
 
 In this example we learn how to configure Couper to automatically request an access token for a third-party API using the OAuth2 client credentials grant.
 
