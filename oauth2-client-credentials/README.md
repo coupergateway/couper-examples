@@ -259,6 +259,34 @@ By default, Couper uses basic authentication to authenticate itself at the autho
 token_endpoint_auth_method = "client_secret_post"
 ```
 
+Couper also implements the client authentication methods `"client_secret_jwt"` and `"private_key_jwt"` that use a self-signed JWT for authentication.
+
+With `client_secret_jwt`, the JWT is signed with the `client_id` using an HS algorithm, so no additional key is necessary.
+
+```hcl
+client_id = "..."
+client_secret = "..."
+token_endpoint_auth_method = "client_secret_jwt"
+jwt_signing_profile {
+  signature_algorithm = "HS256"
+  ttl = "10s"
+}
+```
+
+With `private_key_jwt`, the JWT is signed with a _private_ key using an RS or EC algorithm (only the corresponding _public_ key stays at the authorization server):
+
+```hcl
+client_id = "..."
+token_endpoint_auth_method = "private_key_jwt"
+jwt_signing_profile {
+  key_file = "private_key.pem"
+  signature_algorithm = "RS256"
+  ttl = "10s"
+}
+```
+
+Make sure that the authorization server supports the selected client authentication method.
+
 We can also specify the scope of the requested access token by setting the `scope` attribute in the `oauth2` block:
 
 ```hcl
