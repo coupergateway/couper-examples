@@ -138,4 +138,4 @@ Content-Length: 374
 
 ## See also
 
-* [Backend Block](https://github.com/avenga/couper/tree/master/docs/README.md#backend-block) (reference)
+* [Backend Block](https://docs.couper.io/configuration/block/backend) (reference)
