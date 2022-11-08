@@ -56,3 +56,9 @@ definitions {
     verifier_value = request.cookies.authvv
   }
 }
+defaults {
+  environment_variables = {
+    RP_CLIENT_ID = "foo"
+    RP_CLIENT_SECRET = "bar"
+  }
+}
