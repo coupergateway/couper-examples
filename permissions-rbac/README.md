@@ -42,6 +42,15 @@ So instead of the `beta_permissions_claim` attribute, we set the `beta_roles_cla
   }
 ```
 
+*Note:* If our roles map is quite big, or we would like to create on in some build process, we could reference it using `beta_roles_map_file = "roles.json"` instead of `beta_roles_map`. The format of the JSON file is very similar to the `beta_roles_map` value, e.g.:
+```json
+{
+  "r1": ["perm1.1", "perm1.2"],
+  "r2": ["perm2.1"]
+}
+```
+
+
 Now we can try accessing the endpoints by using one of the tokens below (replace `<token>` with one of the tokens):
 ```
 $ curl -si http://localhost:8080/a -H "Authorization: Bearer <token>"
