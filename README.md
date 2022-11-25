@@ -81,6 +81,7 @@ Press `CTRL+C` to exit.
 ### Running Couper
 
 * [Environment based configuration](environment)
+* [Handling configuration files](configuration-files)
 * [Environment Variables](env-var/README.md)
 * [Emitting Environment Variables](static-responses/README.md#example-3-environment-variables)
 * [Using docker](docker/README.md)
