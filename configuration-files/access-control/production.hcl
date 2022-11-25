@@ -1,13 +1,9 @@
 server {
-  access_control = ["my-jwt"]
+  access_control = ["production-ba"]
 }
 
 definitions {
-  jwt "my-jwt" {
-    jwks_url = "https://demo-idp.couper.io/jwks.json"
-    required_claims = ["role", "sub", "exp"]
-    claims = {
-      iss = "https://demo-idp.couper.io/"
-    }
+  basic_auth "production-ba" {
+    htpasswd_file = ".htpasswd"
   }
 }

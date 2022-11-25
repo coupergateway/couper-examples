@@ -197,12 +197,18 @@ So let's build the image again and this time add the `stage.hcl` to the build pr
 
 ```hcl
 server {
-  access_control = ["my-ba"]
+  access_control = ["stage-ba"]
 }
 
 definitions {
-  basic_auth "my-ba" {
-    password = "test"
+  basic_auth "stage-ba" {
+    password = env.STAGE_BA_PASSWD
+  }
+}
+
+defaults {
+  environment_variables = {
+    STAGE_BA_PASSWD = "test"
   }
 }
 ```
@@ -225,23 +231,23 @@ Your Stage environment is protected now. Enter `test` as value into the password
 The advantage to switch to a complete other `access_control` mechanism could be very handy if you have to use a specific SSO or other provider
 to handle the permissions.
 
-So let's switch from **basic-auth** to **jwt** with the `production.hcl` configuration file.
+In this example, we keep it simpler and just switch from a very simple `basic_auth` to a slightly more sophisticated one using `htpasswd_file` instead of just a `password`.
 
 ```hcl
 server {
-  access_control = ["my-jwt"]
+  access_control = ["production-ba"]
 }
 
 definitions {
-  jwt "my-jwt" {
-    jwks_url = "https://demo-idp.couper.io/jwks.json"
-    required_claims = ["role", "sub", "exp"]
-    claims = {
-      iss = "https://demo-idp.couper.io/"
-    }
+  basic_auth "production-ba" {
+    htpasswd_file = ".htpasswd"
   }
 }
 ```
+
+Currently, there are two valid users with their passwords:
+* alice with password ecila
+* bob with password B06
 
 We will build the docker image again to copy the newest files.
 
@@ -255,26 +261,6 @@ Now run our image again:
 docker run -p 8080:8080 couper-env-example run -f /conf/couper.hcl -f /conf/production.hcl
 ```
 
-If we visit our endpoint again:
+If we visit our endpoint again and enter one of the two valid user credentials, then we will get the already known welcome page again.
 
-```shell
-curl -i http://localhost:8080/
-
-HTTP/1.1 401 Unauthorized
-Cache-Control: private
-Couper-Error: access control error
-Couper-Request-Id: c9h4mdp473ds73dnvsvg
-Server: couper.io
-```
-
-We will get a 401 response without basic-auth related headers and no prompt. Additionally, the couper log output:
-
-`"level":"error","message":"access control error: my-jwt: bearer required with authorization header"`
-
-Let's retry the request with a valid JWT token. Just visit [https://demo-idp.couper.io/](https://demo-idp.couper.io/) and copy the generated token. Use this token with our next call:
-
-```shell
-curl -i -H "Authorization: Bearer <your-token>"  http://localhost:8080/
-```
-
-and we will get the already known welcome page again.
+In a more real-world scenario, we would rather switch to a `jwt` access control e.g. using `jwks_url` to reference an identity provider's JWKS resource.
