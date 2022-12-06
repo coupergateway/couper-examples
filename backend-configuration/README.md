@@ -138,4 +138,4 @@ Content-Length: 374
 
 ## See also
 
-* [Backend Block](https://docs.couper.io/configuration/block/backend) (reference)
+* [Backend Block](https://docs.couper.io/configuration/block/backend) (documentation)

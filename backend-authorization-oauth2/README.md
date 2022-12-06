@@ -245,6 +245,6 @@ Or a self-signed JWT assertion is created with a nested `jwt_signing_profile` bl
 
 ## See also
 
-* [OAuth2 Block](https://docs.couper.io/configuration/block/oauth2) (reference)
-* [JWT Signing Profile Block](https://docs.couper.io/configuration/block/jwt_signing_profile) (reference)
-* [jwt_sign() Function](https://docs.couper.io/configuration/functions) (reference)
+* [OAuth2 Block](https://docs.couper.io/configuration/block/oauth2) (documentation)
+* [JWT Signing Profile Block](https://docs.couper.io/configuration/block/jwt_signing_profile) (documentation)
+* [jwt_sign() Function](https://docs.couper.io/configuration/functions) (documentation)
