@@ -112,7 +112,7 @@ Then we have to specify the source of the granted permissions via the `jwt` bloc
       # ...
 ```
 
-*Note:* If our permissions map is quite big, or we would like to create on in some build process, we could reference it using `beta_permissions_map_file = "permissions.json"` instead of `beta_permissions_map`. The format of the JSON file is very similar to the `beta_permissions_map` value, e.g.:
+**Note:** If our permissions map is quite big, or we would like to create one in some build process, we could reference it using `beta_permissions_map_file = "permissions.json"` instead of `beta_permissions_map`. The format of the JSON file is very similar to the `beta_permissions_map` value, e.g.:
 ```json
 {
   "perm1": ["perm1.1", "perm1.2"],
