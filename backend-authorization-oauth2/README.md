@@ -153,25 +153,31 @@ Couper also implements the client authentication methods `"client_secret_jwt"` a
 With `client_secret_jwt`, the JWT is signed with the `client_id` using an HS algorithm, so no additional key is necessary.
 
 ```hcl
-client_id = "..."
-client_secret = "..."
-token_endpoint_auth_method = "client_secret_jwt"
-jwt_signing_profile {
-  signature_algorithm = "HS256"
-  ttl = "10s"
-}
+          oauth2 {
+            # ...
+            client_id = "..."
+            client_secret = "..."
+            token_endpoint_auth_method = "client_secret_jwt"
+            jwt_signing_profile {
+              signature_algorithm = "HS256"
+              ttl = "10s"
+            }
+          }
 ```
 
 With `private_key_jwt`, the JWT is signed with a _private_ key using an RS or EC algorithm (only the corresponding _public_ key stays at the authorization server):
 
 ```hcl
-client_id = "..."
-token_endpoint_auth_method = "private_key_jwt"
-jwt_signing_profile {
-  key_file = "private_key.pem"
-  signature_algorithm = "RS256"
-  ttl = "10s"
-}
+          oauth2 {
+            # ...
+            client_id = "..."
+            token_endpoint_auth_method = "private_key_jwt"
+            jwt_signing_profile {
+              key_file = "private_key.pem"
+              signature_algorithm = "RS256"
+              ttl = "10s"
+            }
+          }
 ```
 
 Make sure that the authorization server supports the selected client authentication method.
