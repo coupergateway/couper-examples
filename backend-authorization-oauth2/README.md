@@ -180,7 +180,7 @@ With `private_key_jwt`, the JWT is signed with a _private_ key using an RS or EC
           }
 ```
 
-Make sure that the authorization server supports the selected client authentication method.
+Make sure that the authorization server supports the selected client authentication method and, at the authorization server, the client is configured accordingly.
 
 We can also specify the scope of the requested access token by setting the `scope` attribute in the `oauth2` block:
 
