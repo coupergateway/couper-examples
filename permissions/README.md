@@ -46,7 +46,7 @@ But additionally, the API endpoints have certain permissions that have to be gra
 
 You can configure this using the `beta_required_permission` attribute in the `endpoint` block.
 
-First, we replace the wildcard `endpoint` bock with three more specific `endpoint` blocks:
+First, we replace the wildcard `endpoint` block with three more specific `endpoint` blocks:
 
 
 ```hcl
