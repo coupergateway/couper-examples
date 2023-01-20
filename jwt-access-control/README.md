@@ -380,7 +380,7 @@ If the tokens are created by a token provider, e.g. an OAuth2 authorization serv
     header = "Authorization"
     # signature_algorithm = "RS256"
     # key_file = "pub.pem"
-    jwks_url = "https://demo-idp.couper.io/jwks.json"
+    jwks_url = "https://my-authorization-server.com/jwks.json"
   }
 ```
 

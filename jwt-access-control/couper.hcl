@@ -23,8 +23,6 @@ definitions {
     signature_algorithm = "RS256"
     key_file = "pub.pem"
 
-    # jwks_url = "https://demo-idp.couper.io/jwks.json"
-
     required_claims = ["iss"]
     claims = {
       sub = "some_user"
