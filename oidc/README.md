@@ -201,3 +201,39 @@ The browser is then sent to the OpenID provider for authentication. In a real ca
 The OpenID provider sends the browser with an authorization code in the query to Couper's redirect endpoint where Couper redeems the code for an access and and ID token. From this information Couper creates its own token, which is stored in the browser in a cookie.
 
 The browser then loads the OIDC Demo page again, now showing some user information in JSON format in the textarea.
+
+---
+
+Couper also implements the client authentication methods `"client_secret_jwt"` and `"private_key_jwt"` that use a self-signed JWT for authentication.
+
+With `client_secret_jwt`, the JWT is signed with the `client_id` using an HS algorithm, so no additional key is necessary.
+
+```hcl
+  oidc {
+    # ...
+    client_id = "..."
+    client_secret = "..."
+    token_endpoint_auth_method = "client_secret_jwt"
+    jwt_signing_profile {
+      signature_algorithm = "HS256"
+      ttl = "10s"
+    }
+  }
+```
+
+With `private_key_jwt`, the JWT is signed with a _private_ key using an RS or EC algorithm (only the corresponding _public_ key stays at the OpenID provider):
+
+```hcl
+  oidc {
+    # ...
+    client_id = "..."
+    token_endpoint_auth_method = "private_key_jwt"
+    jwt_signing_profile {
+      key_file = "private_key.pem"
+      signature_algorithm = "RS256"
+      ttl = "10s"
+    }
+  }
+```
+
+Make sure that the OpenID provider supports the selected client authentication method and, at the OpenID provider, the relying party is configured accordingly.

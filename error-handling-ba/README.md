@@ -163,4 +163,4 @@ Error handlers can also be used in other access controls; e.g. you can try to ad
 
 ## See also
 
-* [Errors](https://github.com/avenga/couper/blob/master/docs/ERRORS.md) (reference)
+* [Errors](https://docs.couper.io/configuration/error-handling) (documentation)

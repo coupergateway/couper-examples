@@ -72,7 +72,7 @@ Press `CTRL+C` to exit.
 * [Permissions (Role-based Access Control)](permissions-rbac/README.md)
 * [Permissions (Map)](permissions-map/README.md)
 * [Creating JWT](creating-jwt/README.md)
-* [OAuth2 Client Credentials Flow](oauth2-client-credentials/README.md)
+* [Backend Authorization using OAuth2](backend-authorization-oauth2/README.md)
 * [Single-Sign-On with SAML](saml/README.md)
 * [Error Handling for Access Controls](error-handling-ba/README.md)
 * [Userinfo Endpoint](static-responses/README.md#example-2-userinfo-endpoint)
