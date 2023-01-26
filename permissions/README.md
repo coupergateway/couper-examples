@@ -44,7 +44,7 @@ But additionally, the API endpoints have certain permissions that have to be gra
 * `GET` requests to `/c` need no permission
 * other requests to `/c` need permission "c"
 
-You can configure this using the `beta_required_permission` attribute in the `endpoint` block.
+You can configure this using the `required_permission` attribute in the `endpoint` block.
 
 First, we replace the wildcard `endpoint` block with three more specific `endpoint` blocks:
 
@@ -103,7 +103,7 @@ Then we set the required permission for `/a`:
 
 ```hcl
     endpoint "/a" {
-      beta_required_permission = "a"    # ←
+      required_permission = "a"    # ←
       proxy = "p"
     }
 ```
@@ -111,16 +111,16 @@ That is simple. For the `/b/{action}` endpoint we can use a quoted template expr
 
 ```hcl
     endpoint "/b/{action}" { # send, copy
-      beta_required_permission = "b:${request.path_params.action}"    # ←
+      required_permission = "b:${request.path_params.action}"    # ←
       proxy = "p"
     }
 ```
 
-Last, the value of `beta_required_permission` can also be an object with a method-permission mapping.
+Last, the value of `required_permission` can also be an object with a method-permission mapping.
 
 ```hcl
     endpoint "/c" {
-      beta_required_permission = {    # ←
+      required_permission = {    # ←
         GET = ""         # no permission required for GET
         DELETE = "c:del" # permission for DELETE is c:del
         "*" = "c"        # permission for other methods is c
@@ -178,7 +178,7 @@ To see which permission (singular!) was required and which permissions (plural!)
   api {
     access_control = ["Token"]
     add_response_headers = {    # ←
-      required-permission = request.context.beta_required_permission
+      required-permission = request.context.required_permission
       granted-permissions = join(" ", request.context.beta_granted_permissions)
     }
 ```
@@ -228,7 +228,7 @@ server {
       response {
         status = 403
         json_body = {
-          error = "request lacking granted permission '${request.context.beta_required_permission}'"
+          error = "request lacking granted permission '${request.context.required_permission}'"
         }
       }
     }

@@ -2,22 +2,22 @@ server {
   api {
     access_control = ["Token"]
     add_response_headers = {
-      required-permission = request.context.beta_required_permission
+      required-permission = request.context.required_permission
       granted-permissions = join(" ", request.context.beta_granted_permissions)
     }
 
     endpoint "/a" {
-      beta_required_permission = "a"
+      required_permission = "a"
       proxy = "p"
     }
 
     endpoint "/b/{action}" { # send, copy
-      beta_required_permission = "b:${request.path_params.action}"
+      required_permission = "b:${request.path_params.action}"
       proxy = "p"
     }
 
     endpoint "/c" {
-      beta_required_permission = {
+      required_permission = {
         GET = ""
         DELETE = "c:del"
         "*" = "c"

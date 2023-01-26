@@ -25,7 +25,7 @@ server {
     access_control = ["Token"]
 
     endpoint "/" {
-      beta_required_permission = {
+      required_permission = {
         POST = "calendar"
         GET = "calendar.readonly"
       }
@@ -33,7 +33,7 @@ server {
     }
 
     endpoint "/{calendarId}" {
-      beta_required_permission = {
+      required_permission = {
         GET = "calendar.readonly"
         PATCH = "calendar"
         PUT = "calendar"
@@ -43,7 +43,7 @@ server {
     }
 
     endpoint "/{calendarId}/events" {
-      beta_required_permission = {
+      required_permission = {
         GET = "calendar.events.readonly"
         POST = "calendar.events"
       }
@@ -127,7 +127,7 @@ To see the scope, which permission (singular!) was required and which permission
     base_path = "/calendars"
     access_control = ["Token"]
     add_response_headers = {    # ←
-      required-permission = request.context.beta_required_permission
+      required-permission = request.context.required_permission
       scope = request.context.Token.scope
       granted-permissions = join(" ", request.context.beta_granted_permissions)
     }
@@ -210,8 +210,8 @@ Couper-Error: method not allowed error
 ```
 and the following log entry:
 ```
-access-control | {...,"handler":"api","level":"error","message":"method not allowed error: method PATCH not allowed by beta_required_permission","method":"PATCH",...
+access-control | {...,"handler":"api","level":"error","message":"method not allowed error: method PATCH not allowed by required_permission","method":"PATCH",...
 ```
-This happens because the `PATCH` method is not mentioned in the `beta_required_permission` attribute value (neither explicitly, nor implicitly via `"*"`).
+This happens because the `PATCH` method is not mentioned in the `required_permission` attribute value (neither explicitly, nor implicitly via `"*"`).
 
-**Note:** The log message gives the indication that this `405` error results from `beta_required_permission` (and not from `allowed_methods`).
+**Note:** The log message gives the indication that this `405` error results from `required_permission` (and not from `allowed_methods`).
