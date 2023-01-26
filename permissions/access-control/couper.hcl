@@ -46,7 +46,7 @@ definitions {
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    # beta_permissions_claim = "permissions"
+    # permissions_claim = "permissions"
   }
 
   # proxy "p" {

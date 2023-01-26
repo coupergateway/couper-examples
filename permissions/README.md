@@ -129,13 +129,13 @@ Last, the value of `required_permission` can also be an object with a method-per
     }
 ```
 
-But how do we know that certain permissions were granted to the requester? With JWT they should be specified in a claim. The claim containing the granted permissions (also called privileges) is configured in the `jwt` access control block with the `beta_permissions_claim`:
+But how do we know that certain permissions were granted to the requester? With JWT they should be specified in a claim. The claim containing the granted permissions (also called privileges) is configured in the `jwt` access control block with the `permissions_claim`:
 
 ```hcl
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    beta_permissions_claim = "permissions"    # ←
+    permissions_claim = "permissions"    # ←
   }
 ```
 

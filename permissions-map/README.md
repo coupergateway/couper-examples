@@ -101,13 +101,13 @@ In Couper, these relationships are configured using the `jwt` block's `beta_perm
   }
 ```
 
-Then we have to specify the source of the granted permissions via the `jwt` block's `beta_permissions_claim`. In this example we expect them to be in the `scope` claim:
+Then we have to specify the source of the granted permissions via the `jwt` block's `permissions_claim`. In this example we expect them to be in the `scope` claim:
 
 ```hcl
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    beta_permissions_claim = "scope"    # ←
+    permissions_claim = "scope"    # ←
     beta_permissions_map = {
       # ...
 ```

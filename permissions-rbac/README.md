@@ -9,7 +9,7 @@ In some cases the granted permissions (also called privileges) can be derived fr
 In Couper, RBAC is configured using two attributes of the `jwt` access control block: `roles_claim` specifying the claim containing the user's roles, and 
 `roles_map` specifying a role-permissions map.
 
-Similar to the `beta_permissions_claim`, Couper expects the roles as a string containing a space-separated list, or an array of strings, like this:
+Similar to the `permissions_claim`, Couper expects the roles as a string containing a space-separated list, or an array of strings, like this:
 ```json
 {
   # ...
@@ -28,7 +28,7 @@ or
 
 The `roles_map` attribute maps a role to a set of granted permissions. The `"*"` key means all other roles, or no role at all.
 
-So instead of the `beta_permissions_claim` attribute, we set the `roles_claim` and `roles_map` attributes:
+So instead of the `permissions_claim` attribute, we set the `roles_claim` and `roles_map` attributes:
 ```hcl
   jwt "Token" {
     signature_algorithm = "RS256"

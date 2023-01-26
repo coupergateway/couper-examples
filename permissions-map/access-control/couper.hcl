@@ -40,7 +40,7 @@ definitions {
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    # beta_permissions_claim = "scope"
+    # permissions_claim = "scope"
     # beta_permissions_map = {
     #   "calendar" = ["calendar.readonly", "calendar.events"] # no need to list calendar.events.readonly here, as the map is called recursively
     #   "calendar.events" = ["calendar.events.readonly"]
