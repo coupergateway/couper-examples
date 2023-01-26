@@ -31,7 +31,7 @@ definitions {
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    # beta_roles_claim = "roles"
+    # roles_claim = "roles"
     # beta_roles_map = {
     #   developer = ["a", "b:send", "b:copy", "c"]
     #   admin = ["a", "b:send", "b:copy", "c", "c:del"]
