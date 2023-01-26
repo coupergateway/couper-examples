@@ -7,7 +7,7 @@ This example is an extension of the [Permissions example](../permissions/README.
 In some cases the granted permissions (also called privileges) can be derived from user roles: access to a certain API endpoint is granted if the user represented by the requesting party has a certain role. This is called role-based access control (RBAC).
 
 In Couper, RBAC is configured using two attributes of the `jwt` access control block: `roles_claim` specifying the claim containing the user's roles, and 
-`beta_roles_map` specifying a role-permissions map.
+`roles_map` specifying a role-permissions map.
 
 Similar to the `beta_permissions_claim`, Couper expects the roles as a string containing a space-separated list, or an array of strings, like this:
 ```json
@@ -26,15 +26,15 @@ or
 }
 ```
 
-The `beta_roles_map` attribute maps a role to a set of granted permissions. The `"*"` key means all other roles, or no role at all.
+The `roles_map` attribute maps a role to a set of granted permissions. The `"*"` key means all other roles, or no role at all.
 
-So instead of the `beta_permissions_claim` attribute, we set the `roles_claim` and `beta_roles_map` attributes:
+So instead of the `beta_permissions_claim` attribute, we set the `roles_claim` and `roles_map` attributes:
 ```hcl
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
     roles_claim = "roles"    # ←
-    beta_roles_map = {            # ←
+    roles_map = {            # ←
       admin = ["a", "b:send", "b:copy", "c", "c:del"]
       developer = ["a", "b:send", "b:copy", "c"]
       "*" = ["a"]
@@ -42,7 +42,7 @@ So instead of the `beta_permissions_claim` attribute, we set the `roles_claim` a
   }
 ```
 
-**Note:** If our roles map is quite big, or we would like to create one in some build process, we could reference it using `beta_roles_map_file = "roles.json"` instead of `beta_roles_map`. The format of the JSON file is very similar to the `beta_roles_map` value, here:
+**Note:** If our roles map is quite big, or we would like to create one in some build process, we could reference it using `roles_map_file = "roles.json"` instead of `roles_map`. The format of the JSON file is very similar to the `roles_map` value, here:
 ```json
 {
   "admin": ["a", "b:send", "b:copy", "c", "c:del"],

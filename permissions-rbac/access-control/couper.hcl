@@ -32,7 +32,7 @@ definitions {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
     # roles_claim = "roles"
-    # beta_roles_map = {
+    # roles_map = {
     #   developer = ["a", "b:send", "b:copy", "c"]
     #   admin = ["a", "b:send", "b:copy", "c", "c:del"]
     #   "*" = ["a"]
