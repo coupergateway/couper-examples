@@ -215,7 +215,7 @@ Couper-Error: access control error
 ```
 In the log we see an entry like this:
 ```
-access-control | {...,"error_type":"beta_insufficient_permissions","handler":"api","level":"error","message":"access control error: required permission \"c:del\" not granted","method":"DELETE",...
+access-control | {...,"error_type":"insufficient_permissions","handler":"api","level":"error","message":"access control error: required permission \"c:del\" not granted","method":"DELETE",...
 ```
 
 This error can be handled with an `error_handler` like this:
@@ -224,7 +224,7 @@ server {
   api {
     # ...
 
-    error_handler "beta_insufficient_permissions" {    # ←
+    error_handler "insufficient_permissions" {    # ←
       response {
         status = 403
         json_body = {

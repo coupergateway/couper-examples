@@ -6,7 +6,7 @@ server {
     #   granted-permissions = join(" ", request.context.beta_granted_permissions)
     # }
 
-    # error_handler "beta_insufficient_permissions" {
+    # error_handler "insufficient_permissions" {
     #   response {
     #     status = 403
     #     json_body = {

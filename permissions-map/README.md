@@ -175,7 +175,7 @@ Couper-Error: access control error
 ```
 with the following log entry
 ```
-access-control | {...,"error_type":"beta_insufficient_permissions","handler":"api","level":"error","message":"access control error: required permission \"calendar.readonly\" not granted","method":"GET",...
+access-control | {...,"error_type":"insufficient_permissions","handler":"api","level":"error","message":"access control error: required permission \"calendar.readonly\" not granted","method":"GET",...
 ```
 
 Or a successful request using the calendar scoped token:
