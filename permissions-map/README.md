@@ -87,13 +87,13 @@ calendar.readonly  calendar.events
 
 So, e.g. a client granted the calendar.events permission may also request a route with the required permission calendar.events.readonly, and a client granted the calendar permission may request every route.
 
-In Couper, these relationships are configured using the `jwt` block's `beta_permissions_map` attribute:
+In Couper, these relationships are configured using the `jwt` block's `permissions_map` attribute:
 
 ```hcl
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    beta_permissions_map = {    # ←
+    permissions_map = {    # ←
       "calendar" = ["calendar.readonly", "calendar.events"] # no need to list calendar.events.readonly here, as the map is called recursively
       "calendar.events" = ["calendar.events.readonly"]
       "calendar.readonly" = ["calendar.events.readonly"]
@@ -108,11 +108,11 @@ Then we have to specify the source of the granted permissions via the `jwt` bloc
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
     permissions_claim = "scope"    # ←
-    beta_permissions_map = {
+    permissions_map = {
       # ...
 ```
 
-**Note:** If our permissions map is quite big, or we would like to create one in some build process, we could reference it using `beta_permissions_map_file = "permissions.json"` instead of `beta_permissions_map`. The format of the JSON file is very similar to the `beta_permissions_map` value, here:
+**Note:** If our permissions map is quite big, or we would like to create one in some build process, we could reference it using `permissions_map_file = "permissions.json"` instead of `permissions_map`. The format of the JSON file is very similar to the `permissions_map` value, here:
 ```json
 {
   "calendar": ["calendar.readonly", "calendar.events"],
