@@ -129,7 +129,7 @@ To see the scope, which permission (singular!) was required and which permission
     add_response_headers = {    # ←
       required-permission = request.context.required_permission
       scope = request.context.Token.scope
-      granted-permissions = join(" ", request.context.beta_granted_permissions)
+      granted-permissions = join(" ", request.context.granted_permissions)
     }
 ```
 

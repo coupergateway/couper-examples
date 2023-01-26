@@ -179,7 +179,7 @@ To see which permission (singular!) was required and which permissions (plural!)
     access_control = ["Token"]
     add_response_headers = {    # ←
       required-permission = request.context.required_permission
-      granted-permissions = join(" ", request.context.beta_granted_permissions)
+      granted-permissions = join(" ", request.context.granted_permissions)
     }
 ```
 **Note:** One header or both are missing if its value is empty (e.g. no permission required or no permissions granted).
