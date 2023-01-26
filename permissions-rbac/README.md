@@ -1,7 +1,5 @@
 # Permissions (Role-based Access Control)
 
-**Note:** This is currently a [_beta_ feature](https://github.com/avenga/couper/blob/master/docs/BETA.md).
-
 This example is an extension of the [Permissions example](../permissions/README.md).
 
 In some cases the granted permissions (also called privileges) can be derived from user roles: access to a certain API endpoint is granted if the user represented by the requesting party has a certain role. This is called role-based access control (RBAC).

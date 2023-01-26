@@ -1,7 +1,5 @@
 # Permissions
 
-**Note:** This is currently a [_beta_ feature](https://github.com/avenga/couper/blob/master/docs/BETA.md).
-
 Suppose you have an API with four endpoints:
 * `/a`
 * `/b/send`

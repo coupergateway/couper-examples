@@ -1,7 +1,5 @@
 # Permissions (Map)
 
-**Note:** This is currently a [_beta_ feature](https://github.com/avenga/couper/blob/master/docs/BETA.md).
-
 Please, see the [Permissions example](../permissions/README.md) before reading this.
 
 Suppose you have a calendar API (like Google's) with (among others) three endpoints:
