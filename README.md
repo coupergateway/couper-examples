@@ -49,7 +49,7 @@ Press `CTRL+C` to exit.
 
 * [Simple File-Serving](simple-fileserving/README.md)
 * [SPA Serving](spa-serving/README.md)
-  * [Apply `bootstra_data`](https://docs.couper.io/configuration/block/spa#bootstrap-data) to your SPA
+  * [Apply `bootstrap_data`](https://docs.couper.io/configuration/block/spa#bootstrap-data) to your SPA
 
 ### Requests & Responses
 
