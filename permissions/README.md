@@ -1,7 +1,5 @@
 # Permissions
 
-**Note:** This is currently a [_beta_ feature](https://github.com/avenga/couper/blob/master/docs/BETA.md).
-
 Suppose you have an API with four endpoints:
 * `/a`
 * `/b/send`
@@ -44,7 +42,7 @@ But additionally, the API endpoints have certain permissions that have to be gra
 * `GET` requests to `/c` need no permission
 * other requests to `/c` need permission "c"
 
-You can configure this using the `beta_required_permission` attribute in the `endpoint` block.
+You can configure this using the `required_permission` attribute in the `endpoint` block.
 
 First, we replace the wildcard `endpoint` block with three more specific `endpoint` blocks:
 
@@ -103,7 +101,7 @@ Then we set the required permission for `/a`:
 
 ```hcl
     endpoint "/a" {
-      beta_required_permission = "a"    # ←
+      required_permission = "a"    # ←
       proxy = "p"
     }
 ```
@@ -111,16 +109,16 @@ That is simple. For the `/b/{action}` endpoint we can use a quoted template expr
 
 ```hcl
     endpoint "/b/{action}" { # send, copy
-      beta_required_permission = "b:${request.path_params.action}"    # ←
+      required_permission = "b:${request.path_params.action}"    # ←
       proxy = "p"
     }
 ```
 
-Last, the value of `beta_required_permission` can also be an object with a method-permission mapping.
+Last, the value of `required_permission` can also be an object with a method-permission mapping.
 
 ```hcl
     endpoint "/c" {
-      beta_required_permission = {    # ←
+      required_permission = {    # ←
         GET = ""         # no permission required for GET
         DELETE = "c:del" # permission for DELETE is c:del
         "*" = "c"        # permission for other methods is c
@@ -129,13 +127,13 @@ Last, the value of `beta_required_permission` can also be an object with a metho
     }
 ```
 
-But how do we know that certain permissions were granted to the requester? With JWT they should be specified in a claim. The claim containing the granted permissions (also called privileges) is configured in the `jwt` access control block with the `beta_permissions_claim`:
+But how do we know that certain permissions were granted to the requester? With JWT they should be specified in a claim. The claim containing the granted permissions (also called privileges) is configured in the `jwt` access control block with the `permissions_claim`:
 
 ```hcl
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    beta_permissions_claim = "permissions"    # ←
+    permissions_claim = "permissions"    # ←
   }
 ```
 
@@ -178,8 +176,8 @@ To see which permission (singular!) was required and which permissions (plural!)
   api {
     access_control = ["Token"]
     add_response_headers = {    # ←
-      required-permission = request.context.beta_required_permission
-      granted-permissions = join(" ", request.context.beta_granted_permissions)
+      required-permission = request.context.required_permission
+      granted-permissions = join(" ", request.context.granted_permissions)
     }
 ```
 **Note:** One header or both are missing if its value is empty (e.g. no permission required or no permissions granted).
@@ -215,7 +213,7 @@ Couper-Error: access control error
 ```
 In the log we see an entry like this:
 ```
-access-control | {...,"error_type":"beta_insufficient_permissions","handler":"api","level":"error","message":"access control error: required permission \"c:del\" not granted","method":"DELETE",...
+access-control | {...,"error_type":"insufficient_permissions","handler":"api","level":"error","message":"access control error: required permission \"c:del\" not granted","method":"DELETE",...
 ```
 
 This error can be handled with an `error_handler` like this:
@@ -224,11 +222,11 @@ server {
   api {
     # ...
 
-    error_handler "beta_insufficient_permissions" {    # ←
+    error_handler "insufficient_permissions" {    # ←
       response {
         status = 403
         json_body = {
-          error = "request lacking granted permission '${request.context.beta_required_permission}'"
+          error = "request lacking granted permission '${request.context.required_permission}'"
         }
       }
     }

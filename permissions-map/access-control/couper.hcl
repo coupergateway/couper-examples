@@ -3,13 +3,13 @@ server {
     base_path = "/calendars"
     access_control = ["Token"]
     # add_response_headers = {
-    #   required-permission = request.context.beta_required_permission
+    #   required-permission = request.context.required_permission
     #   scope = request.context.Token.scope
-    #   granted-permissions = join(" ", request.context.beta_granted_permissions)
+    #   granted-permissions = join(" ", request.context.granted_permissions)
     # }
 
     endpoint "/" {
-      beta_required_permission = {
+      required_permission = {
         POST = "calendar"
         GET = "calendar.readonly"
       }
@@ -17,7 +17,7 @@ server {
     }
 
     endpoint "/{calendarId}" {
-      beta_required_permission = {
+      required_permission = {
         GET = "calendar.readonly"
         PATCH = "calendar"
         PUT = "calendar"
@@ -27,7 +27,7 @@ server {
     }
 
     endpoint "/{calendarId}/events" {
-      beta_required_permission = {
+      required_permission = {
         GET = "calendar.events.readonly"
         POST = "calendar.events"
       }
@@ -40,8 +40,8 @@ definitions {
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    # beta_permissions_claim = "scope"
-    # beta_permissions_map = {
+    # permissions_claim = "scope"
+    # permissions_map = {
     #   "calendar" = ["calendar.readonly", "calendar.events"] # no need to list calendar.events.readonly here, as the map is called recursively
     #   "calendar.events" = ["calendar.events.readonly"]
     #   "calendar.readonly" = ["calendar.events.readonly"]

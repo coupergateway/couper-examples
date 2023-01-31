@@ -1,7 +1,5 @@
 # Permissions (Map)
 
-**Note:** This is currently a [_beta_ feature](https://github.com/avenga/couper/blob/master/docs/BETA.md).
-
 Please, see the [Permissions example](../permissions/README.md) before reading this.
 
 Suppose you have a calendar API (like Google's) with (among others) three endpoints:
@@ -25,7 +23,7 @@ server {
     access_control = ["Token"]
 
     endpoint "/" {
-      beta_required_permission = {
+      required_permission = {
         POST = "calendar"
         GET = "calendar.readonly"
       }
@@ -33,7 +31,7 @@ server {
     }
 
     endpoint "/{calendarId}" {
-      beta_required_permission = {
+      required_permission = {
         GET = "calendar.readonly"
         PATCH = "calendar"
         PUT = "calendar"
@@ -43,7 +41,7 @@ server {
     }
 
     endpoint "/{calendarId}/events" {
-      beta_required_permission = {
+      required_permission = {
         GET = "calendar.events.readonly"
         POST = "calendar.events"
       }
@@ -87,13 +85,13 @@ calendar.readonly  calendar.events
 
 So, e.g. a client granted the calendar.events permission may also request a route with the required permission calendar.events.readonly, and a client granted the calendar permission may request every route.
 
-In Couper, these relationships are configured using the `jwt` block's `beta_permissions_map` attribute:
+In Couper, these relationships are configured using the `jwt` block's `permissions_map` attribute:
 
 ```hcl
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    beta_permissions_map = {    # ←
+    permissions_map = {    # ←
       "calendar" = ["calendar.readonly", "calendar.events"] # no need to list calendar.events.readonly here, as the map is called recursively
       "calendar.events" = ["calendar.events.readonly"]
       "calendar.readonly" = ["calendar.events.readonly"]
@@ -101,18 +99,18 @@ In Couper, these relationships are configured using the `jwt` block's `beta_perm
   }
 ```
 
-Then we have to specify the source of the granted permissions via the `jwt` block's `beta_permissions_claim`. In this example we expect them to be in the `scope` claim:
+Then we have to specify the source of the granted permissions via the `jwt` block's `permissions_claim`. In this example we expect them to be in the `scope` claim:
 
 ```hcl
   jwt "Token" {
     signature_algorithm = "RS256"
     key_file = "pub-key.pem"
-    beta_permissions_claim = "scope"    # ←
-    beta_permissions_map = {
+    permissions_claim = "scope"    # ←
+    permissions_map = {
       # ...
 ```
 
-**Note:** If our permissions map is quite big, or we would like to create one in some build process, we could reference it using `beta_permissions_map_file = "permissions.json"` instead of `beta_permissions_map`. The format of the JSON file is very similar to the `beta_permissions_map` value, here:
+**Note:** If our permissions map is quite big, or we would like to create one in some build process, we could reference it using `permissions_map_file = "permissions.json"` instead of `permissions_map`. The format of the JSON file is very similar to the `permissions_map` value, here:
 ```json
 {
   "calendar": ["calendar.readonly", "calendar.events"],
@@ -127,9 +125,9 @@ To see the scope, which permission (singular!) was required and which permission
     base_path = "/calendars"
     access_control = ["Token"]
     add_response_headers = {    # ←
-      required-permission = request.context.beta_required_permission
+      required-permission = request.context.required_permission
       scope = request.context.Token.scope
-      granted-permissions = join(" ", request.context.beta_granted_permissions)
+      granted-permissions = join(" ", request.context.granted_permissions)
     }
 ```
 
@@ -175,7 +173,7 @@ Couper-Error: access control error
 ```
 with the following log entry
 ```
-access-control | {...,"error_type":"beta_insufficient_permissions","handler":"api","level":"error","message":"access control error: required permission \"calendar.readonly\" not granted","method":"GET",...
+access-control | {...,"error_type":"insufficient_permissions","handler":"api","level":"error","message":"access control error: required permission \"calendar.readonly\" not granted","method":"GET",...
 ```
 
 Or a successful request using the calendar scoped token:
@@ -210,8 +208,8 @@ Couper-Error: method not allowed error
 ```
 and the following log entry:
 ```
-access-control | {...,"handler":"api","level":"error","message":"method not allowed error: method PATCH not allowed by beta_required_permission","method":"PATCH",...
+access-control | {...,"handler":"api","level":"error","message":"method not allowed error: method PATCH not allowed by required_permission","method":"PATCH",...
 ```
-This happens because the `PATCH` method is not mentioned in the `beta_required_permission` attribute value (neither explicitly, nor implicitly via `"*"`).
+This happens because the `PATCH` method is not mentioned in the `required_permission` attribute value (neither explicitly, nor implicitly via `"*"`).
 
-**Note:** The log message gives the indication that this `405` error results from `beta_required_permission` (and not from `allowed_methods`).
+**Note:** The log message gives the indication that this `405` error results from `required_permission` (and not from `allowed_methods`).
