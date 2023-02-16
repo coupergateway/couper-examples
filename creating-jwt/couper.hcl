@@ -47,7 +47,6 @@ definitions {
   }
 
   jwt "LocalToken" {
-    header = "Authorization"
     signature_algorithm = "HS256"
     key = "Th3$e(rEt"
     signing_ttl = "600s"

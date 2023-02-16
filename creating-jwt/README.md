@@ -111,7 +111,6 @@ Looking at the decoded payload you will find the claims `iss` and `iat` from the
 definitions {
   ...
   jwt "LocalToken" {
-    header = "Authorization"
     signature_algorithm = "HS256"
     key = "Th3$e(rEt"
     signing_ttl = "600s"

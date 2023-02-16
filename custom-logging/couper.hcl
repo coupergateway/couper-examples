@@ -44,7 +44,6 @@ definitions {
     password = "asdf"
   }
   jwt "MyToken" {
-    header = "authorization"
     signature_algorithm = "HS256"
     key = "$e(R3t"
     signing_ttl = "10m"

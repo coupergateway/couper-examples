@@ -56,7 +56,6 @@ server {
 
 definitions {
   jwt "JWTToken" {
-    header = "Authorization"
     signature_algorithm = "RS256"
     key_file = "pub.pem"
   }
