@@ -171,6 +171,7 @@ First, we repeat the unauthorized request from above:
 $ curl -i http://localhost:8080/private/headers
 HTTP/1.1 401 Unauthorized
 …
+Www-Authenticate: Bearer
 
 {
   "error": {
@@ -188,22 +189,22 @@ calls:
 
 ```sh
 $ curl -i http://localhost:8080/private/headers -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImFzZGYifQ.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIiwiZXhwIjoxNTkwNDkxNTI4fQ.iPO6NiiSH9ERuqDEM9xYGs0Vo3h8aHc-u9CCpmhVMp2PYafwfQXMM5MXlq1Crtw_g-jBUrB-r80a7uqOaBPvHzP0vmTzTNLXRp5U3l7I1ixUJaxSsA4g6k5CrVQ9rYPkKbABviJBw1gmfV9t5Yz8l7QYUFz0I0LTju8bmGqPLmQMOYCZyLW4KcflLGqjwbWZFNpVIXbc1WRySo-bwuBTiSfbzZ2RFvXrv6sHfNCcE4ounsjZSx9P6mpl9pyj5J5iu0Dvh_J6zeH7DMQ_WXbt0MblIuRtNRx_g025NuhuGRlOzLOeO2CYq266xcH9txWz2YIXm9ke1HDiLGL6_ORSUA"
-HTTP/1.1 403 Forbidden
+HTTP/1.1 401 Unauthorized
 …
+Www-Authenticate: Bearer, error="invalid_token", error_description="The access token expired"
 
 {
   "error": {
     "id":      "bt6vrr18d3b967b0m29g",
     "message": "access control error",
     "path":    "/private/headers",
-    "status":  403
+    "status":  401
   }
 }
 ```
 
-Note how the HTTP status code and Couper's error code have changed
-from `401` to `403`: We now send an authentication token, but an invalid one.
-In fact, the token has expired, see Couper's log for details (`access control error: JWTToken: token is expired`).
+Note how the `Www-Authenticate` response header changed: We now send an authentication token, but an invalid one.
+In fact, the token has expired, also see Couper's log (`access control error: JWTToken: token is expired`).
 
 ```sh
 $ curl -i http://localhost:8080/private/headers -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImFzZGYifQ.eyJzdWIiOiJzb21lX3VzZXIiLCJpc3MiOiJzb21lX3Byb3ZpZGVyIn0.uSp2uAxubCuAGqMLS2S67aCK5DTvVVLi0LcxV5bSrTiiXE1wUb1h9IYZ4oXIKFWnCsXuIqTUl-UBn9kcJ7NJvagCaKAqk2_uRMKvFOA9lWT228FAYL58twaue-Ut_3Z5U1MfMYJxq6ADKzjgUW-bZQOceBP7yZ-Bedewmq2ZtNzLhoO-RLiCkmrLlIKcx0LCTOZOYFT7g38XLOWHcG1QQ8U9qBZMAm9j4wXgk4UoCJj1h4tS9He2YyVfB_w7y1kyXmpd_Tn3onU2z6I6qKpkRfh8sBUJ9AP50Iub85-O4mKw23gNTtw6uHhc33uBydenV9M3EMayCWkKTwEGmkpgUw"
