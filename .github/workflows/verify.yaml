@@ -16,7 +16,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: 'setup docker'
-        uses: docker-practice/actions-setup-docker@1.0.8
+        uses: docker-practice/actions-setup-docker@1.0.11
       - name: 'verify with avenga/couper:${{ inputs.image-tag }}'
         id: verify
         run: |
