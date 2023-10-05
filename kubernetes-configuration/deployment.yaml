@@ -16,7 +16,7 @@ spec:
       containers:
         - name: couper
           # With 'latest' tag, K8s pull policy is implicitly 'always'
-          image: avenga/couper:latest
+          image: coupergateway/couper:latest
           ports:
             - containerPort: 8099
           livenessProbe:

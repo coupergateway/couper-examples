@@ -1,17 +1,17 @@
 # Couper Example Collection
 
-[Couper](https://github.com/avenga/couper) is designed to support developers
+[Couper](https://github.com/coupergateway/couper) is designed to support developers
 building and operating API-driven Web projects by offering security
 and observability functionality in a frontend gateway
 component.
 
 This collection of examples highlights Couper's features with small, ready-to-use examples.
-If you have any questions or feedback you are welcome to start a [discussion](https://github.com/avenga/couper/discussions).
+If you have any questions or feedback you are welcome to start a [discussion](https://github.com/coupergateway/couper/discussions).
 
 ## Getting started
 
 To run the examples you need Couper. It is available as _docker
-image_ from [Docker Hub](https://hub.docker.com/r/avenga/couper)
+image_ from [Docker Hub](https://hub.docker.com/r/coupergateway/couper)
 
 This requires a working [Docker](https://www.docker.com/) setup on your
 computer. Please visit the [get started guide](https://docs.docker.com/get-started/) to get prepared.
@@ -19,7 +19,7 @@ computer. Please visit the [get started guide](https://docs.docker.com/get-start
 To run the examples, clone the repository:
 
 ```sh
-$ git clone https://github.com/avenga/couper-examples.git
+$ git clone https://github.com/coupergateway/couper-examples.git
 Cloning into 'couper-examples'...
 ```
 

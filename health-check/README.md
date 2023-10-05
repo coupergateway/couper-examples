@@ -103,7 +103,7 @@ still 500, the health state downgrades to `unhealthy`.
 The number of failing requests it takes until a backend is considered `unhealthy`
 can be configured with the `failure_threshold` attribute (defaults to 1).
 If you want the response body to contain a certain text, you can define that with
-the `expected_text` attribute. See the [reference](https://github.com/avenga/couper/blob/master/docs/REFERENCE.md#health-block)
+the `expected_text` attribute. See the [reference](https://github.com/coupergateway/couper/blob/master/docs/REFERENCE.md#health-block)
 for details on these and other attributes.
 
 The health state of a backend is accessible via the `backends.<label>.health` variable, that is
@@ -176,4 +176,4 @@ Retry-After: 15
 …
 ```
 
-**Note:** This is currently a [_beta_ feature](https://github.com/avenga/couper/blob/master/docs/BETA.md).
+**Note:** This is currently a [_beta_ feature](https://github.com/coupergateway/couper/blob/master/docs/BETA.md).

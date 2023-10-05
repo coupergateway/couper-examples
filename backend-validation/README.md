@@ -7,7 +7,7 @@ Couper uses the [OpenAPI 3 standard](https://www.openapis.org/) to load the defi
 ## Configuration
 
 To enable the validation we must provide an `openapi` block within a `backend` block which refers to the related OpenAPI yaml file.
-There are additional options which are described further in our [documentation](https://github.com/avenga/couper/tree/master/docs#openapi_block).
+There are additional options which are described further in our [documentation](https://github.com/coupergateway/couper/tree/master/docs#openapi_block).
 
 A simple backend configuration with validation looks like this:
 
