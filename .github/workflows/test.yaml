@@ -10,13 +10,13 @@ on:
 
 jobs:
   latest:
-    # uses: avenga/couper-examples/.github/workflows/verify.yaml@master
+    # uses: coupergateway/couper-examples/.github/workflows/verify.yaml@master
     uses: ./.github/workflows/verify.yaml
     if: github.event_name != 'pull_request' || github.event.review.state == 'approved'
     with:
       image-tag: 'latest'
   edge:
-    # uses: avenga/couper-examples/.github/workflows/verify.yaml@master
+    # uses: coupergateway/couper-examples/.github/workflows/verify.yaml@master
     uses: ./.github/workflows/verify.yaml
     if: github.event_name != 'push' || github.event.review.state == 'approved'
     with:

@@ -69,10 +69,10 @@ docker run --rm \
 -p 8080:8080 \
 -v "$(pwd)":/conf \
 -e BACKEND_ORIGIN=https://httpbin.org \
-avenga/couper
+coupergateway/couper
 ```
 
-The [`environment_variables` map](https://github.com/avenga/couper/blob/master/docs/REFERENCE.md#defaults-block) in the `defaults` block allows us to define default values as fallback for missing environment variables:
+The [`environment_variables` map](https://github.com/coupergateway/couper/blob/master/docs/REFERENCE.md#defaults-block) in the `defaults` block allows us to define default values as fallback for missing environment variables:
 
 ```hcl
 //...

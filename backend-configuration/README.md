@@ -18,7 +18,7 @@ server {
 The connection can be modified via transport settings like `max_connections`,
 `timeout`, `disable_certificate_validation` etc. You can find the complete list
 of the transport settings
-[here](https://github.com/avenga/couper/blob/master/DOCKER.md#transport-settings-attributes).
+[here](https://github.com/coupergateway/couper/blob/master/DOCKER.md#transport-settings-attributes).
 
 For example, if a backend should to be relieved, you can limit the number of
 simultaneous connections (in any state - active or idle) to the backend service via

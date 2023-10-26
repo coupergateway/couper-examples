@@ -16,7 +16,7 @@ spec:
       containers:
         - name: couper
           # With 'latest' tag, K8s image pull policy is implicitly 'always'
-          image: avenga/couper:latest
+          image: coupergateway/couper:latest
           args: ['run', '-f', '/my-conf/couper.hcl']
           ports:
             - containerPort: 8099
