@@ -1,7 +1,7 @@
 version: "3"
 services:
   couper:
-    image: avenga/couper
+    image: coupergateway/couper
     container_name: client
     hostname: client
     ports:
@@ -15,7 +15,7 @@ services:
       # hot reload config
       - COUPER_WATCH=true
   rs:
-    image: avenga/couper
+    image: coupergateway/couper
     container_name: resource-server
     hostname: resource-server
     ports:
@@ -26,7 +26,7 @@ services:
       # hot reload config
       - COUPER_WATCH=true
   as:
-    image: avenga/couper
+    image: coupergateway/couper
     container_name: authorization-server
     hostname: authorization-server
     ports:

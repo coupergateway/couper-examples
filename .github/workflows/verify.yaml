@@ -17,10 +17,10 @@ jobs:
         uses: actions/checkout@v2
       - name: 'setup docker'
         uses: docker-practice/actions-setup-docker@1.0.11
-      - name: 'verify with avenga/couper:${{ inputs.image-tag }}'
+      - name: 'verify with coupergateway/couper:${{ inputs.image-tag }}'
         id: verify
         run: |
           docker version
-          docker pull avenga/couper:${{ inputs.image-tag }}
-          docker run avenga/couper:${{ inputs.image-tag }} version
-          for d in $(find . -type f -name \*.hcl -exec dirname {} \;); do echo ${d:1} && docker run --rm -v "$(pwd)":/examples avenga/couper:${{ inputs.image-tag }} verify -d /examples/${d:1}; if [[ "$?" -ne 0 ]]; then echo "::error directory=${d:1}::verification failed" && exit 1; fi; done
+          docker pull coupergateway/couper:${{ inputs.image-tag }}
+          docker run coupergateway/couper:${{ inputs.image-tag }} version
+          for d in $(find . -type f -name \*.hcl -exec dirname {} \;); do echo ${d:1} && docker run --rm -v "$(pwd)":/examples coupergateway/couper:${{ inputs.image-tag }} verify -d /examples/${d:1}; if [[ "$?" -ne 0 ]]; then echo "::error directory=${d:1}::verification failed" && exit 1; fi; done

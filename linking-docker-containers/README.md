@@ -27,7 +27,7 @@ docker run --rm \
 -v "$(pwd)":/conf \
 --link httpbin:httpbin \
 -e BACKEND_ORIGIN=http://httpbin:80 \
-avenga/couper
+coupergateway/couper
 ```
 
 Docker automatically sets some environment variables for linked

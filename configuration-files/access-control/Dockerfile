@@ -1,4 +1,4 @@
-FROM avenga/couper:latest
+FROM coupergateway/couper:latest
 
 # copy base configuration
 COPY *.hcl /conf/

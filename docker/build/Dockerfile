@@ -1,4 +1,4 @@
-FROM avenga/couper
+FROM coupergateway/couper
 
 COPY htdocs/ /htdocs/
 COPY couper.hcl /conf/

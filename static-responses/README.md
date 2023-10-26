@@ -98,7 +98,7 @@ server {
 Start Couper with
 
 ```sh
-docker run --rm -e APP_VERSION=1.0 -e APP_ENV=local -e APP_DEBUG=true -p 8080:8080 -v "$(pwd)":/conf avenga/couper
+docker run --rm -e APP_VERSION=1.0 -e APP_ENV=local -e APP_DEBUG=true -p 8080:8080 -v "$(pwd)":/conf coupergateway/couper
 ```
 
 and call it with

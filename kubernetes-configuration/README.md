@@ -17,7 +17,7 @@ The [`kubectl`](https://kubernetes.io/docs/tasks/tools/) is required to apply th
 To keep things simple, we will configure a [Pod](https://kubernetes.io/docs/concepts/workloads/pods/) containing a Couper [deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) and a [service](https://kubernetes.io/docs/concepts/services-networking/service/) to describe our basic setup.
 
 Depending on the project you may want to connect the upstream services via additional Kubernetes services.
-For those cases use the related [service dns-record](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/) as `origin` for your [`backend`](https://github.com/avenga/couper/tree/master/docs#backend-block) configuration within your Couper configuration file.
+For those cases use the related [service dns-record](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/) as `origin` for your [`backend`](https://github.com/coupergateway/couper/tree/master/docs#backend-block) configuration within your Couper configuration file.
 
 ### Deployment
 
@@ -42,7 +42,7 @@ spec:
       containers:
         - name: couper
           # With 'latest' tag, K8s pull policy is implicitly 'always'
-          image: avenga/couper:latest
+          image: coupergateway/couper:latest
           ports:
             - containerPort: 8099
           livenessProbe:
@@ -149,7 +149,7 @@ Or you can visit the welcome page with your browser: [http://localhost:9090/](ht
 
 ## Adding a custom Couper configuration file
 
-To customize the Couper configuration you can build a container inherited from `avenga/couper`, add the related configuration file and make this image available to your K8s cluster.
+To customize the Couper configuration you can build a container inherited from `coupergateway/couper`, add the related configuration file and make this image available to your K8s cluster.
 First, we will mount the configuration file into the Pod with help from the [configmap](https://kubernetes.io/docs/concepts/configuration/configmap/).
 
 Let's run the following:

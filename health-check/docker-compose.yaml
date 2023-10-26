@@ -1,7 +1,7 @@
 version: "3"
 services:
   gateway:
-    image: avenga/couper
+    image: coupergateway/couper
     container_name: gateway
     ports:
       - 8080:8080
@@ -12,7 +12,7 @@ services:
     environment:
       COUPER_WATCH: "true"
   backend:
-    image: avenga/couper
+    image: coupergateway/couper
     container_name: backend
     volumes:
       - ./backend:/conf
