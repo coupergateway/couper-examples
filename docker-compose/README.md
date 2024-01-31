@@ -1,12 +1,12 @@
 # Using docker-compose
 
-A typical setup for local development is running Couper with [`docker-compose`](https://docs.docker.com/compose/). Couper's Docker image [`avenga/couper`](https://hub.docker.com/r/avenga/couper) is ready to use. All you need is a `docker-compose.yaml`:
+A typical setup for local development is running Couper with [`docker-compose`](https://docs.docker.com/compose/). Couper's Docker image [`coupergateway/couper`](https://hub.docker.com/r/coupergateway/couper) is ready to use. All you need is a `docker-compose.yaml`:
 
 ```yaml
 version: "3"
 services:
   couper:
-    image: avenga/couper
+    image: coupergateway/couper
     ports:
       - 8080:8080
     volumes:
@@ -33,7 +33,7 @@ We should make our Couper setup configurable for the different environments it w
 version: "3"
 services:
   couper:
-    image: avenga/couper
+    image: coupergateway/couper
     ports:
       - 8080:8080
     volumes:
@@ -52,7 +52,7 @@ Variables starting with `COUPER_` usually refer to Couper settings.
 (`COUPER_WATCH` is an equivalent for the `-watch` command line switch
 – it tells Couper to reload the configuration when the file changes).
 You can find a complete list
-[here](https://github.com/avenga/couper/blob/master/DOCKER.md).
+[here](https://github.com/coupergateway/couper/blob/master/DOCKER.md).
 
 The other two variables `GREET_NAME` and `SERVICE_ORIGIN` are
 application variables. They are available in the configuration file
@@ -93,7 +93,7 @@ links those services with their name as network address.
 version: "3"
 services:
   couper:
-    image: avenga/couper
+    image: coupergateway/couper
     ports:
       - 8080:8080
     volumes:

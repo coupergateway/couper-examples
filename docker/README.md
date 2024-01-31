@@ -5,7 +5,7 @@
 - [Custom build](#build)
 
 ## Introduction
-Couper is also available as docker image from [Docker Hub](https://hub.docker.com/r/avenga/couper/).
+Couper is also available as docker image from [Docker Hub](https://hub.docker.com/r/coupergateway/couper/).
 
 Running the Couper container requires a working [Docker](https://www.docker.com/) setup on your computer.
 Please visit the [get started guide](https://docs.docker.com/get-started/) to get prepared.
@@ -15,7 +15,7 @@ Please visit the [get started guide](https://docs.docker.com/get-started/) to ge
 To download the latest Couper image run:
 
 ```sh
-docker pull avenga/couper
+docker pull coupergateway/couper
 ```
 
 Couper needs a configuration file to know what to do.
@@ -36,7 +36,7 @@ server {
 Then start the Couper container:
 
 ```sh
-docker run --rm -p 8080:8080 -v "$(pwd)":/conf avenga/couper
+docker run --rm -p 8080:8080 -v "$(pwd)":/conf coupergateway/couper
 ```
 
 Now Couper is serving on your computer's port `8080`:
@@ -51,7 +51,7 @@ You can press `CTRL + c` to stop the running Couper container.
 
 #### Additional links
 
-- [Documentation reference](https://github.com/avenga/couper/tree/master/docs/)
+- [Documentation reference](https://github.com/coupergateway/couper/tree/master/docs/)
 - [more Examples](../README.md)
 
 ### Build
@@ -76,7 +76,7 @@ server {
 Create a file named `Dockerfile` and insert the following content:
 
 ```Dockerfile
-FROM avenga/couper
+FROM coupergateway/couper
 
 COPY htdocs/ /htdocs/
 COPY couper.hcl /conf/

@@ -13,7 +13,7 @@ In the real world, we will probably use an existing OpenID provider somewhere el
 version: "3"
 services:
   rp:
-    image: avenga/couper
+    image: coupergateway/couper
     container_name: relying-party
     ports:
       - 8080:8080
@@ -26,7 +26,7 @@ services:
       RP_CLIENT_ID: "foo"
       RP_CLIENT_SECRET: "bar"
   op:
-    image: avenga/couper
+    image: coupergateway/couper
     container_name: openid-provider
     ports:
       - 8081:8080

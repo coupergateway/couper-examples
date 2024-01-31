@@ -19,7 +19,7 @@ In the real world, we will probably use an existing identity provider somewhere 
 version: "3"
 services:
   couper:
-    image: avenga/couper
+    image: coupergateway/couper
     container_name: couper
     ports:
       - 8080:8080

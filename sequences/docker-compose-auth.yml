@@ -1,7 +1,7 @@
 version: "3"
 services:
   couper:
-    image: avenga/couper
+    image: coupergateway/couper
     ports:
       - 8080:8080
     volumes:
@@ -10,7 +10,7 @@ services:
       # hot reload config
       - COUPER_WATCH=true
   token-provider:
-    image: avenga/couper
+    image: coupergateway/couper
     ports:
       - 8081:8081
     volumes:
@@ -19,7 +19,7 @@ services:
       # hot reload config
       - COUPER_WATCH=true
   resource:
-    image: avenga/couper
+    image: coupergateway/couper
     ports:
       - 8082:8082
     volumes:

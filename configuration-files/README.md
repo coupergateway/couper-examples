@@ -11,12 +11,12 @@
 
 # Configuration files
 
-Couper gets configured by a [configuration file](https://github.com/avenga/couper/tree/master/docs#configuration-file) and
-as of the [1.9 release](https://github.com/avenga/couper/releases/tag/v1.9.0) Couper has an option to handle multiple
+Couper gets configured by a [configuration file](https://github.com/coupergateway/couper/tree/master/docs#configuration-file) and
+as of the [1.9 release](https://github.com/coupergateway/couper/releases/tag/v1.9.0) Couper has an option to handle multiple
 configuration files and configuration directories. Both can be passed as arguments and will be processed in order.
 
-This enables you to split up a Couper configuration by content or even by environment. This is solved by [merging](https://github.com/avenga/couper/blob/master/docs/MERGE.md) the top-level
-declarations and replacing nested ones. Details are explained in our [merge documentation](https://github.com/avenga/couper/blob/master/docs/MERGE.md).
+This enables you to split up a Couper configuration by content or even by environment. This is solved by [merging](https://github.com/coupergateway/couper/blob/master/docs/MERGE.md) the top-level
+declarations and replacing nested ones. Details are explained in our [merge documentation](https://github.com/coupergateway/couper/blob/master/docs/MERGE.md).
 
 ## Split by topic
 
@@ -87,7 +87,7 @@ The Couper container basically runs already with the argument `-d /conf` inside 
 our `./conf-a` directory to `/conf`. Also, the Couper welcome page already exists within `/htdocs`.
 
 ```shell
-docker run --pull -v ${PWD}/conf-a:/conf -p 8080:8080 avenga/couper
+docker run --pull -v ${PWD}/conf-a:/conf -p 8080:8080 coupergateway/couper
 ```
 
 ```hcl
@@ -142,7 +142,7 @@ Another possible case would be an access-control which may differ between a stag
 Let's use this case to tailor a possible configuration setup.
 
 Basically we will have some base configuration again. This can be a single file or a directory. To keep things simple, we will add all environment related configuration files during the container build process. If you want to ship a specific environment-based configuration file this conditional must be solved by your continuous-integration setup. If you have any questions, feel free
-to open a [discussion](https://github.com/avenga/couper/discussions).
+to open a [discussion](https://github.com/coupergateway/couper/discussions).
 
 ### Base
 
@@ -165,7 +165,7 @@ server {
 ### Dockerfile
 
 ```Dockerfile
-FROM avenga/couper:latest
+FROM coupergateway/couper:latest
 
 # copy base configuration
 COPY *.hcl /conf/
