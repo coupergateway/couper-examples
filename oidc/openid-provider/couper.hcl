@@ -69,7 +69,6 @@ definitions {
 
   jwt "token" {
     jwks_url = "http://localhost:8080/jwks.json"
-    header = "authorization"
     required_claims = ["iat", "exp"]
     claims = {
       iss = "http://testop:8080"

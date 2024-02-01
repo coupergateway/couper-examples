@@ -15,7 +15,7 @@ server {
           aud = "The_Audience"
         })
         token_type = "Bearer"
-        expires_in = "600"
+        expires_in = 600
       }
     }
   }
@@ -62,7 +62,7 @@ The response looks similar to
 ```json
 {
   "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6Im15LWp3ay1pZCIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUaGVfQXVkaWVuY2UiLCJleHAiOjE2MzM1OTE0OTIsImlhdCI6MTYzMzU5MDg5MiwiaXNzIjoiTXlBUyIsInN1YiI6ImpvaG4uZG9lIn0.qv6E3ILUe_9WR7wUhN4ZU6HWR-YoyyTNdXhf7TmiteUwXXpqUqngRqw_1h4CXJbPs250AaUf3BLeK7hJTxThCwBJl5aolngmPVnHcEiby6mq-EWOMjG-XP6NkJNI_GzmtWjpRIGcQ9zS8qMONE_GHRn_QvrtxR9rudVr6vUkLbN_6UJSETEaEH-WaKWRXUc7tsSQvB5wqnX2mVvmwchDG7lDLxL5oWM7GbpuEZQVdOEBgrLv-9D1yGkzcbaP1Y0AJWH9JaS-vpWSfwfUVvCr-Yf-iTA0EyEPFLGsTi9plz-8x5Qj_17SCSHN8M1j9MXJj_aSMH4-sVgIJf85C-EgIg",
-  "expires_in": "600",
+  "expires_in": 600,
   "token_type": "Bearer"
 }
 ```
@@ -98,7 +98,7 @@ Looking at the decoded payload you will find the claims `iss` and `iat` from the
       json_body = {
         access_token = jwt_sign("LocalToken", {})
         token_type = "Bearer"
-        expires_in = "600"
+        expires_in = 600
       }
     }
   }
@@ -111,7 +111,6 @@ Looking at the decoded payload you will find the claims `iss` and `iat` from the
 definitions {
   ...
   jwt "LocalToken" {
-    header = "Authorization"
     signature_algorithm = "HS256"
     key = "Th3$e(rEt"
     signing_ttl = "600s"

@@ -7,7 +7,7 @@ server {
           aud = "The_Audience"
         })
         token_type = "Bearer"
-        expires_in = "600"
+        expires_in = 600
       }
     }
   }
@@ -17,7 +17,7 @@ server {
       json_body = {
         access_token = jwt_sign("LocalToken", {})
         token_type = "Bearer"
-        expires_in = "600"
+        expires_in = 600
       }
     }
   }
@@ -47,7 +47,6 @@ definitions {
   }
 
   jwt "LocalToken" {
-    header = "Authorization"
     signature_algorithm = "HS256"
     key = "Th3$e(rEt"
     signing_ttl = "600s"

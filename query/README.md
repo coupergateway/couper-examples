@@ -114,7 +114,6 @@ definitions {
   jwt "UserToken" {
     signature_algorithm = "HS256"
     key = env.JWT_KEY
-    header = "Authorization"
   }
 }
 ```
