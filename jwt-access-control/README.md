@@ -126,7 +126,7 @@ All we need is:
 ```hcl
 definitions {
   jwt "JWTToken" {
-    header = "Authorization"
+    bearer = true
     signature_algorithm = "RS256"
     key_file = "pub.pem"
   }
@@ -378,7 +378,7 @@ If the tokens are created by a token provider, e.g. an OAuth2 authorization serv
 
 ```hcl
   jwt "JWTToken" {
-    header = "Authorization"
+    bearer = true
     # signature_algorithm = "RS256"
     # key_file = "pub.pem"
     jwks_url = "https://my-authorization-server.com/jwks.json"
