@@ -15,7 +15,7 @@ server {
 
 definitions {
   jwt "JWTToken" {
-    header = "Authorization"
+    bearer = true
     # header = "API-Token"
     # cookie = "token"
     # token_value = request.form_body.token[0]

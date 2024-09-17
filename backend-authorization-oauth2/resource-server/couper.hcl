@@ -14,6 +14,6 @@ definitions {
   jwt "token" {
     signature_algorithm = "HS256"
     key = "$eCr3T"
-    header = "Authorization"
+    bearer = true
   }
 }
